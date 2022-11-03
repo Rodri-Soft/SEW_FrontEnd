@@ -1,0 +1,63 @@
+:root {
+    --primarioSew: #1B2730;
+}
+
+.logo {
+    width: 20%;
+}
+
+.background {
+    position: fixed;    
+}
+
+.form-container {    
+    width: 100%!important;
+}
+
+.form-title {
+    font-weight: 800;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 150%;
+    color: black;
+}
+
+.form-text-title {
+    margin-bottom: 10%;
+}
+
+.form-text {
+    font-weight: 400;
+    font-family: 'Public Sans', sans-serif;    
+    color: black;        
+}
+
+.logIn-form-button {
+    /* background: var(--primarioSew); */
+    margin-top: -10%;
+    background: #1B2730;
+    color: white;
+}
+
+.logIn-form {  
+            
+    margin-top: 1%;    
+    margin-left: 35%;
+    margin-right: 35%;    
+   
+    background-color: white;
+    padding: 3rem;
+    border-radius: 9%;
+}
+
+.logIn-background {
+   margin-top: 5%;   
+   padding: 0 3rem;      
+}
+
+.logIn-background-left {
+    margin-right: 10%!important;
+}
+
+.logIn-background-right {
+    margin-left: 10%!important
+}
