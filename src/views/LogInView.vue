@@ -1,83 +1,87 @@
 <template>
-  <!-- <div>      
-    <HelloWorld msg="LogIn"/>
-  </div> -->
 
-  <!-- <div class="bg-image logIn-background">
-	</div> -->
-
-  <MDBNavbar light container class="shadow-0">
+  
+  <MDBNavbar light container class="shadow-0 background">
     <MDBNavbarBrand href="#">
-      <!-- <div> -->
-      <img src="@/assets/logo.svg" alt="..." class="logo"/>
-      <!-- </div>       -->
+      <img src="@/assets/logo.svg" alt="..." class="logo" />
     </MDBNavbarBrand>
   </MDBNavbar>
 
   <section>
-    <div class="background">
+
+    <div class="background background-images">
       <div class="d-flex justify-content-between logIn-background">
 
-        <div class="logIn-background-left"><img src="@/assets/loginBackground-left.svg" class="img-fluid" alt="..." />
+        <div id="background-left-container" class="logIn-background-left">
+          <img src="@/assets/loginBackground-left.svg" class="img-fluid" alt="background-left" />
         </div>
 
-        <div class="logIn-background-right"><img src="@/assets/loginBackground-right.svg" class="img-fluid" alt="..." />
+        <div id="background-right-container" class="logIn-background-right">
+          <img src="@/assets/loginBackground-right.svg" class="img-fluid" alt="background-right" />
         </div>
 
       </div>
     </div>
 
     <div class="background form-container">
-      <div class="logIn-form shadow-5-strong">
-        <form>
+      <div class="logIn-form logIn-form-container shadow-5-strong d-flex justify-content-between">
+        <form class="logIn-form">
+          
+          <MDBRow>
+            <MDBCol>
+              <p class="text-center form-title">Inicio de Sesión</p>
+            </MDBCol>
+          </MDBRow>
 
-          <p class="text-center form-title">Inicio de Sesión</p>
-
-          <p class="text-center form-text form-text-title">Encuentra el trabajo de tus sueños</p>
+          <MDBRow>
+            <MDBCol>
+              <p class="text-center form-text form-text-title">Encuentra el trabajo de tus sueños</p>
+            </MDBCol>
+          </MDBRow>
 
           <!-- Email input -->
           <MDBInput type="email" label="Email" id="form2Email" v-model="form2Email" wrapperClass="mb-4" />
           <!-- Password input -->
-          <MDBInput type="password" label="Contraseña" id="form2Password" v-model="form2Password" wrapperClass="mb-4" />
+          <MDBInput type="password" label="Contraseña" id="form2Password" v-model="form2Password"
+            wrapperClass="mb-2" />
           <!-- 2 column grid layout for inline styling -->
-          <MDBRow class="mb-4">            
+
+          <MDBRow class="mb-4">
             <MDBCol>
               <!-- Simple link -->
-              <a href="#!" class="form-text">Olvidaste tu contraseña?</a>
+              <a href="#!" class="form-text form-link">¿Olvidaste tu contraseña?</a>
             </MDBCol>
           </MDBRow>
+
           <!-- Submit button -->
           <MDBBtn block class="logIn-form-button"> Ingresar </MDBBtn>
 
-          <p class="text-center form-text">─ O Inicia Sesión con ─</p>
+          <MDBRow class="mt-4">
+            <MDBCol>
+              <p class="text-center form-text">─ O Inicia Sesión con ─</p>
+            </MDBCol>
+          </MDBRow>
 
-          <!-- Register buttons -->
-          <div class="text-center">
-            <p>Not a member? <a href="#!">Register</a></p>
-            <p>or sign up with:</p>
-            <MDBBtn color="primary" floating class="mx-1">
-              <MDBIcon iconStyle="fab" icon="facebook-f" />>
-            </MDBBtn>
+          <MDBRow>
+            <MDBCol class="d-flex justify-content-center">
+              <MDBBtn tag="a" class="button-google" href="#!" outline="dark">
+                <MDBIcon iconStyle="fab" icon="google"></MDBIcon>
+                Google
+              </MDBBtn>
+            </MDBCol>
+          </MDBRow>
 
-            <MDBBtn color="primary" floating class="mx-1">
-              <MDBIcon iconStyle="fab" icon="google" />
-            </MDBBtn>
+          <MDBRow class="mt-3">
+            <MDBCol class="text-center form-text">
+              <p>¿No tienes una cuenta? <a href="#!">Regístrate</a></p>
+            </MDBCol>
+          </MDBRow>                                  
 
-            <MDBBtn color="primary" floating class="mx-1">
-              <MDBIcon iconStyle="fab" icon="twitter" />
-            </MDBBtn>
-
-            <MDBBtn color="primary" floating class="mx-1">
-              <MDBIcon iconStyle="fab" icon="github" />
-            </MDBBtn>
-          </div>
-        </form>
+        </form>          
       </div>
-    </div>
+    </div>      
 
   </section>
-
-
 
 </template>
   
