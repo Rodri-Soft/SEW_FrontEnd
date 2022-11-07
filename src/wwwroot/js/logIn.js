@@ -48,7 +48,7 @@ export default {
     setBackgroud() {
 
       let width = $(window).width();
-      const windowSize = 768;
+      const windowSize = 768;      
       
       if (width < windowSize) {
         emptyBackgroundContainers();            
@@ -60,18 +60,18 @@ export default {
 
         if (width < windowSize) {
           emptyBackgroundContainers();   
-        }
+        }       
 
         if (width >= windowSize) {
 
           fillBackgroundContainers("left", "44146cda");
           fillBackgroundContainers("right", "7026e0cc");
 
-        }
+        }       
 
       });
 
-    },
+    }
    
   }
 }
@@ -94,7 +94,6 @@ function fillBackgroundContainers(side, id){
     backgroundContainer.appendChild(background);
 
   }
-
 
 }
 
