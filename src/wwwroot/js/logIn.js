@@ -3,7 +3,7 @@ import $ from 'jquery';
 import axios from 'axios';
 import './axios'
 import { ref } from 'vue';
-import { mapMutations } from 'vuex';
+import Cookies from 'js-cookie';
 import {
   MDBRow,
   MDBCol,
@@ -21,7 +21,7 @@ import {
   MDBRadio
 } from 'mdb-vue-ui-kit';
 export default {
-  name: 'HomeView',
+  name: 'LogInView',
   components: {
     HelloWorld,
     MDBRow,
@@ -49,6 +49,8 @@ export default {
     const emailRegister = ref('');
     const passwordRegister = ref(''); 
     const role = ref('');
+    const modalChangePassword = ref(false);
+    const emailNew = ref('');
 
     return {
       email,
@@ -60,14 +62,16 @@ export default {
       emailRegister,
       passwordRegister,
       role,
+      modalChangePassword,
+      emailNew,
     };
   },
   mounted() {
+    Cookies.remove('access_token');
     this.setBackgroud();
     this.loginWithGoogle();
   },
   methods: {
-    ...mapMutations(['setToken']),
     setBackgroud() {
       let width = $(window).width();
       const windowSize = 768;
@@ -90,50 +94,20 @@ export default {
         }
       });
     },
-    async login(event) {
-      event.target.classList.add('was-validated');
+    showPassword() {    
+      const iconsPassword = document.querySelectorAll('.password-icon');
 
-      if (event.target.checkValidity()) {
-        let payload = {
-          email: this.email,
-          password: this.password,
-        };
-        const url = 'auth/login';
-        const messageLogin = document.getElementById('message-login');
+      iconsPassword.forEach((iconPassword) => {
+        iconPassword.addEventListener('click', () => {
+          const spanPassowrd = iconPassword.parentElement
+          const labelPassword = spanPassowrd.previousElementSibling;
+          const inputPassword = labelPassword.previousElementSibling;
 
-        await axios.post(url, payload).then((data) => {
-          const codeStatus = data.status; 
-          const accessToken = data.data.token;
-          
-          if (codeStatus === 200) {
-            // localStorage.setItem('access_token', accessToken);            
-            this.setToken(accessToken);
-            this.$router.push('about');          
-          } 
-        }).catch((error) => {
-          const inputEmail = document.getElementById('input-email');
-          const inputPassword = document.getElementById('input-password');          
-          const codeStatus = error.response.status;
-          const messages = {
-            '400': 'Verifique los campos nuevamente 🤔',
-            '401': 'Usuario o contraseña incorrectos 😕',
-          }
-          messageLogin.innerHTML = messages[codeStatus];
+          const type = inputPassword.getAttribute('type') === 'password' ? 'text' : 'password';
 
-          inputEmail.classList.add('is-invalid');
-          inputPassword.classList.add('is-invalid');
+          inputPassword.setAttribute('type', type);
+          iconPassword.classList.toggle('fa-eye-slash');
         });
-      }
-    },
-    loginWithGoogle() {
-      const googleButton = document.getElementById('google-button');
-      const url = 'http://localhost:3000/api/v1/auth/google';
-      const windowFeatures = 'location=yes, height=570, width=520,' + 
-      'scrollbars=yes, status=yes, left=500, top=150';
-      const windowTarget = '_blank';
-
-      googleButton.addEventListener('click', () => {
-        window.open(url, windowTarget, windowFeatures);
       });
     },
     checkInput(patterns, pattern, input, inputId) {
@@ -161,23 +135,7 @@ export default {
       formsText.forEach((formText) => {
         formText.innerHTML = '';
       });
-    },
-    showPassword() {    
-      const iconsPassword = document.querySelectorAll('.password-icon');
-
-      iconsPassword.forEach((iconPassword) => {
-        iconPassword.addEventListener('click', () => {
-          const spanPassowrd = iconPassword.parentElement
-          const labelPassword = spanPassowrd.previousElementSibling;
-          const inputPassword = labelPassword.previousElementSibling;
-
-          const type = inputPassword.getAttribute('type') === 'password' ? 'text' : 'password';
-
-          inputPassword.setAttribute('type', type);
-          iconPassword.classList.toggle('fa-eye-slash');
-        });
-      });
-    },
+    },    
     validateFormRegister() {
       const patterns = {
         'fullName': new RegExp("^[0-9a-zA-ZÀ-ÿ\\u00f1\\u00d1]{1,}[0-9\\sa-zA-ZÀ-ÿ\\u00f1\\u00d1.:',_-]{0,}$"),
@@ -209,7 +167,7 @@ export default {
       event.target.classList.add('was-validated');    
 
       const numberOfErrors = this.validateFormRegister();
-      
+
       if (event.target.checkValidity() && numberOfErrors === 0) {
         let payload = {
           fullName: this.fullName,
@@ -246,6 +204,89 @@ export default {
         });
       } else {
         this.removeFormText();
+      }
+    },
+    async login(event) {
+      event.target.classList.add('was-validated');
+
+      if (event.target.checkValidity()) {
+        let payload = {
+          email: this.email,
+          password: this.password,
+        };
+        const url = 'auth/login';
+        const messageLogin = document.getElementById('message-login');
+
+        await axios.post(url, payload).then((data) => {
+          const codeStatus = data.status; 
+          const accessToken = data.data.token;
+          
+          if (codeStatus === 200) {           
+            Cookies.set('access_token', accessToken, { 
+              httpOnly: false,
+              secure: true 
+            });
+
+            this.$router.push('about');          
+          } 
+        }).catch((error) => {
+          const inputEmail = document.getElementById('input-email');
+          const inputPassword = document.getElementById('input-password');          
+          const codeStatus = error.response.status;
+          const messages = {
+            '400': 'Verifique los campos nuevamente 🤔',
+            '401': 'Usuario o contraseña incorrectos 😕',
+            // '403': 'No puedes acceder a través de Google 😕',
+            '500': 'Error interno del servidor 😢'
+          }
+          messageLogin.innerHTML = messages[codeStatus];
+
+          inputEmail.classList.add('is-invalid');
+          inputPassword.classList.add('is-invalid');
+        });
+      }
+    },
+    loginWithGoogle() {      
+      const googleButton = document.getElementById('google-button');
+      const url = 'http://localhost:3000/api/v1/auth/google';
+      googleButton.addEventListener('click', () => {        
+        window.location.href = url;        
+      });      
+    },
+    async changePassword(event) {
+      event.target.classList.add('was-validated');
+
+      if (event.target.checkValidity()) {
+        let payload = {
+          email: this.emailNew,
+        };
+        const url = 'auth/recovery';
+        const messageChangePassword = document.getElementById('message-change-password');
+        const inputEmail = document.getElementById('input-email-new');
+
+        await axios.post(url, payload).then((data) => {
+          const codeStatus = data.status; 
+          
+          if (codeStatus === 200) {           
+            const buttonChangePassword = document.getElementById('change-password-button');
+            buttonChangePassword.classList.add('d-none');
+            inputEmail.setAttribute('readonly', '');
+
+            messageChangePassword.innerHTML = 'Se ha enviado un correo a tu correo electrónico. Puede cerrar esta ventana 👍';
+          } 
+        }).catch((error) => {
+          console.log(error);
+          const codeStatus = error.response.status;
+          const messages = {
+            '400': 'Verifique su correo nuevamente 🤔',
+            '401': 'Primero debes registrarte 🫡',
+            '404': 'Primero debes registrarte 🫡',
+            '500': 'Error interno del servidor 😢'
+          }
+          messageChangePassword.innerHTML = messages[codeStatus];
+
+          inputEmail.classList.add('is-invalid');
+        });
       }
     }
   }

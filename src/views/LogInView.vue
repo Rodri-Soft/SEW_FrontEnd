@@ -49,7 +49,9 @@
               </MDBInput>
             </MDBCol>
             <MDBCol md="12" class="mt-4">
-              <a href="#!" class="form-options-text form-link">¿Olvidaste tu contraseña?</a>
+              <a @click="modalChangePassword = true" class="form-options-text form-link">                 
+                ¿Olvidaste tu contraseña?
+              </a>
             </MDBCol>            
           </MDBRow>
           
@@ -92,7 +94,7 @@
           Registro de Usuarios
         </MDBModalTitle>
 
-        <form @submit.prevent="registerNewUser" id="register-user-form" novalidate>        
+        <form @submit.prevent="registerNewUser" class="user-form" novalidate>        
           <MDBRow class="g-3">
             <MDBCol>
               <p id="message-register" class="text-center mt-3">
@@ -159,6 +161,40 @@
           </MDBCol>
           
           <MDBBtn id="register-user-button" type="submit" class="mt-2 logIn-form-button" block>Registrarse</MDBBtn>
+        </form>
+      </MDBModalBody>
+    </MDBModal>
+  </section>
+  
+  <section>
+    <MDBModal id="modal-change-password" tabindex="-1" v-model="modalChangePassword"
+      staticBackdrop
+      centered>
+      <MDBModalBody>
+        <a href="#" class="text-reset">
+          <MDBIcon icon="close" size="lg" class="d-flex justify-content-end" @click="modalChangePassword = false"/>
+        </a> 
+
+        <MDBModalTitle class="text-center form-title">
+          Olvide mi contraseña
+        </MDBModalTitle>
+
+        <form @submit.prevent="changePassword" class="user-form" novalidate>        
+          <MDBRow class="g-3">
+            <MDBCol>
+              <p id="message-change-password" class="text-center mt-2">
+                No te preocupes, ¡nosotros te ayudamos! 😊
+              </p>
+            </MDBCol>
+
+            <MDBCol md="12">
+              <MDBInput type="email" label="Correo elétronico" id="input-email-new" v-model="emailNew"
+                invalidFeedback="Verifica tu correo elétronico" 
+                required/>            
+            </MDBCol>            
+          </MDBRow>
+            
+          <MDBBtn id="change-password-button" type="submit" class="mt-4 logIn-form-button" block>Cambiar contraseña</MDBBtn>
         </form>
       </MDBModalBody>
     </MDBModal>

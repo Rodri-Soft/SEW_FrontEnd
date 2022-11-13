@@ -2,14 +2,11 @@
   <div class="about">
 
     <h1>This is an about page</h1>
-    <router-link v-if="isAuthenticated" to="/login">Go to home</router-link> |
-    <!-- <h3 v-if="token">{{token}}</h3> -->
+    <!-- <router-link v-if="isAuthenticated" to="/login">Go to home</router-link> | -->
   </div>
 </template>
 
-
 <script>
-  import { mapGetters } from 'vuex'
   export default {
     name: 'About',
     components: {},
@@ -18,13 +15,13 @@
       };
     },
     mounted() {
-      
+    
     },
     methods: {
 
     },  
     computed: {
-      ...mapGetters(['isAuthenticated'])
+      // ...mapGetters(['isAuthenticated'])
     } 
   };
 </script>
