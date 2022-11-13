@@ -16,7 +16,7 @@ import {
 import { ref } from "vue";
 
 export default {
-  name: 'HomeView',
+  name: 'LogInView',
   components: {
     HelloWorld,
 

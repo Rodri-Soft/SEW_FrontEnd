@@ -9,8 +9,23 @@ const routes = [
   // },
   {
     path: '/',
-    name: 'home',
+    name: 'login',
     component: () => import('../views/LogInView.vue')
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: () => import('../views/HomeView.vue')
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('../views/TestView.vue')
+  },
+  {
+    path: '/dev',
+    name: 'dev',
+    component: () => import('../components/MainFeed.vue')
   },
   {
     path: '/about',

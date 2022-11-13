@@ -1,0 +1,13 @@
+.listText {
+    width: 7rem;
+}
+
+.listButton {
+    margin-top: 8%;
+    margin-bottom: 8%; 
+    width: 45%;   
+}
+
+.categoryListItem {
+    padding: .5rem;
+}

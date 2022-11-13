@@ -1,0 +1,14 @@
+.containerMenu {
+    display: grid!important;
+}
+
+.profileImage {
+    margin-top: -10rem;
+    width: 10rem;    
+}
+
+.borderColorProfile {
+    border-color: white;
+    width: 100%;
+    padding: 0;
+}
