@@ -1,8 +1,10 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue'
 import Navbar from '@/components/Navbar.vue'
-import Category from '@/components/Category.vue'
 import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
+import MainFeed from '@/components/MainFeed.vue'
+import Category from '@/components/Category.vue'
+
 
 export default {
 
@@ -11,8 +13,8 @@ export default {
     HelloWorld,
     Navbar,
     ProfileMainMenu,
-    Category,
-  
+    MainFeed,
+    Category  
   }
 }
 

@@ -6,3 +6,20 @@
     /* margin-top: -10rem; */
     width: 4rem;    
 }
+
+.ellipsisIcon {
+    color: white;
+    cursor: pointer;
+}
+
+#ellipsisOptionsIcon {
+    cursor: pointer;
+}
+
+.dropdownMenuButton-ellipsis {
+    margin-left: -9rem;
+}
+
+.actionIcon {
+    margin-left: -1%;
+}

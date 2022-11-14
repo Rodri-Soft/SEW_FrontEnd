@@ -20,14 +20,14 @@ import {
   MDBDropdownMenu,
   MDBDropdownItem,
   MDBIcon,    
-  MDBBadge,
+  MDBBadge, 
 
 } from "mdb-vue-ui-kit";
 import { ref } from 'vue';
 
 export default {
 
-  name: 'HomeView',
+  name: 'MainFeed',
   components: {
     Navbar,
     ProfileMainMenu,
@@ -45,16 +45,15 @@ export default {
     MDBDropdownMenu,
     MDBDropdownItem,
     MDBIcon,    
-    MDBBadge,
+    MDBBadge,        
    
-  },
-  setup() {    
-    const dropdown2 = ref(false);
-   
-    return {
-      dropdown2,
-      
-    }   
-  },
+  },  
+  setup() {
+    
+    const dropdownOptions = ref(false);   
+    return {      
+      dropdownOptions,
+    }
+  }
 }
 

@@ -54,7 +54,7 @@
                         <MDBBadge pill notification class="bg-danger">1</MDBBadge>
                     </a>
 
-                    <MDBDropdownMenu id="dropDownBell" aria-labelledby="dropdownMenuButton" class="dropdownMenuButton-notifications">
+                    <MDBDropdownMenu id="dropDownBell" aria-labelledby="dropdownMenuButtonNotifications" class="dropdownMenuButton-notifications">
                         <MDBDropdownItem href="#">Action</MDBDropdownItem>
                         <MDBDropdownItem href="#">Another Action</MDBDropdownItem>
                         <MDBDropdownItem href="#">Something else here</MDBDropdownItem>

@@ -4,5 +4,11 @@
 }
 
 .profileCard {
-    width: 16rem;   
+    width: 30rem;   
+}
+
+@media (min-width: 992px) {
+    .profileCard {
+        width: 16rem;   
+    }
 }

@@ -8,19 +8,17 @@
                 <ProfileMainMenu/>
             </div>
 
-            <div class="col-lg-6">
-                <p class="text-center">Center</p>
+            <div class="col-lg-6 p-lg-0">
+                <MainFeed/>
             </div>
 
             <div class="col-lg-3">
                 <Category/>
             </div>
         </div>
-    </div>    
+    </div>        
 
 </template>
 
-<style scoped src="@/wwwroot/css/home.css">
-
-</style>
+<style scoped src="@/wwwroot/css/home.css"></style>
 <script src="@/wwwroot/js/home.js"></script>

@@ -20,7 +20,7 @@ import {
 import { ref } from 'vue';
 
 export default {
-  name: 'HomeView',
+  name: 'Navbar',
   components: {
     HelloWorld,
 
