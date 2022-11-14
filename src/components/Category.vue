@@ -19,11 +19,11 @@
 
         </div>
 
-        <div class="col">
+        <!-- <div class="col">
             <div class="d-flex justify-content-lg-end justify-content-center">
                 <MDBBtn color="primary mt-3 mb-3 shadow-0 backgroundFont profileCard">Mi Perfil</MDBBtn>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </template>

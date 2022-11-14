@@ -33,6 +33,12 @@ export default {
     MDBCardGroupItem,
     MDBListGroupItem,
     MDBListGroup,
-  },  
+  },    
+  props: ["user"],
+  data() {
+    return {
+      userPhoto: this.user.photo,       
+    }
+  }
 }
 

@@ -1,5 +1,11 @@
 .listText {
-    width: 7rem;
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .listText {
+        width: 7rem;
+    }
 }
 
 .listButton {

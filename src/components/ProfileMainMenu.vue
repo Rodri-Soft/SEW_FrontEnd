@@ -5,20 +5,20 @@
             <MDBCard class="profileCard backgroundFont">
                 <MDBCardImg top src="https://mdbootstrap.com/img/new/standard/city/062.webp" alt="..." />
                 <MDBCardBody class="text-center mb-3">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg"
+                    <img v-bind:src="userPhoto"
                         class="img-fluid rounded-circle profileImage" alt="Townhouses and Skyscrapers" />
-                    <MDBCardTitle>José Daniel Camarillo Villa</MDBCardTitle>
+                    <MDBCardTitle>{{user.full_name}}</MDBCardTitle>
                     <MDBCardText class="text-muted">
-                        @CamarilloVilla
+                        {{user.tag_name}}
                     </MDBCardText>
                 </MDBCardBody>
                 <MDBListGroup horizontal>
                     <MDBListGroupItem class="backgroundFont borderColorProfile text-center">
-                        <p class="mt-3 mb-1">1991</p>
+                        <p class="mt-3 mb-1">{{user.followers}}</p>
                         <p class="mb-2">Siguiendo</p>
                     </MDBListGroupItem>
                     <MDBListGroupItem class="backgroundFont borderColorProfile text-center">
-                        <p class="mt-3 mb-1">21</p>
+                        <p class="mt-3 mb-1">{{user.amount_offers}}</p>
                         <p class="mb-2">Ofertas</p>
                     </MDBListGroupItem>
                 </MDBListGroup>

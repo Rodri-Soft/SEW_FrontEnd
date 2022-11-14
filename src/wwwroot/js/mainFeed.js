@@ -48,11 +48,16 @@ export default {
     MDBBadge,        
    
   },  
-  setup() {
-    
+  setup() {    
     const dropdownOptions = ref(false);   
     return {      
       dropdownOptions,
+    }
+  },
+  props: ["offers"],
+  data() {
+    return {
+      userPhoto: this.offers.photo,      
     }
   }
 }

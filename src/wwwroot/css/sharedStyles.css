@@ -4,6 +4,10 @@
 }
 
 .profileCard {
+    width: 100%;   
+}
+
+/* .profileCard {
     width: 30rem;   
 }
 
@@ -11,4 +15,4 @@
     .profileCard {
         width: 16rem;   
     }
-}
+} */

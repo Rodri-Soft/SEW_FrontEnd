@@ -4,12 +4,12 @@
         <MDBCardHeader class="headerFeed">
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-start mt-3">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg"
+                    <img v-bind:src="userPhoto"
                         class="img-fluid rounded-circle profileImageFeed" alt="Townhouses and Skyscrapers" />
                     <div class="ms-2">
-                        <MDBCardText class="mb-1">José Daniel Camarillo Villa</MDBCardText>
+                        <MDBCardText class="mb-1">{{offers.full_name}}</MDBCardText>
                         <MDBCardText class="text-muted d-flex justify-content-start">
-                            @CamarilloVilla
+                            {{offers.tag_name}}
                         </MDBCardText>
                     </div>
                 </div>
@@ -28,18 +28,15 @@
                 </MDBDropdown>                
             </div>
 
-            <div>
-                <h3>Lorem ipsum dolor sit amet</h3>
+            <div>                
+                <h3>{{offers.title}}</h3>
             </div>
 
         </MDBCardHeader>
 
         <MDBCardBody>
             <MDBCardText class="text-start">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Nisi dolor, repellat quod minus eveniet, esse saepe eius
-                perspiciatis excepturi mollitia ad, eaque dicta dignissimos
-                aspernatur voluptates cum voluptatum ratione? Ut!
+                {{offers.description}}
             </MDBCardText>
         </MDBCardBody>
 
@@ -55,7 +52,7 @@
                 <MDBBtn class="shadow-0" tag="a" color="warning actionIcon" floating size="sm">
                     <i class="fas fa-star me-2"></i>
                 </MDBBtn>
-                <p class="fs-5 ms-1">30</p>
+                <p class="fs-5 ms-1">{{offers.score}}</p>
             </div>
 
             <div class="d-flex justify-content-between mt-3 mb-2">
