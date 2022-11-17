@@ -25,7 +25,7 @@ const routes = [
   {
     path: '/dev',
     name: 'dev',
-    component: () => import('../components/MainFeed.vue')
+    component: () => import('../views/OfferView.vue')
   },
   {
     path: '/about',

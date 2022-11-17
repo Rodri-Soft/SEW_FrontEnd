@@ -41,13 +41,12 @@
 @media (max-width: 395px) {
 
     .dropdownMenuButton-notifications {
-        margin-left: 1rem!important;
+        margin-left: 2rem!important;
     }
 }
 
-.filter-button {
-    color: #4F4F4F;
-    
+.color-button {
+    color: #4F4F4F;    
 }
 
 .filter-text {
@@ -58,7 +57,7 @@
     margin-left: -2%;
 }
 
-.dropdownMenuButton-notifications {
+.dropdownMenuButton-notifications, #dropDownBell {
     margin-left: -9rem;
 }
 

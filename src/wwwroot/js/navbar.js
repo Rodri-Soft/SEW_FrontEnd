@@ -12,9 +12,8 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBIcon,    
+  MDBIcon,
   MDBBadge,
-
 
 } from 'mdb-vue-ui-kit';
 import { ref } from 'vue';
@@ -37,41 +36,48 @@ export default {
     MDBDropdownItem,
     MDBIcon,
     MDBBadge,
+                              
   },
   setup() {
     const collapse1 = ref(false);
     const dropdown1 = ref(false); 
-    const dropdown2 = ref(false);
+    const dropdownBellNotifications = ref(false);
     const dropdown21 = ref(false);
-    const dropdown13 = ref(false);
-
+    const dropdown13 = ref(false);      
 
     return {
       collapse1,
       dropdown1,
-      dropdown2,
+      dropdownBellNotifications,
       dropdown21,
-      dropdown13
+      dropdown13,      
     }   
   },
   mounted(){   
     
-    this.adaptDropDown("bellNotifications", "dropDownBell", "1rem");
-    this.adaptDropDown("filterButton", "dropDownFilter", "-9rem");
-    
+    this.adaptDropDown("bellNotificationsButton", "dropDownBell", "1rem", "-9rem");
+    this.adaptDropDown("filterButton", "dropDownFilter", "-9rem", "0");    
 
   },
   methods:{
             
-    adaptDropDown(button, item, value) {
+    adaptDropDown(button, item, value, oldValue) {
+
+      const windowSize = 992;      
 
       $( `#${button}` ).click(function() {
         
         if ($("#navbarSupportedContent").hasClass("show")) {          
           $(`#${item}`).css("margin-left", `${value}`);         
-        }                
+        }
+                        
+        let width = $(window).width();                     
+        
+        if (width >= windowSize) {                    
+          $(`#${item}`).css("margin-left", `${oldValue}`);
+        }       
+          
       });
-    }
-       
+    }       
   }
 }
