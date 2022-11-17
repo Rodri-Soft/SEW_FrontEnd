@@ -1,45 +1,57 @@
+import axios from 'axios'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import store from './../store/index.js'
+import Cookies from 'js-cookie'
+import '../wwwroot/js/axios'
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: HomeView
-  // },
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component: () => import('../views/LogInView.vue')
   },
   {
-    path: '/home',
-    name: 'home',
-    component: () => import('../views/HomeView.vue')
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: () => import('../views/TestView.vue')
-  },
-  {
-    path: '/dev',
-    name: 'dev',
-    component: () => import('../views/OfferView.vue')
+    path: '/change-password',
+    name: 'changePassword',
+    component: () => import('../views/ChangePasswordView.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    meta: { requiresAuth: true },
+    component: () => import('../views/AboutView.vue')
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    const accessToken = Cookies.get('access_token');
+    let payload = {
+      token: accessToken
+    };
+
+    const url = 'auth/verify-token';
+
+    axios.post(url, payload).then((data) => {
+      const codeStatus = data.status;
+
+      if (codeStatus === 200 && accessToken) {          
+        next();
+        return;
+      }
+    }).catch((error) => {
+      next('/login');
+    });
+  } else {
+    next()
+  }
 })
 
 export default router
