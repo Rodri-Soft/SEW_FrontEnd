@@ -115,7 +115,7 @@
             </MDBCol>
 
             <MDBCol md="12">
-              <MDBInput type="tel" label="Número telefónico" id="input-phone-number" v-model="phoneNumber"
+              <MDBInput type="phone" label="Número telefónico" id="input-phone-number" v-model="phoneNumber"
                 invalidFeedback="Verifica tu número telefónico" 
                 required/>            
             </MDBCol>
@@ -146,10 +146,10 @@
               </MDBCol>
               <MDBCol md="4" class="p-0 m-0">
                 <MDBRadio label="Reclutador" value="Recruiter" inline name="userRole" required
-                  invalidFeedback="Selecciona un puesto"/>
+                  invalidFeedback="Selecciona un puesto" v-model="role"/>
               </MDBCol>
               <MDBCol md="4" class="p-0 m-0">
-                <MDBRadio label="Empleado" value="Employee" inline name="userRole" required/>
+                <MDBRadio label="Empleado" value="Employee" inline name="userRole" required v-model="role"/>
               </MDBCol>
             </MDBRow>        
           </MDBRow>

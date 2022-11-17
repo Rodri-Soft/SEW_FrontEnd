@@ -168,37 +168,47 @@ export default {
 
       const numberOfErrors = this.validateFormRegister();
 
-      if (event.target.checkValidity() && numberOfErrors === 0) {
+      if (event.target.checkValidity() && numberOfErrors === 0) {        
         let payload = {
           fullName: this.fullName,
           phone: this.phoneNumber,
           user: {
             rfc: this.rfc,
-            role: role,
+            role: this.role,
             email: this.emailRegister,
             password: this.passwordRegister,
             provider: 'Local',
           }
         };
 
-        if (role === 'Recruiter') {
-          payload.charge = '';
-        }
-
-        const url = role === 'recruiter' ? 'recruiters' : 'employees';
+        const messageLogin = document.getElementById('message-register');
+        const url = this.role === 'Recruiter' ? 'recruiters' : 'employees';
 
         axios.post(url, payload).then((data) => {
           const codeStatus = data.status;
 
           if (codeStatus === 201) {
-            this.$router.push('about');
+            messageLogin.innerHTML = 'Usuario registrado correctamente 😊';
+            messageLogin.classList.add('text-success');
+
+            setTimeout(() => {
+              this.modalRegisterUser = false;
+              messageLogin.innerHTML = '';
+              this.fullName = '';
+              this.rfc = '';
+              this.phoneNumber = '';
+              this.emailRegister = '';
+              this.passwordRegister = '';
+              this.role = '';              
+              messageLogin.classList.remove('text-success');
+            }, 2000);
           }
         }).catch((error) => {
-          const messageLogin = document.getElementById('message-register');
           const codeStatus = error.response.status;
           const messages = {
             '409': 'Pareces ya estar registrado, verifica los campos 👍',
             '400': 'Verifique los campos nuevamente 🤔',
+            '500': 'Algo salió mal, intenta más tarde 😔'
           }
           messageLogin.innerHTML = messages[codeStatus];
         });
@@ -236,7 +246,6 @@ export default {
           const messages = {
             '400': 'Verifique los campos nuevamente 🤔',
             '401': 'Usuario o contraseña incorrectos 😕',
-            // '403': 'No puedes acceder a través de Google 😕',
             '500': 'Error interno del servidor 😢'
           }
           messageLogin.innerHTML = messages[codeStatus];
