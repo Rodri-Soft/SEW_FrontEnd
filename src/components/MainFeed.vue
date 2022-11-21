@@ -94,10 +94,6 @@
 
 </template>
 
-<style scoped src="@/wwwroot/css/mainFeed.css">
-
-</style>
-<style scoped src="@/wwwroot/css/sharedStyles.css">
-
-</style>
+<style scoped src="@/wwwroot/css/mainFeed.css"></style>
+<style scoped src="@/wwwroot/css/sharedStyles.css"></style>
 <script src="@/wwwroot/js/mainFeed.js"></script>

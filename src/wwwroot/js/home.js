@@ -5,7 +5,6 @@ import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
 import MainFeed from '@/components/MainFeed.vue'
 import Category from '@/components/Category.vue'
 
-
 export default {
 
   name: 'HomeView',
@@ -18,15 +17,14 @@ export default {
   },
   data() {
     return {      
-      userObject:
-        {
-          photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
-          full_name: "José Daniel Camarillo Villa",
-          tag_name: "@CamarilloVilla",
-          followers: 300,
-          amount_offers: 21,
-          userType: "recruiter",
-        },
+      userObject: {
+        photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
+        full_name: "José Daniel Camarillo Villa",
+        tag_name: "@CamarilloVilla",
+        followers: 300,
+        amount_offers: 21,
+        userType: "recruiter",
+      },
       offerInformation: [
         {
           title: "Lorem ipsum 1",

@@ -51,6 +51,7 @@ export default {
     this.adaptProfileButtons();
   },
   methods:{
+          
     adaptProfileButtons() {
       
       const windowSize = 992;  
@@ -58,15 +59,17 @@ export default {
       manageTextCenter(windowSize, "profileButton");
       manageTextCenter(windowSize, "offersButton");
       manageTextCenter(windowSize, "groupsButton");
+      manageTextCenter(windowSize, "jobApplicationsButton");
 
       $(window).resize(function(){
                 
         manageTextCenter(windowSize, "profileButton");
         manageTextCenter(windowSize, "offersButton");
         manageTextCenter(windowSize, "groupsButton");
+        manageTextCenter(windowSize, "jobApplicationsButton");
         
       });     
-    }    
+    } 
   }
 }
 

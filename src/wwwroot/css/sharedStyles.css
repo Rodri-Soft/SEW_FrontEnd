@@ -1,5 +1,10 @@
 .backgroundFont {
     background: #1B2730;
+    color: white;        
+}
+
+.buttonHover:hover {
+    background-color: #25529c!important;
     color: white;
 }
 
@@ -9,4 +14,8 @@
 
 .profileCard {
     width: 90%;   
+}
+
+.buttonPadding {
+    padding: 1rem!important;
 }

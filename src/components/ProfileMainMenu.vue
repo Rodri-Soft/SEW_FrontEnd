@@ -27,25 +27,25 @@
 
         <MDBRow>
             <MDBCol id="profileButton" col="12">                
-                <MDBBtn color="primary mt-3 mb-2 shadow-0 backgroundFont profileCard p-3">
+                <MDBBtn class="mt-3 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-user-alt me-2 fa-lg"></i>
                     Mi Perfil
                 </MDBBtn>            
             </MDBCol>
-            <MDBCol id="offersButton" col="12">
-                <MDBBtn v-show="userType == 'worker'" color="primary mt-2 mb-2 shadow-0 backgroundFont profileCard p-3">
+            <MDBCol id="jobApplicationsButton" col="12">
+                <MDBBtn v-show="userType == 'worker'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-envelope me-2 fa-lg"></i>
                     Mis Solicitudes
                 </MDBBtn>   
             </MDBCol>
             <MDBCol id="offersButton" col="12">
-                <MDBBtn v-show="userType == 'recruiter'" color="primary mt-2 mb-2 shadow-0 backgroundFont profileCard p-3">
+                <MDBBtn v-show="userType == 'recruiter'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-briefcase me-2 fa-lg"></i>
                     Mis Ofertas
                 </MDBBtn>   
             </MDBCol>
             <MDBCol id="groupsButton" col="12">
-                <MDBBtn v-show="userType == 'recruiter'" color="primary mt-2 mb-2 shadow-0 backgroundFont profileCard p-3">
+                <MDBBtn v-show="userType == 'recruiter'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-users me-2 fa-lg"></i>
                     Mis Grupos
                 </MDBBtn>   
