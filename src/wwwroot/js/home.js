@@ -17,14 +17,15 @@ export default {
     Category  
   },
   data() {
-    return {
+    return {      
       userObject:
         {
           photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
           full_name: "José Daniel Camarillo Villa",
           tag_name: "@CamarilloVilla",
           followers: 300,
-          amount_offers: 21
+          amount_offers: 21,
+          userType: "recruiter",
         },
       offerInformation: [
         {

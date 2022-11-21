@@ -3,16 +3,10 @@
     color: white;
 }
 
-.profileCard {
+.largeCard {
     width: 100%;   
 }
 
-/* .profileCard {
-    width: 30rem;   
+.profileCard {
+    width: 90%;   
 }
-
-@media (min-width: 992px) {
-    .profileCard {
-        width: 16rem;   
-    }
-} */

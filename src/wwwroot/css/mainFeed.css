@@ -2,8 +2,7 @@
     border-color: white;
 }
 
-.profileImageFeed {
-    /* margin-top: -10rem; */
+.profileImageFeed {    
     width: 4rem;    
 }
 
@@ -23,3 +22,23 @@
 .actionIcon {
     margin-left: -1%;
 }
+
+@media (max-width: 576px) {
+    .reactionButton {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .reactionButton {
+        font-size: xx-small;
+    }
+}
+
+@media (min-width: 1300px) {
+    .reactionButton {
+        font-size: x-small;
+    }
+}
+
+

@@ -5,8 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 mb-3">
-                <ProfileMainMenu :user="userObject"/>
-                <Category/>
+                <ProfileMainMenu :user="userObject"/>                
             </div>
 
             <div class="col-lg-6 p-lg-0">                
@@ -15,7 +14,11 @@
             </div>
 
             <div class="col-lg-3 mb-3">
-                <Category/>
+                <div class="col col-sm-12">
+                    <div class="d-flex justify-content-lg-end justify-content-center">
+                        <Category/>
+                    </div>
+                </div>                
             </div>
         </div>
     </div>        

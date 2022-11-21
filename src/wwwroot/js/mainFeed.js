@@ -21,6 +21,8 @@ import {
   MDBDropdownItem,
   MDBIcon,    
   MDBBadge, 
+  MDBCol,
+  MDBRow
 
 } from "mdb-vue-ui-kit";
 import { ref } from 'vue';
@@ -46,6 +48,8 @@ export default {
     MDBDropdownItem,
     MDBIcon,    
     MDBBadge,        
+    MDBCol,
+    MDBRow
    
   },  
   setup() {    
