@@ -56,83 +56,45 @@
                 </MDBCol>
 
                 <MDBCol md="12">
-                    <MDBInput type="text" label="Título" id="input-full-name" v-model="fullName"
-                        invalidFeedback="Verifica tu nombre completo" 
+                    <MDBInput type="text" label="Título" id="input-title" v-model="title"
+                        invalidFeedback="Verifica el título" 
                         required/>
-                </MDBCol>
-                
-                <MDBCol md="12">
-                    <MDBInput type="text" label="Descripción" id="input-rfc" v-model="rfc" 
-                        invalidFeedback="Verifica tu RFC" 
-                        required/>            
-                </MDBCol>
-
-                <MDBCol md="12">
-                    <MDBInput type="phone" label="Categoría" id="input-phone-number" v-model="phoneNumber"
-                        invalidFeedback="Verifica tu número telefónico" 
-                        required/>            
                 </MDBCol>
 
                 <MDBCol md="12">
                     <div class="select">
                         <select name="format" id="format">
-                            <option selected disabled>Choose a book format</option>
-                            <option value="pdf">PDF</option>
-                            <option value="txt">txt</option>
-                            <option value="epub">ePub</option>
-                            <option value="fb2">fb2</option>
-                            <option value="mobi">mobi</option>
+                            <option selected disabled>Seleccione una categoría</option>
+                            <option value="pdf">Servicios</option>
+                            <option value="txt">Industria manufacturera</option>
+                            <option value="epub">Tecnología y telecomunicaciones</option>
+                            <option value="fb2">Alimentos y bebidas</option>
+                            <option value="mobi">Construcción</option>
                         </select>
                     </div>
                 </MDBCol>
 
                 <MDBCol md="12">
-                    <MDBInput type="email" label="Experiencia" id="input-email-register" v-model="emailRegister"
-                        invalidFeedback="Verifica tu correo elétronico" 
+                    <MDBInput type="text" label="Jornada Laboral" id="input-workday-register" v-model="workday"
+                        invalidFeedback="Verifica la jornada laboral" 
                         required/>            
                 </MDBCol>
-
+                
                 <MDBCol md="12">
-                    <MDBInput type="email" label="Jornada Laboral" id="input-workday-register" v-model="emailRegister"
-                        invalidFeedback="Verifica tu correo elétronico" 
+                    <MDBTextarea rows="4" type="text" label="Descripción" id="input-description" v-model="description" 
+                        invalidFeedback="Verifica la descripción" 
+                        required/>            
+                </MDBCol>                               
+                
+                <MDBCol md="12">
+                    <MDBTextarea rows="4" type="text" label="Experiencia Laboral" id="input-email-register" v-model="experience"
+                        invalidFeedback="Verifica la experiencia laboral " 
                         required/>            
                 </MDBCol>
-
-                <!-- <MDBCol md="12">
-                <MDBInput type="password" label="Contraseña" id="input-password-register" v-model="passwordRegister"
-                    invalidFeedback="Recuerda usar mayusculas, minusculas, números y símbolos" 
-                    formText="Usa 8 o más caracteres con una combinación de mayusculas, minusculas, números y símbolos"
-                    required
-                    inputGroup>
-                    <span outline="primary" class="password-span input-group-text border-0" @click="showPassword">
-                    <MDBIcon icon="eye" size="lg" class="password-icon"/>
-                    </span>
-                </MDBInput>            
-                </MDBCol> -->
-            </MDBRow>
+                               
+            </MDBRow>                                               
             
-            <MDBRow class="mt-4">          
-                <MDBRow class="mx-0">
-                <MDBCol md="3" class="p-0 m-0">
-                    <p>Quiero ser:</p>
-                </MDBCol>
-                <MDBCol md="4" class="p-0 m-0">
-                    <MDBRadio label="Reclutador" value="Recruiter" inline name="userRole" required
-                    invalidFeedback="Selecciona un puesto" v-model="role"/>
-                </MDBCol>
-                <MDBCol md="4" class="p-0 m-0">
-                    <MDBRadio label="Empleado" value="Employee" inline name="userRole" required v-model="role"/>
-                </MDBCol>
-                </MDBRow>        
-            </MDBRow>
-            
-            <MDBCol class="text-center mt-4">
-                <MDBCheckbox label="Acepto Condiciones y Política de Privacidad" class="text-center"
-                required
-                inline/>          
-            </MDBCol>
-            
-            <MDBBtn id="register-user-button" type="submit" class="mt-2 logIn-form-button" block>Registrarse</MDBBtn>
+            <MDBBtn id="register-user-button" type="submit" class="mt-4 backgroundFont" block>Registrarse</MDBBtn>
             </form>
         </MDBModalBody>
         </MDBModal>

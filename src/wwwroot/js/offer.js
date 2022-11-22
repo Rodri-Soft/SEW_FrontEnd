@@ -29,11 +29,8 @@ import {
   MDBIcon,
   MDBInput,
   MDBCheckbox,
-
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem
+  MDBTextarea,
+  
 
 } from "mdb-vue-ui-kit";
 
@@ -67,45 +64,26 @@ export default {
     MDBRadio,
     MDBIcon,
     MDBInput,
-    MDBCheckbox,
-
-    MDBDropdown,
-    MDBDropdownToggle,
-    MDBDropdownMenu,
-    MDBDropdownItem
+    MDBCheckbox,  
+    MDBTextarea,   
    
   },
-  setup() {
+  setup() {    
 
-    const dropdown2 = ref(false);
+    const title = ref('');
+    const description = ref('');
+    const experience = ref('');
+    const workday = ref('');   
+    const modalAddOffer = ref(false);          
 
-    const email = ref('');
-    const password = ref('');
-    const modalAddOffer = ref(false);
-    const fullName = ref('');
-    const rfc = ref('');
-    const phoneNumber = ref('');
-    const emailRegister = ref('');
-    const passwordRegister = ref(''); 
-    const role = ref('');
-    const modalChangePassword = ref(false);
-    const emailNew = ref('');
+    return {      
 
-    return {
-
-      dropdown2,
-
-      email,
-      password,
-      modalAddOffer,
-      fullName,
-      rfc,
-      phoneNumber,
-      emailRegister,
-      passwordRegister,
-      role,
-      modalChangePassword,
-      emailNew,
+      title,
+      description,
+      experience,
+      workday,
+      modalAddOffer, 
+      
     };
   },
   data() {

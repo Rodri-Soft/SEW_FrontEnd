@@ -19,3 +19,14 @@
 .buttonPadding {
     padding: 1rem!important;
 }
+
+.user-form {
+    padding: 0 7% 5%;
+}
+
+.form-title {
+    font-weight: 800;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 180%;
+    color: black;
+}
