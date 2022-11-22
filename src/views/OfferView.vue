@@ -56,20 +56,20 @@
                 </MDBCol>
 
                 <MDBCol md="12">
-                    <MDBInput type="text" label="Título" id="input-title" v-model="title"
+                    <MDBInput type="text" label="Título" id="input-offer-title" v-model="title"
                         invalidFeedback="Verifica el título" 
                         required/>
                 </MDBCol>
 
                 <MDBCol md="12">
                     <div class="select">
-                        <select name="format" id="format">
+                        <select name="combobox-category" id="combobox-category">
                             <option selected disabled>Seleccione una categoría</option>
-                            <option value="pdf">Servicios</option>
-                            <option value="txt">Industria manufacturera</option>
-                            <option value="epub">Tecnología y telecomunicaciones</option>
-                            <option value="fb2">Alimentos y bebidas</option>
-                            <option value="mobi">Construcción</option>
+                            <option value="services">Servicios</option>
+                            <option value="industry">Industria manufacturera</option>
+                            <option value="technology">Tecnología y telecomunicaciones</option>
+                            <option value="food">Alimentos y bebidas</option>
+                            <option value="building">Construcción</option>
                         </select>
                     </div>
                 </MDBCol>
