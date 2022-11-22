@@ -18,14 +18,22 @@ const routes = [
     meta: { requiresAuth: true }
   },
   {
-    path: '/',
-    name: '/',    
-    component: () => import('../views/OfferView.vue')
+    path: '/about',
+    name: 'about',
+    meta: { requiresAuth: true },
+    component: () => import('../views/AboutView.vue')
   },
   {
     path: '/home',
-    name: 'home',    
+    name: 'home',
+    // meta: { requiresAuth: true },
     component: () => import('../views/HomeView.vue')
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    // meta: { requiresAuth: true },
+    component: () => import('../views/ProfileView.vue')
   }
 ]
 

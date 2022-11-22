@@ -115,7 +115,7 @@
             </MDBCol>
 
             <MDBCol md="12">
-              <MDBInput type="phone" label="Número telefónico" id="input-phone-number" v-model="phoneNumber"
+              <MDBInput type="tel" label="Número telefónico" id="input-phone-number" v-model="phoneNumber"
                 invalidFeedback="Verifica tu número telefónico" 
                 required/>            
             </MDBCol>

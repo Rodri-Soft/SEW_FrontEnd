@@ -145,22 +145,20 @@ export default {
         'password': new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[\\da-zA-ZÀ-ÿ\\u00f1\\u00d1$@$!%*?&#-.$($)$-$_]{8,16}$')
       };    
       let numberOfErrors = 5;
+      const checkInputs = [
+        this.checkInput(patterns, 'fullName', this.fullName, 'input-full-name'),
+        this.checkInput(patterns, 'rfc', this.rfc, 'input-rfc'),
+        this.checkInput(patterns, 'phone', this.phoneNumber, 'input-phone-number'),
+        this.checkInput(patterns, 'email', this.emailRegister, 'input-email-register'),
+        this.checkInput(patterns, 'password', this.passwordRegister, 'input-password-register')
+      ];
 
-      this.checkInput(patterns, 'fullName', this.fullName, 'input-full-name') 
-        ? numberOfErrors-- : numberOfErrors;
-        
-      this.checkInput(patterns, 'rfc', this.rfc, 'input-rfc') 
-        ? numberOfErrors-- : numberOfErrors;
-        
-      this.checkInput(patterns, 'phone', this.phoneNumber, 'input-phone-number') 
-        ? numberOfErrors-- : numberOfErrors;
-
-      this.checkInput(patterns, 'email', this.emailRegister, 'input-email-register') 
-        ? numberOfErrors-- : numberOfErrors;
-
-      this.checkInput(patterns, 'password', this.passwordRegister, 'input-password-register') 
-        ? numberOfErrors-- : numberOfErrors;
-
+      checkInputs.forEach((checkInput) => {
+        if (checkInput) {
+          numberOfErrors--;
+        }
+      });
+    
       return numberOfErrors;
     },
     async registerNewUser(event) {
@@ -184,7 +182,7 @@ export default {
         const messageLogin = document.getElementById('message-register');
         const url = this.role === 'Recruiter' ? 'recruiters' : 'employees';
 
-        axios.post(url, payload).then((data) => {
+        await axios.post(url, payload).then((data) => {
           const codeStatus = data.status;
 
           if (codeStatus === 201) {
