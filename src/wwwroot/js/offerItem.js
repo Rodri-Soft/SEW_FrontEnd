@@ -44,11 +44,17 @@ export default {
    
   },  
   setup() {    
-    const dropdownOptions = ref(false);   
+    const offerDropdownOptions = ref(false);   
     return {      
-      dropdownOptions,
+      offerDropdownOptions,
     }
   },
   props: ["personalOffers"],  
+  mounted(){ 
+    
+  },
+  methods:{
+    
+  }
 }
 

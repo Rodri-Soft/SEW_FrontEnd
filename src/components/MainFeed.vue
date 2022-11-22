@@ -9,7 +9,7 @@
                     <div class="ms-2">
                         <MDBCardText class="mb-1">{{offers.full_name}}</MDBCardText>
                         <MDBCardText class="text-muted d-flex justify-content-start">
-                            {{offers.tag_name}}
+                            {{offers.role}}
                         </MDBCardText>
                     </div>
                 </div>
@@ -21,9 +21,9 @@
 
                     <MDBDropdownMenu id="dropDownEllipsis" aria-labelledby="dropdownMenuButtonEllipsis"
                         class="dropdownMenuButton-ellipsis">
-                        <MDBDropdownItem href="#">Action</MDBDropdownItem>
-                        <MDBDropdownItem href="#">Another Action</MDBDropdownItem>
-                        <MDBDropdownItem href="#">Something else here</MDBDropdownItem>
+                        <MDBDropdownItem tag="button">Action</MDBDropdownItem>
+                        <MDBDropdownItem tag="button">Another Action</MDBDropdownItem>
+                        <MDBDropdownItem tag="button">Something else here</MDBDropdownItem>
                     </MDBDropdownMenu>
                 </MDBDropdown>                
             </div>
@@ -35,8 +35,25 @@
         </MDBCardHeader>
 
         <MDBCardBody>
+            
+            <h5 class="text-start">Descripción</h5>
             <MDBCardText class="text-start">
                 {{offers.description}}
+            </MDBCardText>
+
+            <h5 class="text-start">Categoría</h5>
+            <MDBCardText class="text-start">
+                {{offers.category}}
+            </MDBCardText>
+
+            <h5 class="text-start">Experiencia</h5>
+            <MDBCardText class="text-start">
+                {{offers.experience}}
+            </MDBCardText>
+
+            <h5 class="text-start">Jornada Laboral</h5>
+            <MDBCardText class="text-start">
+                {{offers.workday}}
             </MDBCardText>
         </MDBCardBody>
 

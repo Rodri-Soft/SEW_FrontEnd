@@ -19,45 +19,51 @@ export default {
     return {      
       userObject: {
         photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
-        full_name: "José Daniel Camarillo Villa",
-        tag_name: "@CamarilloVilla",
+        full_name: "José Daniel Camarillo Villa",        
         followers: 300,
         amount_offers: 21,
-        userType: "recruiter",
+        role: "recruiters",
       },
       offerInformation: [
         {
           title: "Lorem ipsum 1",
           photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
           full_name: "José Daniel Camarillo Villa",
-          tag_name: "@CamarilloVilla",
+          role: "Recruiter",
           description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Nisi dolor, repellat quod minus eveniet, esse saepe eius perspiciatis
             excepturi mollitia ad, eaque dicta dignissimos aspernatur voluptates
             cum voluptatum ratione? Ut! 1`,
-          score: 3.5
+          category: "Tecnología y telecomunicaciones",
+          experience: "2-4 años",
+          workday: "8 horas diarias",
+          score: 3.5,          
         },
         {
           title: "Lorem ipsum 2",
           photo: "https://mdbootstrap.com/img/Photos/Avatars/img (27).jpg",
           full_name: "José Rodrigo Sánchez Méndez",
-          tag_name: "@RodrigoSanchez",
+          role: "Recruiter",
           description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Nisi dolor, repellat quod minus eveniet, esse saepe eius perspiciatis
             excepturi mollitia ad, eaque dicta dignissimos aspernatur voluptates
             cum voluptatum ratione? Ut! 2`,
-          score: 5
+          category: "Tecnología y telecomunicaciones",
+          experience: "2-4 años",
+          workday: "8 horas diarias",
         },
         {
           title: "Lorem ipsum 3",
           photo: "https://mdbootstrap.com/img/Photos/Avatars/img (29).jpg",
           full_name: "Son Goku",
-          tag_name: "@Goku",
+          role: "Recruiter",
           description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Nisi dolor, repellat quod minus eveniet, esse saepe eius perspiciatis
             excepturi mollitia ad, eaque dicta dignissimos aspernatur voluptates
             cum voluptatum ratione? Ut! 3`,
-          score: 2.1
+          category: "Tecnología y telecomunicaciones",
+          experience: "2-4 años",
+          workday: "8 horas diarias",
         }
 
       ]                       

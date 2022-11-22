@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       userPhoto: this.user.photo,      
-      userType: this.user.userType, 
+      role: this.user.role, 
     }
   },
   mounted(){ 

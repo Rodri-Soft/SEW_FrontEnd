@@ -9,7 +9,7 @@
                         class="img-fluid rounded-circle profileImage" alt="Townhouses and Skyscrapers" />
                     <MDBCardTitle>{{user.full_name}}</MDBCardTitle>
                     <MDBCardText class="text-muted">
-                        {{user.tag_name}}
+                        {{user.role}}
                     </MDBCardText>
                 </MDBCardBody>
                 <MDBListGroup horizontal>
@@ -33,19 +33,19 @@
                 </MDBBtn>            
             </MDBCol>
             <MDBCol id="jobApplicationsButton" col="12">
-                <MDBBtn v-show="userType == 'worker'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
+                <MDBBtn v-show="role == 'employees'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-envelope me-2 fa-lg"></i>
                     Mis Solicitudes
                 </MDBBtn>   
             </MDBCol>
             <MDBCol id="offersButton" col="12">
-                <MDBBtn v-show="userType == 'recruiter'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
+                <MDBBtn v-show="role == 'recruiters'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-briefcase me-2 fa-lg"></i>
                     Mis Ofertas
                 </MDBBtn>   
             </MDBCol>
             <MDBCol id="groupsButton" col="12">
-                <MDBBtn v-show="userType == 'recruiter'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
+                <MDBBtn v-show="role == 'recruiters'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-users me-2 fa-lg"></i>
                     Mis Grupos
                 </MDBBtn>   

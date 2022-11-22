@@ -3,13 +3,13 @@
     <MDBCard text="center backgroundFont mb-3">
         <MDBCardHeader>
             <div class="d-flex justify-content-end">            
-                <MDBDropdown v-model="dropdownOptions">
-                    <a id="ellipsisOptionsIcon" @click="dropdownOptions = !dropdownOptions">                        
+                <MDBDropdown v-model="offerDropdownOptions">
+                    <a id="offerEllipsisOptionsIcon" @click="offerDropdownOptions = !offerDropdownOptions">                        
                         <i class="fas fa-ellipsis-v ellipsisIcon fa-lg"></i>
                     </a>
-                    <MDBDropdownMenu id="dropDownEllipsis" aria-labelledby="dropdownMenuButtonEllipsis"
+                    <MDBDropdownMenu id="offerDropDownEllipsis" aria-labelledby="offerDropdownMenuButtonEllipsis"
                         class="dropdownMenuButton-ellipsis">
-                        <MDBDropdownItem href="#">Eliminar</MDBDropdownItem>                       
+                        <MDBDropdownItem tag="button">Eliminar</MDBDropdownItem>                       
                     </MDBDropdownMenu>
                 </MDBDropdown>                
             </div>
@@ -21,8 +21,24 @@
         </MDBCardHeader>
 
         <MDBCardBody>
+            <h5 class="text-start">Descripción</h5>
             <MDBCardText class="text-start">
                 {{personalOffers.description}}
+            </MDBCardText>
+
+            <h5 class="text-start">Categoría</h5>
+            <MDBCardText class="text-start">
+                {{personalOffers.category}}
+            </MDBCardText>
+
+            <h5 class="text-start">Experiencia</h5>
+            <MDBCardText class="text-start">
+                {{personalOffers.experience}}
+            </MDBCardText>
+
+            <h5 class="text-start">Jornada Laboral</h5>
+            <MDBCardText class="text-start">
+                {{personalOffers.workday}}
             </MDBCardText>
         </MDBCardBody>
 

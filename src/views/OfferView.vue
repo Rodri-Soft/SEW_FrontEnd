@@ -47,54 +47,53 @@
                 Crear Nueva Oferta
             </MDBModalTitle>
 
-            <form @submit.prevent="registerNewUser" class="user-form" novalidate>        
-            <MDBRow class="g-3">
-                <MDBCol>
-                <p id="message-register" class="text-center mt-3">                    
-                    Crea una nueva oferta laboral para compartir
-                </p>
-                </MDBCol>
+            <form @submit.prevent="publishOffer" class="user-form" novalidate>        
+                <MDBRow class="g-3">
+                    <MDBCol>
+                    <p id="message-publish" class="text-center mt-3">                    
+                        Crea una nueva oferta laboral para compartir
+                    </p>
+                    </MDBCol>
 
-                <MDBCol md="12">
-                    <MDBInput type="text" label="Título" id="input-offer-title" v-model="title"
-                        invalidFeedback="Verifica el título" 
-                        required/>
-                </MDBCol>
+                    <MDBCol md="12">
+                        <MDBInput type="text" label="Título" id="input-offer-title" v-model="title"
+                            invalidFeedback="Verifica el título" 
+                            required/>
+                    </MDBCol>
 
-                <MDBCol md="12">
-                    <div class="select">
-                        <select name="combobox-category" id="combobox-category">
-                            <option selected disabled>Seleccione una categoría</option>
-                            <option value="services">Servicios</option>
-                            <option value="industry">Industria manufacturera</option>
-                            <option value="technology">Tecnología y telecomunicaciones</option>
-                            <option value="food">Alimentos y bebidas</option>
-                            <option value="building">Construcción</option>
-                        </select>
-                    </div>
-                </MDBCol>
+                    <MDBCol md="12">
+                        <div class="select">
+                            <select name="combobox-category" id="combobox-offer-category">
+                                <option value="null" selected disabled>Seleccione una categoría</option>
+                                <option value="Servicios">Servicios</option>
+                                <option value="Industria manufacturera">Industria manufacturera</option>
+                                <option value="Tecnología y telecomunicaciones">Tecnología y telecomunicaciones</option>
+                                <option value="Alimentos y bebidas">Alimentos y bebidas</option>
+                                <option value="Construcción">Construcción</option>
+                            </select>
+                        </div>
+                    </MDBCol>
 
-                <MDBCol md="12">
-                    <MDBInput type="text" label="Jornada Laboral" id="input-workday-register" v-model="workday"
-                        invalidFeedback="Verifica la jornada laboral" 
-                        required/>            
-                </MDBCol>
+                    <MDBCol md="12">
+                        <MDBInput type="text" label="Jornada Laboral" id="input-offer-workday" v-model="workday"
+                            invalidFeedback="Verifica la jornada laboral" 
+                            required/>            
+                    </MDBCol>
+                    
+                    <MDBCol md="12">
+                        <MDBTextarea rows="4" type="text" label="Descripción" id="textarea-offer-description" v-model="description" 
+                            invalidFeedback="Verifica la descripción" 
+                            required/>            
+                    </MDBCol>                               
+                    
+                    <MDBCol md="12">
+                        <MDBTextarea rows="4" type="text" label="Experiencia Laboral" id="textarea-offer-experience" v-model="experience"
+                            invalidFeedback="Verifica la experiencia laboral " 
+                            required/>            
+                    </MDBCol>                               
+                </MDBRow>                                               
                 
-                <MDBCol md="12">
-                    <MDBTextarea rows="4" type="text" label="Descripción" id="input-description" v-model="description" 
-                        invalidFeedback="Verifica la descripción" 
-                        required/>            
-                </MDBCol>                               
-                
-                <MDBCol md="12">
-                    <MDBTextarea rows="4" type="text" label="Experiencia Laboral" id="input-email-register" v-model="experience"
-                        invalidFeedback="Verifica la experiencia laboral " 
-                        required/>            
-                </MDBCol>
-                               
-            </MDBRow>                                               
-            
-            <MDBBtn id="register-user-button" type="submit" class="mt-4 backgroundFont" block>Registrarse</MDBBtn>
+                <MDBBtn id="publish-offer-button" type="submit" class="mt-4 backgroundFont" block>Publicar</MDBBtn>
             </form>
         </MDBModalBody>
         </MDBModal>
