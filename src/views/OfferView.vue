@@ -19,9 +19,12 @@
 
             <div class="col-lg-6 p-lg-0">
                 <h2>Mis Ofertas</h2>                
-                <OfferItem v-for="(offer, i) in offerInformation" :key="i"
-                            :personalOffers="offer" v-on:alterOfferItem="alterOfferItem(i)"/>
-                    
+                <OfferItem v-for="(offer, i) in offerInformation"
+                            :key="i"
+                            :personalOffers="offer"
+                            v-on:alterOfferItem="alterOfferItem(i)"
+                            v-on:removeOfferItem="removeOfferItem(i)"                    
+                            v-on:showOffer="showOffer(i)" />                    
             </div>
 
             <div class="col-lg-3 mb-3">

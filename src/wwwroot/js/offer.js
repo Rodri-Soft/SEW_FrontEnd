@@ -126,8 +126,7 @@ export default {
 
       event.target.classList.add('was-validated');    
 
-      const numberOfErrors = this.validateFormOffer();      
-      let categoryCombobox = document.getElementById("combobox-offer-category");
+      const numberOfErrors = this.validateFormOffer();            
       let messagePublish = document.getElementById('message-publish');
       let messageUpdate = document.getElementById('message-update');
 
@@ -241,6 +240,15 @@ export default {
       this.workday = offer.workday; 
       this.category = offer.category
                               
+    },
+    removeOfferItem(i) {
+
+      const offersRemove = this.offerInformation.filter((element, index) => index !== i);      
+      this.offerInformation = offersRemove;
+      
+    },
+    showOffer(i) {
+      console.log(i);
     },
     closeOfferModal(){
       

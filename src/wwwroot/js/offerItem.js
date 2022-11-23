@@ -56,6 +56,12 @@ export default {
   methods:{
     alter() {
       this.$emit("alterOfferItem");
+    },
+    remove() {
+      this.$emit("removeOfferItem");
+    },
+    showOffer() {
+      this.$emit("showOffer");
     }
   }
 }
