@@ -20,7 +20,7 @@
             <div class="col-lg-6 p-lg-0">
                 <h2>Mis Ofertas</h2>                
                 <OfferItem v-for="(offer, i) in offerInformation" :key="i"
-                            :personalOffers="offer" />
+                            :personalOffers="offer" v-on:alterOfferItem="alterOfferItem(i)"/>
                     
             </div>
 
@@ -39,19 +39,25 @@
         staticBackdrop
         centered>
         <MDBModalBody>
-            <a href="#" class="text-reset">
-            <MDBIcon icon="close" size="lg" class="d-flex justify-content-end" @click="modalAddOffer = false"/>
+            <a tag="button" class="text-reset">
+                <MDBIcon icon="close" size="lg" class="d-flex justify-content-end" @click="closeOfferModal()"/>
             </a> 
 
-            <MDBModalTitle class="text-center form-title">
+            <MDBModalTitle v-show="update == false" class="text-center form-title">
                 Crear Nueva Oferta
             </MDBModalTitle>
+            <MDBModalTitle v-show="update == true" class="text-center form-title">
+                Actualiza una Oferta
+            </MDBModalTitle>
 
-            <form @submit.prevent="publishOffer" class="user-form" novalidate>        
+            <form id="offerForm" @submit.prevent="manageOfferForm" class="user-form" novalidate>        
                 <MDBRow class="g-3">
                     <MDBCol>
-                    <p id="message-publish" class="text-center mt-3">                    
+                    <p v-show="update == false" id="message-publish" class="text-center mt-3">                    
                         Crea una nueva oferta laboral para compartir
+                    </p>
+                    <p v-show="update == true" id="message-update" class="text-center mt-3">                    
+                        Actualiza la información de tu oferta
                     </p>
                     </MDBCol>
 
@@ -63,7 +69,7 @@
 
                     <MDBCol md="12">
                         <div class="select">
-                            <select name="combobox-category" id="combobox-offer-category">
+                            <select name="combobox-category" id="combobox-offer-category" v-model="category">
                                 <option value="null" selected disabled>Seleccione una categoría</option>
                                 <option value="Servicios">Servicios</option>
                                 <option value="Industria manufacturera">Industria manufacturera</option>
@@ -93,12 +99,12 @@
                     </MDBCol>                               
                 </MDBRow>                                               
                 
-                <MDBBtn id="publish-offer-button" type="submit" class="mt-4 backgroundFont" block>Publicar</MDBBtn>
+                <MDBBtn id="publish-offer-button" v-show="update == false" type="submit" class="mt-4 backgroundFont" block>Publicar</MDBBtn>
+                <MDBBtn id="update-offer-button" v-show="update == true" type="submit" class="mt-4 backgroundFont" block>Actualizar</MDBBtn>
             </form>
         </MDBModalBody>
         </MDBModal>
     </section>
-
 </template>
 
 <style scoped src="@/wwwroot/css/offer.css"></style>

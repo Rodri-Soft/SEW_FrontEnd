@@ -54,7 +54,7 @@ export default {
           
     adaptProfileButtons() {
       
-      const windowSize = 992;  
+      const windowSize = 975;  
 
       manageTextCenter(windowSize, "profileButton");
       manageTextCenter(windowSize, "offersButton");

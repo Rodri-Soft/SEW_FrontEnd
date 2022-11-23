@@ -54,7 +54,9 @@ export default {
     
   },
   methods:{
-    
+    alter() {
+      this.$emit("alterOfferItem");
+    }
   }
 }
 

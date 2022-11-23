@@ -32,7 +32,6 @@ import {
   MDBInput,
   MDBCheckbox,
   MDBTextarea,
-  
 
 } from "mdb-vue-ui-kit";
 
@@ -76,6 +75,7 @@ export default {
     const description = ref('');
     const experience = ref('');
     const workday = ref('');   
+    const category = ref('null');
     const modalAddOffer = ref(false);          
 
     return {      
@@ -84,6 +84,7 @@ export default {
       description,
       experience,
       workday,
+      category,
       modalAddOffer, 
       
     };
@@ -100,35 +101,8 @@ export default {
         role: "recruiters",
       },      
       offerInformation: [],
-        // {
-        //   title: "Lorem ipsum 1",                              
-        //   description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        //     Nisi dolor, repellat quod minus eveniet, esse saepe eius perspiciatis
-        //     excepturi mollitia ad, eaque dicta dignissimos aspernatur voluptates
-        //     cum voluptatum ratione? Ut! 1`,
-        //   score: 3.5,
-        //   jobAplicationsNumber: 24,          
-        // },
-        // {
-        //   title: "Lorem ipsum 2",                              
-        //   description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        //     Nisi dolor, repellat quod minus eveniet, esse saepe eius perspiciatis
-        //     excepturi mollitia ad, eaque dicta dignissimos aspernatur voluptates
-        //     cum voluptatum ratione? Ut! 2`,
-        //   score: 5,
-        //   jobAplicationsNumber: 10,
-        // },
-        // {
-        //   title: "Lorem ipsum 3",          
-        //   description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        //     Nisi dolor, repellat quod minus eveniet, esse saepe eius perspiciatis
-        //     excepturi mollitia ad, eaque dicta dignissimos aspernatur voluptates
-        //     cum voluptatum ratione? Ut! 3`,
-        //   score: 2.1,
-        //   jobAplicationsNumber: 400,
-        // }
-
-      // ]                               
+      update: false,
+      updatedOfferIndex: 0,                               
     };
   },
   mounted(){ 
@@ -138,7 +112,7 @@ export default {
   methods:{
     adaptOfferButton() {
 
-      const windowSize = 992;  
+      const windowSize = 975;  
 
       manageTextCenter(windowSize, "newOfferButton");        
 
@@ -148,90 +122,41 @@ export default {
         
       });     
     },    
-    async publishOffer(event) {
+    manageOfferForm(event) {
 
       event.target.classList.add('was-validated');    
 
-      const numberOfErrors = this.validateFormOffer();
-      const messagePublish = document.getElementById('message-publish');
+      const numberOfErrors = this.validateFormOffer();      
+      let categoryCombobox = document.getElementById("combobox-offer-category");
+      let messagePublish = document.getElementById('message-publish');
+      let messageUpdate = document.getElementById('message-update');
 
       if (event.target.checkValidity() && numberOfErrors === 0) {     
-        
-        messagePublish.innerHTML = 'Oferta publicada correctamente 😊';
-        messagePublish.classList.add('text-success');
-        const publishButton = document.getElementById('publish-offer-button');
-        publishButton.setAttribute("disabled", "");
-        let categoryCombobox = document.getElementById("combobox-offer-category");
 
-        this.offerInformation.push(
-          {
-            title: this.title,                              
-            description: this.description,
-            category: categoryCombobox.value,
-            experience: this.experience,
-            workday: this.workday,
-            score: 0,
-            jobAplicationsNumber: 0,          
+        if (this.update) {
+          this.updateOffer(messageUpdate);
+        } else {
+          this.publishOffer(messagePublish);
+        }
+               
+        setTimeout(() => {          
+          this.closeOfferModal();                               
+          if (this.update) {
+            messageUpdate.classList.remove('text-success');
+          } else {
+            messagePublish.classList.remove('text-success');            
           }
-        );
-
-        setTimeout(() => {
-          this.modalAddOffer = false;
-          messagePublish.innerHTML = '';
-          this.title = '';
-          this.description = '';
-          this.experience = '';
-          this.workday = '';                       
-          messagePublish.classList.remove('text-success');
-        }, 2000);
-
-        // let payload = {
-        //   fullName: this.fullName,
-        //   phone: this.phoneNumber,
-        //   user: {
-        //     rfc: this.rfc,
-        //     role: this.role,
-        //     email: this.emailRegister,
-        //     password: this.passwordRegister,
-        //     provider: 'Local',
-        //   }
-        // };
-
-        // const messagePublish = document.getElementById('message-publish');
-        // const url = this.role === 'Recruiter' ? 'recruiters' : 'employees';
-
-        // await axios.post(url, payload).then((data) => {
-        //   const codeStatus = data.status;
-
-        //   if (codeStatus === 201) {
-        //     messagePublish.innerHTML = 'Oferta publicada correctamente 😊';
-        //     messagePublish.classList.add('text-success');
-
-        //     setTimeout(() => {
-        //       this.modalRegisterUser = false;
-        //       messagePublish.innerHTML = '';
-        //       this.fullName = '';
-        //       this.rfc = '';
-        //       this.phoneNumber = '';
-        //       this.emailRegister = '';
-        //       this.passwordRegister = '';
-        //       this.role = '';              
-        //       messagePublish.classList.remove('text-success');
-        //     }, 2000);
-        //   }
-        // }).catch((error) => {
-        //   const codeStatus = error.response.status;
-        //   const messages = {
-        //     '409': 'Pareces ya estar registrado, verifica los campos 👍',
-        //     '400': 'Verifique los campos nuevamente 🤔',
-        //     '500': 'Algo salió mal, intenta más tarde 😔'
-        //   }
-        //   messagePublish.innerHTML = messages[codeStatus];
-        // });
+        }, 2000);        
 
       } else {
         this.removeFormText();
-        messagePublish.innerHTML = 'Verifique los campos nuevamente 🤔';        
+        const verifyFieldsMessage = 'Verifique los campos nuevamente 🤔';
+        if (this.update) {
+          messageUpdate.innerHTML = verifyFieldsMessage;
+        } else {
+          messagePublish.innerHTML = verifyFieldsMessage;          
+        }
+                
       }      
     },  
     validateFormOffer() {
@@ -295,18 +220,77 @@ export default {
       this.offerInformation.push(
         {
           title: "Lorem ipsum 1",                              
-          description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Nisi dolor, repellat quod minus eveniet, esse saepe eius perspiciatis
-            excepturi mollitia ad, eaque dicta dignissimos aspernatur voluptates
-            cum voluptatum ratione? Ut! 1`,
-          category: "Tecnología",
+          description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.`,
+          category: "Tecnología y telecomunicaciones",
           experience: "2-4 años",
           workday: "8 horas diarias",
           score: 3.5,
           jobAplicationsNumber: 24,          
         }
       );
-    }
+    },
+    alterOfferItem(i) {           
+      
+      this.update = true;
+      let offer = this.offerInformation[i];          
+      this.updatedOfferIndex = i;
+      this.modalAddOffer = true;      
+      this.title = offer.title;      
+      this.description = offer.description;
+      this.experience = offer.experience;
+      this.workday = offer.workday; 
+      this.category = offer.category
+                              
+    },
+    closeOfferModal(){
+      
+      this.update = false;
+      const messagePublish = document.getElementById('message-publish');
+      messagePublish.innerHTML = '';
+      this.modalAddOffer = false;      
+      this.title = '';
+      this.description = '';
+      this.experience = '';
+      this.workday = '';                             
+      this.category = 'null';                             
+
+    },  
+    publishOffer(messagePublish) {
+      
+      messagePublish.innerHTML = 'Oferta publicada correctamente 😊';
+      messagePublish.classList.add('text-success');
+      const publishButton = document.getElementById('publish-offer-button');
+      publishButton.setAttribute("disabled", "");
+      
+      this.offerInformation.push(
+        {
+          title: this.title,                              
+          description: this.description,
+          category: this.category,
+          experience: this.experience,
+          workday: this.workday,
+          score: 0,
+          jobAplicationsNumber: 0,          
+        }
+      );
+    },
+    updateOffer(messageUpdate) {
+      
+      messageUpdate.innerHTML = 'Oferta actualizada correctamente 😊';
+      messageUpdate.classList.add('text-success');
+      const updateButton = document.getElementById('update-offer-button');
+      updateButton.setAttribute("disabled", "");
+      
+      let newOffer = this.offerInformation[this.updatedOfferIndex];
+      newOffer.title = this.title;
+      newOffer.description = this.description,
+      newOffer.category = this.category,
+      newOffer.experience = this.experience,
+      newOffer.workday = this.workday,
+
+      this.offerInformation[this.updatedOfferIndex] = newOffer;
+               
+    },
 
   }
 }

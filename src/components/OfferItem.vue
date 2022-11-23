@@ -10,6 +10,7 @@
                     <MDBDropdownMenu id="offerDropDownEllipsis" aria-labelledby="offerDropdownMenuButtonEllipsis"
                         class="dropdownMenuButton-ellipsis">
                         <MDBDropdownItem tag="button">Eliminar</MDBDropdownItem>                       
+                        <MDBDropdownItem tag="button" v-on:click="alter">Modificar</MDBDropdownItem>                       
                     </MDBDropdownMenu>
                 </MDBDropdown>                
             </div>
