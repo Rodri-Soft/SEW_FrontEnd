@@ -3,7 +3,7 @@
 
   <MDBRow class="m-0">
     <MDBCard border="light" shadow="0" bg="white">
-      <MDBCardImg top src="https://mdbootstrap.com/img/new/standard/city/062.webp" alt="..." class="img-fluid" id="profile-background" style="height: 10rem;"/>
+      <MDBCardImg top src="https://mdbootstrap.com/img/new/standard/city/062.webp" alt="..." class="img-fluid" id="profile-background" style="height: 6rem;"/>
       <MDBCardBody class="text-center">
         <img src="https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg" class="img-fluid rounded-circle"
           alt="Townhouses and Skyscrapers" id="profile-image" />
@@ -12,8 +12,14 @@
           <MDBIcon class="mx-1" size="xs" icon="edit" />
         </h2>
         <MDBCardLink @click="modalUserInformation = true">Información de contacto</MDBCardLink>
-        <MDBCardText class="text-muted">
-          {{ user.role }}
+        <MDBCardText class="text-muted form-options-text" 
+          v-if="user.role == 'Employee'">
+          Trabajador
+        </MDBCardText>
+
+        <MDBCardText class="text-muted form-options-text" 
+          v-else>
+          Reclutador
         </MDBCardText>
       </MDBCardBody>
     </MDBCard>
@@ -76,18 +82,15 @@
         <h3>
           Acerca de mi
         </h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt dolorem minus a eos illum ipsa ea, sed
-          itaque
-        </p>
+        <p class="form-options-text">{{ user.employee.cv.description }}</p>
       </MDBRow>
       <!-- <hr> -->
       <MDBRow class="mb-5 rounded-5">
         <h3>
           Experiencia Laboral
         </h3>      
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt dolorem minus a eos illum ipsa ea, sed itaque
+        <p v-for="(workExperience) in user.employee.cv.workExperiences" class="form-options-text">
+          {{ workExperience.workExperience }}
         </p>
       </MDBRow>
       <!-- <hr> -->
@@ -95,8 +98,8 @@
         <h3>
           Educación
         </h3>      
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt dolorem minus a eos illum ipsa ea, sed itaque
+        <p v-for="(academicTraining) in user.employee.cv.academicTrainings" class="form-options-text">
+          {{ academicTraining.academicTraining }}
         </p>    
       </MDBRow>
       <!-- <hr> -->
@@ -104,8 +107,8 @@
         <h3 >
           Certificaciones
         </h3>      
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt dolorem minus a eos illum ipsa ea, sed itaque
+        <p v-for="(certification) in user.employee.cv.certifications" class="form-options-text">
+          {{ certification.certification }}
         </p>      
       </MDBRow>
     </MDBCol>
@@ -118,12 +121,9 @@
               <h3>
                 Habilidades
               </h3>
-              <p>Javascript</p>
-              <p>Vue</p>
-              <p>PHP</p>
-              <p>MySQL</p>
-              <p>HTML</p>
-              <p>CSS</p>
+              <p v-for="(skill) in user.employee.cv.skills" class="form-options-text">
+                {{ skill.skill }}
+              </p> 
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -133,45 +133,42 @@
               <h3>
                 Idiomas
               </h3>
-              <p>Español</p>
-              <p>Inglés</p>            
+              <p v-for="(lenguage) in user.employee.cv.lenguages" class="form-options-text">
+                {{ lenguage.lenguage }}
+              </p>             
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
       </MDBRow>
     </MDBCol>
   </MDBRow>
-
-  <MDBRow center class="m-0 p-5" v-else>
-    <!-- <h2 class="text-center  mb-4">
-      ¡Recuerda registrar tu CV!
-    </h2>
-    <MDBBtn tag="a" color="primary" href="#!" floating size="lg">
-      <img src="@/assets/cv.svg"/>
-    </MDBBtn> -->
-    <div
-    class="bg-image"
-    style="
-      /* background-image: url('https://mdbootstrap.com/img/new/standard/city/062.webp'); */
-      background-image: url('../assets/cv.svg');
-      height: 100vh;
-    "
-  >
-    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
-      <div class="d-flex justify-content-center align-items-center h-100">
-        <!-- <h1 class="text-white mb-0">Page title</h1> -->
-        <h2 class="text-white mb-0">
-          ¡Recuerda registrar tu CV!
-        </h2>
-      </div>
-    </div>
-  </div>
-  <!-- Background image -->
+  
+  <MDBRow center class="m-0 px-5" v-else>
+    <MDBRow>
+      <MDBCol md="6" class="d-flex align-items-center justify-content-center">
+        <img class="img-fluid" src="../assets/cv.svg"/>
+      </MDBCol>
+      
+      <MDBCol md="6" class="d-flex align-items-center justify-content-center">
+        <MDBRow>
+          <h2 class="form-title text-center my-4">
+            ¡Recuerda registrar tu CV!
+          </h2>
+          
+          <p class="text-center form-options-text m-0">
+            El Currículum Vitae (CV) es un resumen breve de tus experiencias formativas y laborales y de tus habilidades profesionales. Su objetivo es demostrar la idoneidad de tu candidatura a un puesto de trabajo.
+          </p>
+          
+          <MDBBtn class="text-center logIn-form-button my-4" 
+            @click="showModalCV" block>
+            Registrar
+          </MDBBtn>
+        </MDBRow>
+      </MDBCol>
+    </MDBRow>  
   </MDBRow>
 
-  <!-- <ModalCV/> -->
-
-
+  <ModalCV v-if="isModalCVVisible"/>
 </template>
 
 <style scoped src="@/wwwroot/css/profile.css"></style>

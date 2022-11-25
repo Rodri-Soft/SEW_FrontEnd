@@ -51,33 +51,32 @@ export default {
   },
   data() {
     return {
-       
+      isModalCVVisible: true,
     }
   },
   setup() {
     const modalUserInformation = ref(false);
 
     return {
-      modalUserInformation,  
+      modalUserInformation, 
+    
     };
   },
   mounted() {
     this.getEmployeeProfile();
-    this.modalLenguageCV = true;
   },
   methods: {
     async getEmployeeProfile() {
       const token = Cookies.get("access_token");
       const url = "profile/my-cv";
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      const createCV = await axios.get(url, config)
+      const createCV = await axios.get(url)
       .then((response) => {
         const employee = response.data;
         this.$store.dispatch("user", employee);
       });
     },
-    
+    showModalCV() {
+      this.isModalCVVisible = !this.isModalCVVisible;
+    }
   },
 };

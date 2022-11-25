@@ -95,7 +95,7 @@
         </MDBModalTitle>
 
         <form @submit.prevent="registerNewUser" class="user-form" novalidate>        
-          <MDBRow class="g-3">
+          <MDBRow class="g-4">
             <MDBCol>
               <p id="message-register" class="text-center mt-3">
                 Registrate para encontrar ofertas laborales para ti
@@ -104,18 +104,21 @@
 
             <MDBCol md="12">
               <MDBInput type="text" label="Nombre Completo" id="input-full-name" v-model="fullName"
-                invalidFeedback="Verifica tu nombre completo" 
+                counter :maxlength="50"
+                invalidFeedback="Verifica tu nombre completo"
                 required/>
             </MDBCol>
             
             <MDBCol md="12">
-              <MDBInput type="text" label="RFC" id="input-rfc" v-model="rfc" 
+              <MDBInput type="text" label="RFC" id="input-rfc" v-model="rfc"
+                counter :maxlength="13" 
                 invalidFeedback="Verifica tu RFC" 
                 required/>            
             </MDBCol>
 
             <MDBCol md="12">
               <MDBInput type="tel" label="Número telefónico" id="input-phone-number" v-model="phoneNumber"
+                counter :maxlength="10"
                 invalidFeedback="Verifica tu número telefónico" 
                 required/>            
             </MDBCol>

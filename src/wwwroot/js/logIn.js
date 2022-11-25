@@ -116,11 +116,7 @@ export default {
 
       if (!patterns[pattern].test(input)) {
         inputElement.classList.add('is-invalid');
-        const formsText = document.querySelectorAll('.form-text');
-                
-        formsText.forEach((formText) => {
-          formText.innerHTML = '';
-        });
+        this.removeSupportingText();
       } else {
         inputElement.classList.remove('is-invalid');
 
@@ -129,7 +125,7 @@ export default {
 
       return isValid;
     },
-    removeFormText() {
+    removeSupportingText() {
       const formsText = document.querySelectorAll('.form-text');
         
       formsText.forEach((formText) => {
@@ -211,7 +207,7 @@ export default {
           messageLogin.innerHTML = messages[codeStatus];
         });
       } else {
-        this.removeFormText();
+        this.removeSupportingText();
       }
     },
     async login(event) {
@@ -228,14 +224,19 @@ export default {
         await axios.post(url, payload).then((data) => {
           const codeStatus = data.status; 
           const accessToken = data.data.token;
-          
+          const role = data.data.role;
+
           if (codeStatus === 200) {           
             Cookies.set('access_token', accessToken, { 
               httpOnly: false,
               secure: true 
             });
-
-            this.$router.push('about');          
+            
+            if (role === 'Recruiter') {
+              this.$router.push('home')
+            } else {
+              this.$router.push('profile');          
+            }
           } 
         }).catch((error) => {
           const inputEmail = document.getElementById('input-email');

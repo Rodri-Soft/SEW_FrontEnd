@@ -1,5 +1,6 @@
 import FormInformation from '@/components/FormInformation.vue'
 import { ref } from 'vue';
+import axios from 'axios';
 import { mapGetters } from 'vuex';
 import {
   MDBIcon,
@@ -22,7 +23,7 @@ import {
 } from "mdb-vue-ui-kit";
 
 export default {
-  name: "ProfileView",
+  name: 'ProfileView',
   components: {
     FormInformation,
     MDBIcon,
@@ -41,10 +42,10 @@ export default {
     MDBModalTitle,
     MDBModalBody,
     MDBTable,
-    MDBTextarea
+    MDBTextarea,
   },
   computed: {
-    ...mapGetters(["user"], ["lenguages"], ["works"], ["academics"], ["certifications"], ["skills"], ["description"]),
+    ...mapGetters(['user']),
   },
   data() {
     return {
@@ -53,8 +54,8 @@ export default {
       academics: [],
       certifications: [],
       skills: [],
-      description: null,      
-    }
+      description: null,
+    };
   },
   setup() {
     const lenguage = ref('');
@@ -68,54 +69,54 @@ export default {
     const modalAcademicCV = ref(false);
     const modalCertificationCV = ref(false);
     const modalSkillCV = ref(false);
-    const modalDescriptionCV = ref(false);    
-
+    const modalDescriptionCV = ref(false);
     const openModalDescriptionCV = () => {
       modalSkillCV.value = false;
-      setTimeout(() => {
+      setTimeout(() => {        
         modalDescriptionCV.value = true;
+        description.value = '';
       }, 200);
-    }
-
+    };
     const openModalSkillCV = () => {
-      modalCertificationCV.value = false;  
-      modalDescriptionCV.value = false;    
+      modalCertificationCV.value = false;
+      modalDescriptionCV.value = false;
       setTimeout(() => {
         modalSkillCV.value = true;
+        skill.value = '';
       }, 200);
-    }
-
+    };
     const openModalCertificationCV = () => {
       modalAcademicCV.value = false;
       modalSkillCV.value = false;
       setTimeout(() => {
         modalCertificationCV.value = true;
+        certification.value = '';
       }, 200);
-    }
-
+    };
     const openModalAcademicCV = () => {
       modalWorkCV.value = false;
       modalCertificationCV.value = false;
       setTimeout(() => {
         modalAcademicCV.value = true;
+        academic.value = '';
       }, 200);
     };
-
-    const openModalWorkCV = () => {            
+    const openModalWorkCV = () => {
       modalLenguageCV.value = false;
-      modalAcademicCV.value = false;      
+      modalAcademicCV.value = false;
       setTimeout(() => {
         modalWorkCV.value = true;
-      }, 200);    
+        work.value = '';
+      }, 200);
     };
-
     const openModalLenguageCV = () => {
       modalWorkCV.value = false;
       setTimeout(() => {
+        lenguage.value = '';
         modalLenguageCV.value = true;
       }, 200);
     };
-    
+
     return {
       lenguage,
       work,
@@ -128,7 +129,7 @@ export default {
       modalAcademicCV,
       modalCertificationCV,
       modalSkillCV,
-      modalDescriptionCV, 
+      modalDescriptionCV,
       openModalDescriptionCV,
       openModalSkillCV,
       openModalCertificationCV,
@@ -142,52 +143,71 @@ export default {
   },
   methods: {
     checkInput(input) {
-      const textPattern = new RegExp("^[0-9a-zA-ZÀ-ÿ\\u00f1\\u00d1]{1,}[0-9\\sa-zA-ZÀ-ÿ\\u00f1\\u00d1.:',_-]{0,}$");
+      const textPattern = new RegExp(
+        "^[0-9a-zA-ZÀ-ÿ\\u00f1\\u00d1]{1,}[0-9\\sa-zA-ZÀ-ÿ\\u00f1\\u00d1.:',_-]{0,}$"
+      );
       let isValid = true;
       const inputElement = document.getElementById(`input-${input}`);
       const inputElementValue = inputElement.value;
-      
+
       if (!textPattern.test(inputElementValue)) {
         isValid = false;
-        inputElement.classList.add("is-invalid");
+        inputElement.classList.add('is-invalid');
       } else {
-        inputElement.classList.remove("is-invalid");
-        inputElement.value = '';    
+        inputElement.classList.remove('is-invalid');
+        inputElement.value = '';        
       }
 
       return {
         isValid,
-        inputElementValue
+        inputElementValue,
       };
     },
-    addRow(field) {
+    addRow(field, array) {
       const checkInput = this.checkInput(field);
       const isValid = checkInput.isValid;
       const inputElementValue = checkInput.inputElementValue;
-      const arrays = {
-        lenguage: this.lenguages,
-        work: this.works,
-        academic: this.academics,
-        certification: this.certifications,
-        skill: this.skills,        
-      };
 
       if (isValid) {
-        this.$store.dispatch(`add_${field}`, inputElementValue);
-        arrays[field].push(inputElementValue);
+        array.push(inputElementValue);
       }
     },
-    deleteRow(index, field) {
-      const arrays = {
-        lenguage: this.lenguages,
-        work: this.works,
-        academic: this.academics,
-        certification: this.certifications,
-        skill: this.skills,
-      };  
+    deleteRow(index, array) {      
+      array.splice(index, 1);
+    },
+    async registerNewEmployeCV() {
+      const payload = {
+        description: this.description,
+        employeeId: this.$store.state.user.employee.id,
+        lenguages: this.lenguages.map((x) => ({ lenguage: x })),
+        workExperiences: this.works.map((x) => ({ workExperience: x })),
+        academicTrainings: this.academics.map((x) => ({ academicTraining: x })),
+        certifications: this.certifications.map((x) => ({ certification: x })),
+        skills: this.skills.map((x) => ({ skill: x })),
+      };
+      
+      const messageCVRegister = document.getElementById("message-cv-register");
 
-      this.$store.dispatch(`remove_${field}`, index);
-      arrays[field].splice(index, 1);
+      await axios.post('cvs', payload).then((response) => {
+        const codeStatus = response.status;
+
+        if (codeStatus === 201) {
+          messageCVRegister.innerHTML = "!CV registrado correctamente! 😊";
+
+          messageCVRegister.classList.add("text-success");
+    
+          setTimeout(() => {
+            this.$router.go()
+          }, 1000);  
+        }
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {
+          '400': 'Verifique las secciones nuevamente 🤔',
+          '500': 'Error interno del servidor 😢'
+        }
+        messageCVRegister.innerHTML = messages[codeStatus];
+      });
     },
   },
 };
