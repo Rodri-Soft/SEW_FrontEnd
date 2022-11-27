@@ -1,6 +1,5 @@
 import Navbar from '@/components/Navbar.vue'
-import ModalCV from '@/components/ModalCV.vue'
-import $ from 'jquery';
+import FormCV from '@/components/FormCV.vue'
 import axios from 'axios';
 import './axios'
 import { ref } from 'vue';
@@ -28,8 +27,8 @@ import {
 export default {
   name: "ProfileView",
   components: {
+    FormCV,
     Navbar,
-    ModalCV,
     MDBIcon,
     MDBInput,
     MDBRow,
@@ -51,7 +50,7 @@ export default {
   },
   data() {
     return {
-      isModalCVVisible: true,
+      
     }
   },
   setup() {
@@ -59,7 +58,6 @@ export default {
 
     return {
       modalUserInformation, 
-    
     };
   },
   mounted() {
@@ -69,14 +67,12 @@ export default {
     async getEmployeeProfile() {
       const token = Cookies.get("access_token");
       const url = "profile/my-cv";
-      const createCV = await axios.get(url)
+
+      const user = await axios.get(url)
       .then((response) => {
         const employee = response.data;
         this.$store.dispatch("user", employee);
       });
     },
-    showModalCV() {
-      this.isModalCVVisible = !this.isModalCVVisible;
-    }
   },
 };
