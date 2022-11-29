@@ -1,41 +1,39 @@
-import Navbar from '@/components/Navbar.vue'
-import FormCV from '@/components/FormCV.vue'
-import UserInformation from '@/components/UserInformation.vue'
-import axios from 'axios';
-import './axios'
-import Cookies from 'js-cookie';
-import { mapGetters } from 'vuex';
+import CVItemForm from "@/components/CVItemForm.vue";
+import { mapGetters } from "vuex";
+import { ref } from "vue";
+import Cookies from "js-cookie";
 import {
+  MDBBtn,
   MDBIcon,
+  MDBInput,
   MDBRow,
   MDBCol,
-  MDBBtn,  
-  MDBInput,
   MDBCard,
+  MDBCardImg,
   MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
   MDBCardLink,
-  MDBCardImg
+  MDBCardText,
+  MDBModal,
+  MDBModalBody,
+  MDBModalTitle
 } from "mdb-vue-ui-kit";
-
 export default {
-  name: "ProfileView",
+  name: "UserInformation",
   components: {
-    FormCV,
-    Navbar,
-    UserInformation,
+    CVItemForm,
     MDBIcon,
     MDBInput,
     MDBRow,
     MDBCol,
     MDBBtn,
     MDBCard,
-    MDBCardBody,
-    MDBCardTitle,
-    MDBCardText,
-    MDBCardLink,
     MDBCardImg,
+    MDBCardBody,
+    MDBCardLink,
+    MDBCardText,
+    MDBModal,
+    MDBModalBody,
+    MDBModalTitle
   },
   computed: {
     ...mapGetters(["user"]),
@@ -58,5 +56,17 @@ export default {
       });
     }
   },
-  methods: {},
+  mounted() {
+
+  },
+  setup() {
+    const modalUserInformation = ref(false);
+    
+    return {      
+      modalUserInformation, 
+    };
+  },
+  methods: {
+    
+  }
 };

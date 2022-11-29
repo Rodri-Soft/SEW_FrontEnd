@@ -4,6 +4,7 @@ import axios from 'axios';
 import './axios'
 import { ref } from 'vue';
 import Cookies from 'js-cookie';
+import { mapGetters } from 'vuex';
 import {
   MDBRow,
   MDBCol,
@@ -39,6 +40,9 @@ export default {
     MDBModalFooter,
     MDBRadio
   },
+  computed: {
+    ...mapGetters(['user']),    
+  },
   setup() {
     const email = ref('');
     const password = ref('');
@@ -67,15 +71,14 @@ export default {
     };
   },
   mounted() {
-    Cookies.remove('access_token');
     this.setBackgroud();
-    this.loginWithGoogle();
+    Cookies.remove('access_token');
+    this.$store.dispatch('user', null);
   },
   methods: {
     setBackgroud() {
       let width = $(window).width();
       const windowSize = 768;
-      const windowsForm = 576;
 
       if (width < windowSize) {
         emptyBackgroundContainers();
@@ -157,24 +160,34 @@ export default {
     
       return numberOfErrors;
     },
+    createUser() {
+      let payload = {
+        fullName: this.fullName,
+        phone: this.phoneNumber,
+        user: {
+          rfc: this.rfc,
+          role: this.role,
+          email: this.emailRegister,
+          password: this.passwordRegister,
+          provider: 'Local',
+        }
+      };
+
+      return payload;
+    },
+    loginWithGoogle() {            
+      const url = 'http://localhost:3000/api/v1/auth/google';
+      window.location.href = url; 
+      
+      // this.setSession('employee');
+    },
     async registerNewUser(event) {
       event.target.classList.add('was-validated');    
 
       const numberOfErrors = this.validateFormRegister();
 
       if (event.target.checkValidity() && numberOfErrors === 0) {        
-        let payload = {
-          fullName: this.fullName,
-          phone: this.phoneNumber,
-          user: {
-            rfc: this.rfc,
-            role: this.role,
-            email: this.emailRegister,
-            password: this.passwordRegister,
-            provider: 'Local',
-          }
-        };
-
+        const payload = this.createUser();
         const messageLogin = document.getElementById('message-register');
         const url = this.role === 'Recruiter' ? 'recruiters' : 'employees';
 
@@ -218,25 +231,22 @@ export default {
           email: this.email,
           password: this.password,
         };
-        const url = 'auth/login';
+        const urlLogin = 'auth/login';
         const messageLogin = document.getElementById('message-login');
 
-        await axios.post(url, payload).then((data) => {
+        await axios.post(urlLogin, payload).then((data) => {
           const codeStatus = data.status; 
           const accessToken = data.data.token;
           const role = data.data.role;
 
-          if (codeStatus === 200) {           
+          if (codeStatus === 200) {          
             Cookies.set('access_token', accessToken, { 
               httpOnly: false,
-              secure: true 
+              secure: true,
+              sameSite: 'strict'
             });
-            
-            if (role === 'Recruiter') {
-              this.$router.push('home')
-            } else {
-              this.$router.push('profile');          
-            }
+          
+            this.setSession(role);
           } 
         }).catch((error) => {
           const inputEmail = document.getElementById('input-email');
@@ -254,12 +264,24 @@ export default {
         });
       }
     },
-    loginWithGoogle() {      
-      const googleButton = document.getElementById('google-button');
-      const url = 'http://localhost:3000/api/v1/auth/google';
-      googleButton.addEventListener('click', () => {        
-        window.location.href = url;        
-      });      
+    async setSession(role) {
+      const urlProfile = "profile/my-cv";
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+
+      await axios.get(urlProfile, config).then((response) => {
+        const employee = response.data;
+        
+        this.$store.dispatch("user", employee);
+    
+        if (role === 'Recruiter') {
+          this.$router.push('home');          
+        } else {
+          this.$router.push('profile');
+        }
+      });
     },
     async changePassword(event) {
       event.target.classList.add('was-validated');
@@ -296,7 +318,7 @@ export default {
           inputEmail.classList.add('is-invalid');
         });
       }
-    }
+    },    
   }
 };
 

@@ -39,10 +39,8 @@
                 />
             </MDBCol>
             <MDBCol md="12">              
-              <MDBInput type="password" label="Contraseña" v-model="password" class="input-password"
-                  id="input-password"
-                  invalidFeedback="Verifica tu contraseña"
-                  required inputGroup>
+              <MDBInput type="password" label="Contraseña" v-model="password"
+                class="input-password" id="input-password" invalidFeedback="Verifica tu contraseña" autocomplete="on" required inputGroup>
                 <span outline="primary" class="password-span input-group-text border-0" @click="showPassword">
                   <MDBIcon icon="eye" size="lg" class="password-icon"/>
                 </span>
@@ -62,7 +60,7 @@
           </MDBRow>
 
           <MDBRow class="mb-4 d-flex justify-content-center">
-            <MDBBtn id="google-button" outline="dark">
+            <MDBBtn outline="dark" @click="loginWithGoogle()">
               <MDBIcon iconStyle="fab" icon="google"></MDBIcon>
                 <strong>
                   Google

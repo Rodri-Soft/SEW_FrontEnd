@@ -15,6 +15,7 @@ import {
   MDBTable,
   MDBTextarea,
 } from "mdb-vue-ui-kit";
+import Cookies from "js-cookie";
 export default {
   name: "FormCV",
   components: {
@@ -123,29 +124,36 @@ export default {
     },
     async registerNewEmployeCV(payload) {    
       const messageCVRegister = document.getElementById("message-register");
+      const token = Cookies.get('access_token');
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
 
-      await axios.post("cvs", payload).then((response) => {
+      messageCVRegister.innerHTML = "Registrando CV...";
+
+      await axios.post("cvs", payload, config).then((response) => {
         const codeStatus = response.status;
 
         if (codeStatus === 201) {
           messageCVRegister.innerHTML = "!CV registrado correctamente! 😊";
           messageCVRegister.classList.add("text-success");
 
-          setTimeout(() => {
-            this.$router.go();
-          }, 1000);
+          // const cv = response.data;
+
+          // this.$store.dispatch("cv", cv);
+
+          // console.log(this.$store.state.user);
         }
       }).catch((error) => {
         const codeStatus = error.response.status;
         const messages = {
           400: "Verifique las secciones nuevamente 🤔",
-          500: "Error interno del servidor 😢",
+          409: "El CV ya se encuentra registrado 🤔",
+          500: "Error interno del servidor 😢",          
         };
 
         messageCVRegister.innerHTML = messages[codeStatus];
       });
-
-      console.log(payload);
     },
   },
 };

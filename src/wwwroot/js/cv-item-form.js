@@ -88,9 +88,6 @@ export default {
       description,
     }
   },
-  mounted() {
-
-  },
   methods: {
     checkInput() {
       let isValid = true;
@@ -134,7 +131,12 @@ export default {
       const inputElementValue = checkInput.inputElementValue;
 
       if (isValid) {
-        this.$emit('register-cv', inputElementValue);
+        this.$emit('register-cv', inputElementValue);        
+        const supportInfoTitles = document.querySelectorAll('.support-info-title');
+
+        supportInfoTitles.forEach((title) => {
+          title.classList.add('d-none');
+        });
       }
     },
     fillTable(newElements) {

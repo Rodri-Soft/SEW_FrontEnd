@@ -62,6 +62,5 @@
   </MDBModal>
 </template>
 
-<style scoped src="@/wwwroot/css/profile.css"></style>
 <style scoped src="@/wwwroot/css/logIn.css"></style>
 <script src="@/wwwroot/js/form-cv.js"></script>

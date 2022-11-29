@@ -4,7 +4,7 @@
       @submit.prevent novalidate>
       <MDBRow class="g-3">
         <MDBRow class="text-center">
-          <h6 class="form-options-text mt-3 mb-4">
+          <h6 class="support-info-title form-options-text mt-3 mb-4">
             {{ supportInformation }}
           </h6>
         </MDBRow>
@@ -50,7 +50,7 @@
           </MDBRow>
         </MDBRow>
         
-        <MDBRow v-else class="m-0 p-0 mb-4">
+        <MDBRow v-else class="support-info-title m-0 p-0 mb-4">
           <MDBTextarea label="Descripción" rows="4" v-bind:id="inputName" v-model="description" maxlength="250"
             invalidFeedback="Verifica el campo" required />
         </MDBRow>
@@ -58,7 +58,7 @@
 
       <MDBRow>
         <MDBCol md="6">
-          <MDBBtn class="mt-4 logIn-form-button" block 
+          <MDBBtn class="support-info-title mt-4 logIn-form-button" block 
             v-if="isButtonPreviusVisible" 
             @click="previousStage()">
             Atrás
@@ -66,7 +66,7 @@
         </MDBCol>
         <MDBCol md="6" 
           v-if="isRegister">
-          <MDBBtn class="mt-4 logIn-form-button" block              
+          <MDBBtn class="support-info-title mt-4 logIn-form-button" block              
             @click="registerCV()">
             Registrarse
           </MDBBtn>
@@ -84,6 +84,5 @@
   </section>
 </template>
 
-<style scoped src="@/wwwroot/css/profile.css"></style>
 <style scoped src="@/wwwroot/css/logIn.css"></style>
 <script src="@/wwwroot/js/cv-item-form.js"></script>

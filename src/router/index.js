@@ -26,7 +26,7 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
     component: () => import('../views/HomeView.vue')
   },
   {
@@ -34,6 +34,12 @@ const routes = [
     name: 'profile',
     meta: { requiresAuth: true },
     component: () => import('../views/ProfileView.vue')
+  },
+  {
+    path: '/profile/cv/lenguages',
+    name: 'cvLanguages',
+    meta: { requiresAuth: true },
+    component: () => import('../views/CVWorksView.vue')    
   }
 ]
 
