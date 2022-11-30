@@ -14,6 +14,7 @@ import {
   MDBModalBody,
   MDBTable,
   MDBTextarea,
+  MDBSpinner
 } from "mdb-vue-ui-kit";
 import Cookies from "js-cookie";
 export default {
@@ -31,6 +32,7 @@ export default {
     MDBModalBody,
     MDBTable,
     MDBTextarea,
+    MDBSpinner
   },
   computed: {
     ...mapGetters(["user"]),
@@ -109,7 +111,16 @@ export default {
         this.isStageSixVisible = true;
       }, 100);
     },
+    closeCVStages() {
+      this.isStageOneVisible = true;
+      this.isStageTwoVisible = false;
+      this.isStageThreeVisible = false;
+      this.isStageFourVisible = false;
+      this.isStageFiveVisible = false;
+      this.isStageSixVisible = false;
+    },
     async createCV(description) {
+
       const payload = {
         description: description,
         employeeId: this.$store.state.user.employee.id,
@@ -120,32 +131,44 @@ export default {
         skills: this.skills.map((x) => ({ skill: x })),
       };
 
-      const cvRegistrarion = await this.registerNewEmployeCV(payload);
+      const spinner = document.getElementById('spinner-register-cv');
+      const messageCVRegister = document.getElementById('message-register');
+      messageCVRegister.innerHTML = "Registrando CV";
+      
+      spinner.classList.remove('d-none');
+      spinner.style.display = 'flex';
+
+      setTimeout(async () => {
+        const cvRegistrarion = await this.registerNewEmployeCV(payload);
+      }, 1500);
     },
     async registerNewEmployeCV(payload) {    
-      const messageCVRegister = document.getElementById("message-register");
+      const messageCVRegister = document.getElementById('message-register');
+      const spinner = document.getElementById('spinner-register-cv');
       const token = Cookies.get('access_token');
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-
-      messageCVRegister.innerHTML = "Registrando CV...";
-
+      
       await axios.post("cvs", payload, config).then((response) => {
-        const codeStatus = response.status;
-
+        const codeStatus = response.status;        
+        
         if (codeStatus === 201) {
           messageCVRegister.innerHTML = "!CV registrado correctamente! 😊";
+          spinner.classList.add('d-none');
           messageCVRegister.classList.add("text-success");
 
-          // const cv = response.data;
+          const newUserCV = response.data;
+          
+          setTimeout(() => {
+            this.$store.dispatch("cv", newUserCV);
+            this.$router.go();
+          }, 2000);
 
-          // this.$store.dispatch("cv", cv);
-
-          // console.log(this.$store.state.user);
         }
       }).catch((error) => {
         const codeStatus = error.response.status;
+        spinner.classList.add('d-none');
         const messages = {
           400: "Verifique las secciones nuevamente 🤔",
           409: "El CV ya se encuentra registrado 🤔",

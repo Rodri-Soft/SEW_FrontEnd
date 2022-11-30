@@ -2,7 +2,7 @@
   <MDBRow class="m-0 mb-2 ">
     <MDBCard shadow="0">
       <img src="@/assets/profile-background.png" alt="Imagen de fondo de perfil" 
-        class="card-img text-center" id="profile-background" top/>
+        class="card-img text-center m-0 p-0" id="profile-background"/>
       <MDBCardBody class="text-center">
         <div class="img-fluid outer-circle shadow-6 text-center">
           <img src="https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg" 
@@ -10,22 +10,41 @@
             alt="Townhouses and Skyscrapers" 
             id="profile-image" />          
         </div>
-        <h2 class="text-center form-title">
+        <h2 class="text-center form-title" 
+          v-if="user.employee">
           {{ user.employee.fullName }}
           <a class="m-1 form-options-text btn btn-link btn-floating" href="#!" role="button">
             <MDBIcon icon="pencil-alt" size="lg" />
           </a>  
         </h2>
+        <h2 class="text-center form-title" 
+          v-else>
+          {{ user.recruiter.fullName }}
+          <a class="m-1 form-options-text btn btn-link btn-floating" href="#!" role="button">
+            <MDBIcon icon="pencil-alt" size="lg" />
+          </a>
+        </h2>
         <a class="m-1" @click="modalUserInformation = true" href="#" role="button">
           Información de contacto
         </a>  
-        <MDBCardText class="text-muted form-options-text" v-if="user.role == 'Employee'">
+        <MDBCardText class="text-muted form-options-text" 
+          v-if="user.role == 'Employee'">
           Trabajador
         </MDBCardText>
 
-        <MDBCardText class="text-muted form-options-text" v-else>
+        <MDBCardText class="mb-2 text-muted form-options-text" 
+          v-else>
           Reclutador
         </MDBCardText>
+
+        <MDBRow class="m-0 d-flext justify-content-center" 
+          v-if="user.recruiter" >
+          <MDBBadge class="text-wrap py-2 form-options-text logIn-form-button rounded-7" 
+            style="width: 7rem;">
+            Seguidores            
+            {{ user.recruiter.followers.length }}
+          </MDBBadge>
+        </MDBRow>
       </MDBCardBody>
     </MDBCard>
   </MDBRow>
@@ -33,12 +52,12 @@
   <MDBModal id="modal-user-information" tabindex="-1" v-model="modalUserInformation" centered>
     <MDBModalBody>
       <a href="#" class="text-reset">
-        <MDBIcon icon="close" size="lg" class="d-flex justify-content-end" @click="modalUserInformation = false" />
+        <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
+          @click="modalUserInformation = false" />
       </a>
 
       <MDBModalTitle class="text-center form-title">
         Información de contacto
-        <!-- <MDBIcon class="mx-1" size="xs" icon="pencil-alt" /> -->
       </MDBModalTitle>
 
       <MDBRow>
@@ -57,10 +76,18 @@
           <MDBCol col="1">
             <i class="fab fa-whatsapp fa-lg mr-2"></i>
           </MDBCol>
-          <MDBCol col="11">
+          <MDBCol col="11" 
+            v-if="user.employee">
             <h6 class="fw-normal">Enviar Whatsapp</h6>
             <a href="https://wa.me/2281272755" target="_blank">
               {{ user.employee.phone }}
+            </a>
+          </MDBCol>
+          <MDBCol col="11" 
+            v-else>
+            <h6 class="fw-normal">Enviar Whatsapp</h6>
+            <a href="https://wa.me/2281272755" target="_blank">
+              {{ user.recruiter.phone }}
             </a>
           </MDBCol>
         </MDBRow>

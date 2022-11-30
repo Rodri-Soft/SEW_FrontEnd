@@ -19,7 +19,8 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-  MDBRadio
+  MDBRadio,
+  MDBSpinner
 } from 'mdb-vue-ui-kit';
 export default {
   name: 'LogInView',
@@ -38,7 +39,8 @@ export default {
     MDBModalTitle,
     MDBModalBody,
     MDBModalFooter,
-    MDBRadio
+    MDBRadio,
+    MDBSpinner
   },
   computed: {
     ...mapGetters(['user']),    
@@ -175,11 +177,9 @@ export default {
 
       return payload;
     },
-    loginWithGoogle() {            
+    async loginWithGoogle() {            
       const url = 'http://localhost:3000/api/v1/auth/google';
       window.location.href = url; 
-      
-      // this.setSession('employee');
     },
     async registerNewUser(event) {
       event.target.classList.add('was-validated');    
@@ -224,6 +224,9 @@ export default {
       }
     },
     async login(event) {
+      const sppinerLogin = document.getElementById('spinner-login');
+      sppinerLogin.classList.remove('d-none');
+
       event.target.classList.add('was-validated');
 
       if (event.target.checkValidity()) {
@@ -242,13 +245,13 @@ export default {
           if (codeStatus === 200) {          
             Cookies.set('access_token', accessToken, { 
               httpOnly: false,
-              secure: true,
-              sameSite: 'strict'
+              secure: false,
             });
           
-            this.setSession(role);
+            this.setSession();
           } 
         }).catch((error) => {
+          sppinerLogin.classList.add('d-none');
           const inputEmail = document.getElementById('input-email');
           const inputPassword = document.getElementById('input-password');          
           const codeStatus = error.response.status;
@@ -264,23 +267,18 @@ export default {
         });
       }
     },
-    async setSession(role) {
-      const urlProfile = "profile/my-cv";
+    async setSession() {
+      const urlProfile = "profile";
       const token = Cookies.get('access_token');      
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-
+      
       await axios.get(urlProfile, config).then((response) => {
-        const employee = response.data;
+        const user = response.data;
         
-        this.$store.dispatch("user", employee);
-    
-        if (role === 'Recruiter') {
-          this.$router.push('home');          
-        } else {
-          this.$router.push('profile');
-        }
+        this.$store.dispatch("user", user);
+        this.$router.push('profile');
       });
     },
     async changePassword(event) {
@@ -305,7 +303,6 @@ export default {
             messageChangePassword.innerHTML = 'Se ha enviado un correo a tu correo electrónico. Puede cerrar esta ventana 👍';
           } 
         }).catch((error) => {
-          console.log(error);
           const codeStatus = error.response.status;
           const messages = {
             '400': 'Verifique su correo nuevamente 🤔',

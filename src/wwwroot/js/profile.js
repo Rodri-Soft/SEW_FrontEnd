@@ -5,6 +5,8 @@ import axios from 'axios';
 import './axios'
 import Cookies from 'js-cookie';
 import { mapGetters } from 'vuex';
+import _ from 'lodash';
+
 import {
   MDBIcon,
   MDBRow,
@@ -40,21 +42,26 @@ export default {
   computed: {
     ...mapGetters(["user"]),
   },
-  beforeCreate() {
+  data() {
+    return {
+      
+    }
+  },
+  created() {
     const user = this.$store.getters.user;
+
     if (!user) {
-      const token = Cookies.get("access_token");
-      const urlProfile = "profile/my-cv";
+      const urlProfile = "profile";
+      const token = Cookies.get('access_token');      
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-  
+      
       axios.get(urlProfile, config).then((response) => {
-        const employee = response.data;
+        const user = response.data;
         
-        this.$store.dispatch("user", employee);
-  
-        console.log(employee);
+        this.$store.dispatch("user", user);
+        this.$router.push('profile');
       });
     }
   },

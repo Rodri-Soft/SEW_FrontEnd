@@ -53,7 +53,10 @@
             </MDBCol>            
           </MDBRow>
           
-          <MDBBtn type="submit" block class="mt-4 logIn-form-button"> Ingresar </MDBBtn>
+          <MDBBtn type="submit" class="mt-4 logIn-form-button" block> 
+            Ingresar
+            <MDBSpinner id="spinner-login" class="ms-2 d-none" tag="span" size="sm" />
+          </MDBBtn>
 
           <MDBRow class="mt-4">
             <p class="text-center form-options-text">─ O Inicia Sesión con ─</p>
@@ -161,7 +164,9 @@
               inline/>          
           </MDBCol>
           
-          <MDBBtn id="register-user-button" type="submit" class="mt-2 logIn-form-button" block>Registrarse</MDBBtn>
+          <MDBBtn id="register-user-button" type="submit" class="mt-2 logIn-form-button" block>
+            Registrarse
+          </MDBBtn>
         </form>
       </MDBModalBody>
     </MDBModal>

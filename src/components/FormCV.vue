@@ -1,12 +1,12 @@
 <template>
-  <MDBBtn class="text-center logIn-form-button my-4" @click="cvModal = true">
+  <MDBBtn class="text-center logIn-form-button my-4 rounded-7" @click="cvModal = true">
     Registrar
   </MDBBtn>
 
   <MDBModal tabindex="-1" staticBackdrop centered v-model="cvModal">
     <MDBModalBody>
       <a href="#" class="text-reset">
-        <MDBIcon icon="close" size="lg" class="d-flex justify-content-end" @click="cvModal = false" />
+        <MDBIcon icon="close" size="lg" class="d-flex justify-content-end" @click="cvModal = false, closeCVStages()" />
       </a>
 
       <MDBModalTitle class="text-center form-title">
@@ -18,7 +18,8 @@
           Aún no has registrado tu CV, por favor llena el siguiente formulario para poder mostrar tu información
         </p>
       </MDBCol>
-
+      <MDBSpinner id="spinner-register-cv" class="d-none" size="sm" />
+      
       <CVItemForm 
         supportInformation='Agrega todos los idiomas que domines (etapa 1/6)'
         tableTitle='Tabla con idioma agregados' 
@@ -64,3 +65,12 @@
 
 <style scoped src="@/wwwroot/css/logIn.css"></style>
 <script src="@/wwwroot/js/form-cv.js"></script>
+
+<style scoped>
+  #spinner-register-cv{
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
