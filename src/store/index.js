@@ -17,7 +17,7 @@ export default createStore({
     },
     cv(context, cv) {
       context.commit('setCV', cv);
-    }
+    },
   },
   mutations: {
     setUser(state, user) {

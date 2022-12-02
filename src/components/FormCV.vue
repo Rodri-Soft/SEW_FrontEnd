@@ -1,5 +1,6 @@
 <template>
-  <MDBBtn class="text-center logIn-form-button my-4 rounded-7" @click="cvModal = true">
+  <MDBBtn class="text-center logIn-form-button my-4" 
+    @click="cvModal = true">
     Registrar
   </MDBBtn>
 
@@ -67,7 +68,7 @@
 <script src="@/wwwroot/js/form-cv.js"></script>
 
 <style scoped>
-  #spinner-register-cv{
+  #spinner-register-cv {
     display: flex;
     margin: auto;
     align-items: center;

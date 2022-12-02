@@ -21,7 +21,7 @@
               Recuerda que puedes crear un grupo o unirte a uno existente. Los grupos de te permiten compartir información y contactos con otros reclutadores. 
             </p>
             
-            <MDBBtn class="logIn-form-button rounded-7 m-0 my-4" >
+            <MDBBtn class="logIn-form-button m-0 my-4" >
               Ver grupos
             </MDBBtn>                       
           </MDBRow>
@@ -77,7 +77,7 @@
           <MDBCol class="mb-4">
             <MDBIcon icon="briefcase" size="lg"/>            
             <h3 class="d-inline mb-4 mx-3 fw-bold">Experiencia Laboral</h3>
-            <router-link class="btn btn-link btn-sm" to="/profile/cv/lenguages" >
+            <router-link class="btn btn-link btn-sm" to="/profile/cv/work-experiences" >
               Editar
             </router-link>
           </MDBCol>

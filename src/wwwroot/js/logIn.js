@@ -332,6 +332,6 @@ function fillBackgroundContainers(side, id){
     background.alt = `background-${side}`;
     const backgroundContainer = document.getElementById(`background-${side}-container`);
 
-    backgroundContainer.appendChild(background);
+    // backgroundContainer.appendChild(background);
   }
 }

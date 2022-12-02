@@ -36,8 +36,8 @@ const routes = [
     component: () => import('../views/ProfileView.vue')
   },
   {
-    path: '/profile/cv/lenguages',
-    name: 'cvLanguages',
+    path: '/profile/cv/work-experiences',
+    name: 'workExperiences',
     meta: { requiresAuth: true },
     component: () => import('../views/CVWorksView.vue')    
   }

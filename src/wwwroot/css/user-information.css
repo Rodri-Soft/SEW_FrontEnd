@@ -33,6 +33,12 @@ h3 {
   font-size: 1.2rem;
 }
 
+#spinner-user-edit {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
 
 
 

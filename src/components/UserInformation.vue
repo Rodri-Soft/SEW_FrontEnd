@@ -5,7 +5,7 @@
         class="card-img text-center m-0 p-0" id="profile-background"/>
       <MDBCardBody class="text-center">
         <div class="img-fluid outer-circle shadow-6 text-center">
-          <img src="https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg" 
+          <img src="https://mdbootstrap.com/img/Photos/Avatars/img (23).jpg" 
             class="img-fluid rounded-circle"
             alt="Townhouses and Skyscrapers" 
             id="profile-image" />          
@@ -13,14 +13,18 @@
         <h2 class="text-center form-title" 
           v-if="user.employee">
           {{ user.employee.fullName }}
-          <a class="m-1 form-options-text btn btn-link btn-floating" href="#!" role="button">
+          <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
+            role="button"
+            @click="(modalUserEdit = true)">
             <MDBIcon icon="pencil-alt" size="lg" />
           </a>  
         </h2>
         <h2 class="text-center form-title" 
           v-else>
           {{ user.recruiter.fullName }}
-          <a class="m-1 form-options-text btn btn-link btn-floating" href="#!" role="button">
+          <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
+            role="button"
+            @click="(modalUserEdit = true)">
             <MDBIcon icon="pencil-alt" size="lg" />
           </a>
         </h2>
@@ -34,7 +38,7 @@
 
         <MDBCardText class="mb-2 text-muted form-options-text" 
           v-else>
-          Reclutador
+          Reclutador / {{ user.recruiter.charge }}
         </MDBCardText>
 
         <MDBRow class="m-0 d-flext justify-content-center" 
@@ -53,7 +57,7 @@
     <MDBModalBody>
       <a href="#" class="text-reset">
         <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
-          @click="modalUserInformation = false" />
+          @click="modalUserInformation = false, fillEditModalFields()" />
       </a>
 
       <MDBModalTitle class="text-center form-title">
@@ -67,7 +71,7 @@
           </MDBCol>
           <MDBCol col="11">
             <h6 class="fw-normal">Enviar email</h6>
-            <a href="mailto:" target="_blank">
+            <a :href="('mailto:' + user.email)" target="_blank">
               {{ user.email }}
             </a>
           </MDBCol>
@@ -76,35 +80,109 @@
           <MDBCol col="1">
             <i class="fab fa-whatsapp fa-lg mr-2"></i>
           </MDBCol>
-          <MDBCol col="11" 
-            v-if="user.employee">
+          <MDBCol col="11">
             <h6 class="fw-normal">Enviar Whatsapp</h6>
-            <a href="https://wa.me/2281272755" target="_blank">
+            <a :href="('https://wa.me/' + user.employee.phone)" target="_blank" 
+              v-if="user.employee">
               {{ user.employee.phone }}
             </a>
-          </MDBCol>
-          <MDBCol col="11" 
-            v-else>
-            <h6 class="fw-normal">Enviar Whatsapp</h6>
-            <a href="https://wa.me/2281272755" target="_blank">
+            <a :href="('https://wa.me/' + user.recruiter.phone)" target="_blank" 
+              v-else-if="user.recruiter">
               {{ user.recruiter.phone }}
             </a>
           </MDBCol>
         </MDBRow>
-        <MDBRow class="mb-4 mx-2">
-          <MDBCol col="1">
-            <MDBIcon icon="map" size="lg" class="ml-2" />
-          </MDBCol>
-          <MDBCol col="11">
-            <h6 class="fw-normal">Ubicación</h6>
-            <p>
-              <!-- Fidencio Ocaña #64 
-              Francisco Ferrer Guardia
-              97000 Xalapa -->
-            </p>
-          </MDBCol>
-        </MDBRow>
       </MDBRow>      
+    </MDBModalBody>
+  </MDBModal>
+
+  <MDBModal tabindex="-1" staticBackdrop centered v-model="modalUserEdit">
+    <MDBModalBody>
+      <a href="#" class="text-reset">
+        <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
+          @click="modalUserEdit = false" />
+      </a>
+
+      <MDBModalTitle class="text-center form-title">
+        Editar información
+      </MDBModalTitle>
+
+      <p class="text-center mt-4 form-options-text" id="message-user-edit">
+        Recuerda mantener tu información actualizada
+      </p>
+      <MDBSpinner id="spinner-user-edit" class="d-none" size="sm" />
+
+      <MDBRow>
+        <form class="form-options-text needs-validation"
+          id="form-user-edit" novalidate 
+          @submit.prevent="createEditInformationUser">
+          <MDBRow class="my-4 mx-2">
+            <MDBCol col="1" class="d-flex align-items-center">
+              <MDBIcon icon="user" size="lg" class="mr-2" />
+            </MDBCol>
+            <MDBCol col="11">            
+              <MDBInput type="text" class="form-control" name="fullName" id="input-fullName-edit"
+                counter :maxlength="50" label="Nombre completo" invalidFeedback="Verifica tu nombre completo" 
+                v-model="fullName"
+                v-if="user.employee"/>
+              <MDBInput type="text" class="form-control" name="fullName" id="input-fullName-edit"
+                counter :maxlength="50" label="Nombre completo" invalidFeedback="Verifica tu nombre completo" 
+                v-model="fullName"
+                v-else/>
+            </MDBCol>
+          </MDBRow>
+          <MDBRow class="mb-4 mx-2">
+            <MDBCol col="1" class="d-flex align-items-center">
+              <MDBIcon icon="envelope" size="lg" class="mr-2"/>
+            </MDBCol>
+            <MDBCol col="11">
+              <MDBInput type="email" class="form-control" name="email" id="input-email-edit"
+                label="Correo electrónico" invalidFeedback="Verifica tu correo electrónico" 
+                v-model="email"/>
+            </MDBCol>
+          </MDBRow>
+          <MDBRow class="mb-4 mx-2">
+            <MDBCol col="1" class="d-flex align-items-center">
+              <MDBIcon icon="id-card" size="lg" class="mr-2"/>
+            </MDBCol>
+            <MDBCol col="11">
+              <MDBInput type="text" class="form-control" name="rfc" id="input-rfc-edit"
+                counter :maxlength="13" label="RFC" invalidFeedback="Verifica tu RFC" 
+                v-model="rfc"/>
+            </MDBCol>
+          </MDBRow>
+          <MDBRow class="mb-4 mx-2">
+            <MDBCol col="1" class="d-flex align-items-center">
+              <MDBIcon icon="phone" size="lg" class="mr-2"/>
+            </MDBCol>
+            <MDBCol col="11">
+              <MDBInput type="tel" class="form-control" name="phone" id="input-phone-edit"
+                counter :maxlength="10" invalidFeedback="Verifica tu número telefónico" 
+                label="Número telefónico"  v-model="phone"
+                v-if="user.employee"/>
+              <MDBInput type="tel" class="form-control" name="phone" id="input-phone-edit"
+                counter :maxlength="10" invalidFeedback="Verifica tu número telefónico" 
+                label="Número telefónico" v-model="phone"
+                v-else/>
+            </MDBCol>
+          </MDBRow>
+          <MDBRow class="mb-4 mx-2"
+           v-if="user.recruiter">
+            <MDBCol col="1" class="d-flex align-items-center">
+              <MDBIcon icon="building" size="lg" class="mr-2"/>
+            </MDBCol>
+            <MDBCol col="11">
+              <MDBInput type="text" class="form-control" name="charge" id="input-charge-edit"
+                counter :maxlength="20" invalidFeedback="Verifica tu número cargo en la empresarial" label="Cargo empresarial" v-model="charge"/>
+            </MDBCol>
+          </MDBRow>
+          <MDBRow class="mx-3 my-4 mt-5 d-flex justify-content-center">
+            <MDBBtn class="logIn-form-button" type="submit" block>
+              Actualizar información
+            </MDBBtn>
+          </MDBRow>
+        </form>
+      </MDBRow>  
     </MDBModalBody>
   </MDBModal>
 </template>
