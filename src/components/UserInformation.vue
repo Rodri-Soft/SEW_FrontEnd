@@ -1,56 +1,60 @@
 <template>
   <MDBRow class="m-0 mb-2 ">
-    <MDBCard shadow="0">
-      <img src="@/assets/profile-background.png" alt="Imagen de fondo de perfil" 
-        class="card-img text-center m-0 p-0" id="profile-background"/>
-      <MDBCardBody class="text-center">
-        <div class="img-fluid outer-circle shadow-6 text-center">
-          <img src="https://mdbootstrap.com/img/Photos/Avatars/img (23).jpg" 
-            class="img-fluid rounded-circle"
-            alt="Townhouses and Skyscrapers" 
-            id="profile-image" />          
-        </div>
-        <h2 class="text-center form-title" 
-          v-if="user.employee">
-          {{ user.employee.fullName }}
-          <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
-            role="button"
-            @click="(modalUserEdit = true)">
-            <MDBIcon icon="pencil-alt" size="lg" />
+    <MDBCol md="10" class="offset-md-1">
+      <MDBCard shadow="0">
+        <MDBCardImg src="https://source.unsplash.com/random/1920x112" alt="Imagen de fondo de perfil" 
+          class="text-center m-0 p-0 bg-image" id="profile-background" top style="height: 7rem;"/>
+        <!-- <MDBCardImg :src=this.profileImage alt="Imagen de fondo de perfil" 
+          class="text-center m-0 p-0 bg-image" id="profile-background" top style="height: 7rem;"/> -->
+        <MDBCardBody class="text-center">
+          <div class="img-fluid outer-circle shadow-6 text-center">
+            <img src="https://source.unsplash.com/random/160x160/?person" 
+              class="img-fluid rounded-circle"
+              alt="Townhouses and Skyscrapers" 
+              id="profile-image" />          
+          </div>
+          <h2 class="text-center form-title" 
+            v-if="user.employee">
+            {{ user.employee.fullName }}
+            <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
+              role="button"
+              @click="(modalUserEdit = true)">
+              <MDBIcon icon="pencil-alt" size="lg" />
+            </a>  
+          </h2>
+          <h2 class="text-center form-title" 
+            v-else>
+            {{ user.recruiter.fullName }}
+            <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
+              role="button"
+              @click="(modalUserEdit = true)">
+              <MDBIcon icon="pencil-alt" size="lg" />
+            </a>
+          </h2>
+          <a class="m-1" @click="modalUserInformation = true" href="#" role="button">
+            Información de contacto
           </a>  
-        </h2>
-        <h2 class="text-center form-title" 
-          v-else>
-          {{ user.recruiter.fullName }}
-          <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
-            role="button"
-            @click="(modalUserEdit = true)">
-            <MDBIcon icon="pencil-alt" size="lg" />
-          </a>
-        </h2>
-        <a class="m-1" @click="modalUserInformation = true" href="#" role="button">
-          Información de contacto
-        </a>  
-        <MDBCardText class="text-muted form-options-text" 
-          v-if="user.role == 'Employee'">
-          Trabajador
-        </MDBCardText>
-
-        <MDBCardText class="mb-2 text-muted form-options-text" 
-          v-else>
-          Reclutador / {{ user.recruiter.charge }}
-        </MDBCardText>
-
-        <MDBRow class="m-0 d-flext justify-content-center" 
-          v-if="user.recruiter" >
-          <MDBBadge class="text-wrap py-2 form-options-text logIn-form-button rounded-7" 
-            style="width: 7rem;">
-            Seguidores            
-            {{ user.recruiter.followers.length }}
-          </MDBBadge>
-        </MDBRow>
-      </MDBCardBody>
-    </MDBCard>
+          <MDBCardText class="text-muted form-options-text" 
+            v-if="user.role == 'Employee'">
+            Trabajador
+          </MDBCardText>
+  
+          <MDBCardText class="mb-2 text-muted form-options-text" 
+            v-else>
+            Reclutador / {{ user.recruiter.charge }}
+          </MDBCardText>
+  
+          <MDBRow class="m-0 d-flext justify-content-center" 
+            v-if="user.recruiter" >
+            <MDBBadge class="text-wrap py-2 form-options-text logIn-form-button rounded-7" 
+              style="width: 7rem;">
+              Seguidores            
+              {{ user.recruiter.followers.length }}
+            </MDBBadge>
+          </MDBRow>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBCol>
   </MDBRow>
 
   <MDBModal id="modal-user-information" tabindex="-1" v-model="modalUserInformation" centered>
@@ -104,7 +108,7 @@
       </a>
 
       <MDBModalTitle class="text-center form-title">
-        Editar información
+        Mi información
       </MDBModalTitle>
 
       <p class="text-center mt-4 form-options-text" id="message-user-edit">
@@ -178,7 +182,7 @@
           </MDBRow>
           <MDBRow class="mx-3 my-4 mt-5 d-flex justify-content-center">
             <MDBBtn class="logIn-form-button" type="submit" block>
-              Actualizar información
+              Guardar
             </MDBBtn>
           </MDBRow>
         </form>

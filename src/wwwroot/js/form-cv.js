@@ -137,7 +137,7 @@ export default {
       
       spinner.classList.remove('d-none');
       spinner.style.display = 'flex';
-
+      
       setTimeout(async () => {
         const cvRegistrarion = await this.registerNewEmployeCV(payload);
       }, 1500);
@@ -172,7 +172,7 @@ export default {
         const messages = {
           400: "Verifique las secciones nuevamente 🤔",
           409: "El CV ya se encuentra registrado 🤔",
-          500: "Error interno del servidor 😢",          
+          500: 'Algo salió mal, intenta más tarde 😔'        
         };
 
         messageCVRegister.innerHTML = messages[codeStatus];

@@ -66,6 +66,11 @@ export default {
   mounted() {
     this.fillEditModalFields();
   },
+  data() {
+    return {
+      profileImage: `https://picsum.photos/1920/112?random=${Math.random()}.webp`
+    }
+  },
   setup() {
     const modalUserInformation = ref(false);
     const modalUserEdit = ref(false);
@@ -179,7 +184,6 @@ export default {
             '409':  `El ${type} ya se encuentra registrado 🥹`, 
             '500': 'Algo salió mal, intenta más tarde 😔'
           }
-
           messageUserEdit.innerHTML = messages[codeStatus];
 
           spinner.classList.add('d-none');

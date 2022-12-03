@@ -28,8 +28,8 @@
           <MDBRow class="m-0">
             <p class="text-center mt-4">{{ tableTitle }}</p>
   
-            <MDBTable striped border class="mb-0 bg-white text-center">
-              <thead class="bg-light">
+            <MDBTable border class="mb-0 bg-white text-center">
+              <thead>
                 <tr>
                   <th>{{ elementName }}</th>
                   <th>Eliminar</th>
@@ -68,7 +68,7 @@
           v-if="isRegister">
           <MDBBtn class="support-info-title mt-4 logIn-form-button" block              
             @click="registerCV()">
-            Registrarse
+            Agregar
           </MDBBtn>
         </MDBCol>
         <MDBCol  md="6"

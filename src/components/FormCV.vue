@@ -1,7 +1,7 @@
 <template>
   <MDBBtn class="text-center logIn-form-button my-4" 
     @click="cvModal = true">
-    Registrar
+    Agregar
   </MDBBtn>
 
   <MDBModal tabindex="-1" staticBackdrop centered v-model="cvModal">
@@ -11,12 +11,12 @@
       </a>
 
       <MDBModalTitle class="text-center form-title">
-        Registra tu CV
+        Curriculum Vitae
       </MDBModalTitle>
 
       <MDBCol class="mb-4">
         <p id="message-register" class="text-center mt-3 form-options-text">
-          Aún no has registrado tu CV, por favor llena el siguiente formulario para poder mostrar tu información
+          Aún no has agregado tu CV, por favor llena el siguiente formulario para poder mostrar tu información
         </p>
       </MDBCol>
       <MDBSpinner id="spinner-register-cv" class="d-none" size="sm" />
