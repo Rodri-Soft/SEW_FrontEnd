@@ -64,11 +64,13 @@ export default {
     // }
   },
   mounted() {
+    this.setUserImages();
     this.fillEditModalFields();
-  },
+  },  
   data() {
     return {
-      profileImage: `https://picsum.photos/1920/112?random=${Math.random()}.webp`
+      profileImage: '',
+      backgroundImage: '',
     }
   },
   setup() {
@@ -206,6 +208,12 @@ export default {
       this.$store.commit('setUser', user);
 
       this.fillEditModalFields();
+    },
+    setUserImages() {
+      setInterval(() => {
+        this.profileImage = Cookies.get('profile_image_url');
+        this.backgroundImage = Cookies.get('background_image_url');            
+      }, 100);
     }
   }
 };

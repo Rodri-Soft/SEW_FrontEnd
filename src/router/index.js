@@ -12,6 +12,7 @@ const routes = [
     component: () => import('../views/LogInView.vue')
   },
   {
+    params: true,
     path: '/change-password/:token',
     name: 'changePassword',
     component: () => import('../views/ChangePasswordView.vue'),

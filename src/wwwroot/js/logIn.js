@@ -75,6 +75,8 @@ export default {
   mounted() {
     this.setBackgroud();
     Cookies.remove('access_token');
+    Cookies.remove('profile_image_url');
+    Cookies.remove('background_image_url');
     this.$store.dispatch('user', null);
   },
   methods: {
@@ -240,9 +242,10 @@ export default {
         await axios.post(urlLogin, payload).then((data) => {
           const codeStatus = data.status; 
           const accessToken = data.data.token;
-          const role = data.data.role;
 
           if (codeStatus === 200) {          
+            this.createUserImages();
+
             Cookies.set('access_token', accessToken, { 
               httpOnly: false,
               secure: false,
@@ -316,6 +319,28 @@ export default {
         });
       }
     },    
+    async createUserImages() {
+      const profileImageUrl = 'https://source.unsplash.com/random/160x160/?person';
+      const backgroundImageUrl = 'https://source.unsplash.com/random/1920x112/?color-solid';
+
+      await axios.get(profileImageUrl).then((response) => {
+        const profileImage = response.request.responseURL;
+
+        Cookies.set('profile_image_url', profileImage, {
+          httpOnly: false,
+          secure: false,
+        });
+      });
+
+      await axios.get(backgroundImageUrl).then((response) => {
+        const backgroundImage = response.request.responseURL;
+
+        Cookies.set('background_image_url', backgroundImage, {
+          httpOnly: false,
+          secure: false,
+        });
+      });
+    }
   }
 };
 
@@ -332,6 +357,6 @@ function fillBackgroundContainers(side, id){
     background.alt = `background-${side}`;
     const backgroundContainer = document.getElementById(`background-${side}-container`);
 
-    // backgroundContainer.appendChild(background);
+    backgroundContainer.appendChild(background);
   }
 }

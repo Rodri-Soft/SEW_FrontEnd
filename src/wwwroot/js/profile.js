@@ -42,11 +42,6 @@ export default {
   computed: {
     ...mapGetters(["user"]),
   },
-  data() {
-    return {
-      
-    }
-  },
   created() {
     const user = this.$store.getters.user;
 
@@ -65,5 +60,4 @@ export default {
       });
     }
   },
-  methods: {},
 };

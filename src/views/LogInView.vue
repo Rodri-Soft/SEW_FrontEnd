@@ -1,8 +1,11 @@
 <template>
-  <MDBNavbar light container class="shadow-0 background">
-    <MDBNavbarBrand href="#">
-      <img src="@/assets/logo.svg" alt="logo" class="logo" />
-    </MDBNavbarBrand>
+  <MDBNavbar light container class="shadow-0" position="top">
+    <router-link to="/login">
+      <MDBNavbarBrand
+        class="form-title ">
+        <img src="@/assets/logo-sew.svg" alt="logo" class="logo" />
+      </MDBNavbarBrand>
+    </router-link>
   </MDBNavbar> 
        
   <section>

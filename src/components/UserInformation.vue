@@ -2,15 +2,17 @@
   <MDBRow class="m-0 mb-2 ">
     <MDBCol md="10" class="offset-md-1">
       <MDBCard shadow="0">
-        <MDBCardImg src="https://source.unsplash.com/random/1920x112" alt="Imagen de fondo de perfil" 
-          class="text-center m-0 p-0 bg-image" id="profile-background" top style="height: 7rem;"/>
-        <!-- <MDBCardImg :src=this.profileImage alt="Imagen de fondo de perfil" 
+        <!-- <MDBCardImg src="https://source.unsplash.com/random/1920x112" alt="Imagen de fondo de perfil" 
           class="text-center m-0 p-0 bg-image" id="profile-background" top style="height: 7rem;"/> -->
+        <MDBCardImg :src=this.backgroundImage alt="Imagen de fondo de perfil" 
+          class="m-0 p-0 bg-image" id="profile-background" top style="height: 7rem;"/>
         <MDBCardBody class="text-center">
           <div class="img-fluid outer-circle shadow-6 text-center">
-            <img src="https://source.unsplash.com/random/160x160/?person" 
+            <!-- <img src="https://source.unsplash.com/random/160x160/?person" 
               class="img-fluid rounded-circle"
               alt="Townhouses and Skyscrapers" 
+              id="profile-image" />           -->
+            <img :src=this.profileImage class="img-fluid rounded-circle" alt="Imagen de perfil" 
               id="profile-image" />          
           </div>
           <h2 class="text-center form-title" 

@@ -1,71 +1,72 @@
 .logo {
-    width: 4rem;
+	width: 4rem;
 }
 
 .search-input {
-
-    width: 33rem!important;
-    
-    background-color: #D9D9D9;
-    border: 0;
-    border-radius: 5%;
-
-    padding-left: 5%;
+	width: 33rem !important;
+	height: 3rem;
+	background-color: #f2f2f2;
+	border: 0;
+	border-radius: 5%;
+	padding-left: 7%;	
 }
 
 .search-icon {
-    position: relative;
-    left: 4%;
+	position: relative;
+	left: 5%;
+	margin-left: 1rem;
 }
 
 @media (max-width: 612px) {
+	.search-input {
+		width: 20rem !important;
+		padding-left: 7%;
+	}
 
-    .search-input {
-        width: 20rem!important;
-        padding-left: 7%;
-    }
-
-    .search-icon {
-        left: 5.5%;
-    }
-
+	.search-icon {
+		left: 5.5%;
+	}
 }
 
 @media (max-width: 375px) {
-    .search-input {
-        width: 14rem!important;
-        padding-left: 7%;
-    }
+	.search-input {
+		width: 14rem !important;
+		padding-left: 7%;
+	}
 }
 
 @media (max-width: 395px) {
-
-    .dropdownMenuButton-notifications {
-        margin-left: 2rem!important;
-    }
+	.dropdownMenuButton-notifications {
+		margin-left: 2rem !important;
+	}
 }
 
 .color-button {
-    color: #4F4F4F;    
+	color: #4F4F4F;
 }
 
 .filter-text {
-    display: inline;    
+	display: inline;
 }
 
 .search-container {
-    margin-left: -2%;
+	margin-left: -2%;
 }
 
-.dropdownMenuButton-notifications, #dropDownBell {
-    margin-left: -9rem;
+.dropdownMenuButton-notifications,
+#dropDownBell {
+	margin-left: -9rem;
 }
 
 .navbar-notifications {
-    margin-right: 0!important;
+	margin-right: 0 !important;
 }
 
 .dropdownMenuButton-user {
-    background-color: #1B2730;
+	background-color: #1B2730;
 }
 
+.nav-profile {
+	display: flex;
+	justify-content:last baseline;
+}
