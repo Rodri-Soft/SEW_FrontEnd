@@ -9,13 +9,15 @@
                     </a>
                     <MDBDropdownMenu id="offerDropDownEllipsis" aria-labelledby="offerDropdownMenuButtonEllipsis"
                         class="dropdownMenuButton-ellipsis">
-                        <MDBDropdownItem tag="button">Eliminar</MDBDropdownItem>                       
+                        <MDBDropdownItem tag="button" v-on:click="remove">Eliminar</MDBDropdownItem>                       
+                        <MDBDropdownItem tag="button" v-on:click="alter">Modificar</MDBDropdownItem>                       
+                        <MDBDropdownItem tag="button" v-on:click="showOffer">Imprimir</MDBDropdownItem>                       
                     </MDBDropdownMenu>
                 </MDBDropdown>                
             </div>
 
             <div>                                
-                <a href="#" class="text-decoration-none fs-3">{{personalOffers.title}}</a>
+                <a tag="button" v-on:click="consultOffer" class="text-decoration-none fs-3">{{personalOffers.title}}</a>                
             </div>
 
         </MDBCardHeader>

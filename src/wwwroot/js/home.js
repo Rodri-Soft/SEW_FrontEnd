@@ -22,7 +22,7 @@ export default {
         full_name: "José Daniel Camarillo Villa",        
         followers: 300,
         amount_offers: 21,
-        role: "recruiters",
+        role: "Employee",
       },
       offerInformation: [
         {

@@ -50,11 +50,26 @@ export default {
     }
   },
   props: ["personalOffers"],  
+  data() {
+    return {                                        
+    };
+  },
   mounted(){ 
     
   },
   methods:{
-    
+    alter() {
+      this.$emit("alterOfferItem");
+    },
+    remove() {
+      this.$emit("removeOfferItem");
+    },
+    showOffer() {
+      this.$emit("showOffer");
+    },
+    consultOffer() {
+      this.$emit("consultOffer");
+    }
   }
 }
 

@@ -19,8 +19,9 @@ const routes = [
   },
   {
     path: '/about',
-    name: 'about',
-    meta: { requiresAuth: true },
+    name: 'about',   
+    props: true, 
+    // meta: { requiresAuth: true },
     component: () => import('../views/AboutView.vue')
   },
   {
@@ -39,7 +40,19 @@ const routes = [
     path: '/profile/cv/work-experiences',
     name: 'workExperiences',
     meta: { requiresAuth: true },
-    component: () => import('../views/CVWorksView.vue')    
+    component: () => import('../views/CVWorksView.vue')
+  },
+  {
+    path: '/',
+    name: 'dev',
+    // meta: { requiresAuth: true },
+    component: () => import('../views/OfferView.vue')
+  },
+  {
+    path: '/offerApplications',
+    name: 'offerApplications',
+    // meta: { requiresAuth: true },
+    component: () => import('../views/OfferApplicationsView.vue')
   }
 ]
 
