@@ -65,8 +65,26 @@ export default {
   mounted(){   
     this.showInputSearchShadow();  
     this.setUserImages();
+    this.adaptDropDown("bellNotificationsButton", "dropDownBell", "1rem", "-9rem");
+    this.adaptDropDown("filterButton", "dropDownFilter", "-9rem", "0");  
   },
   methods:{ 
+    adaptDropDown(button, item, value, oldValue) {
+      const windowSize = 992;      
+
+      $(`#${ button }`).click(function() {
+        
+        if ($("#navbarSupportedContent").hasClass("show")) {          
+          $(`#${item}`).css("margin-left", `${value}`);         
+        }
+                        
+        let width = $(window).width();                     
+        
+        if (width >= windowSize) {                    
+          $(`#${item}`).css("margin-left", `${oldValue}`);
+        }                 
+      });
+    },
     showInputSearchShadow() {
       const inputSearch = document.getElementById("input-search");
 

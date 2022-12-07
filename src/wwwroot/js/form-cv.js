@@ -44,7 +44,7 @@ export default {
       academics: [],
       certificates: [],
       skills: [],
-      description: "",
+      description: '',
       isStageOneVisible: true,
       isStageTwoVisible: false,
       isStageThreeVisible: false,
