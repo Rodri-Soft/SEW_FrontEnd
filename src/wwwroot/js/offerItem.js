@@ -50,6 +50,10 @@ export default {
     }
   },
   props: ["personalOffers"],  
+  data() {
+    return {                                        
+    };
+  },
   mounted(){ 
     
   },
@@ -62,6 +66,9 @@ export default {
     },
     showOffer() {
       this.$emit("showOffer");
+    },
+    consultOffer() {
+      this.$emit("consultOffer");
     }
   }
 }

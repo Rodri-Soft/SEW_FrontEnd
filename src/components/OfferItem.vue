@@ -17,7 +17,7 @@
             </div>
 
             <div>                                
-                <a href="#" class="text-decoration-none fs-3">{{personalOffers.title}}</a>
+                <a tag="button" v-on:click="consultOffer" class="text-decoration-none fs-3">{{personalOffers.title}}</a>                
             </div>
 
         </MDBCardHeader>

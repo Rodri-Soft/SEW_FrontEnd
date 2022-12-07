@@ -11,6 +11,9 @@ export default createStore({
     certifications: [],
     skills: [],
     description: null,
+
+    test: null,
+    offer: null,
   },
   getters: {
     user: (state) => {
@@ -33,6 +36,13 @@ export default createStore({
     },
     description: (state) => {
       return state.description;
+    },
+
+    test: (state) => {
+      return state.test;
+    },
+    offer: (state) => {
+      return state.offer;
     }
   },
   actions: {

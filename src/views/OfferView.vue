@@ -18,13 +18,15 @@
             </div>
 
             <div class="col-lg-6 p-lg-0">
-                <h2>Mis Ofertas</h2>                
+                <h2>Mis Ofertas</h2>     
+                <h3 v-show="emptyOffers == true" class="mt-5 text-center">No hay ofertas por mostrar 🤔</h3>           
                 <OfferItem v-for="(offer, i) in offerInformation"
                             :key="i"
                             :personalOffers="offer"
                             v-on:alterOfferItem="alterOfferItem(i)"
                             v-on:removeOfferItem="removeOfferItem(i)"                    
-                            v-on:showOffer="showOffer(i)" />                    
+                            v-on:showOffer="showOffer(i)"
+                            v-on:consultOffer="consultOffer(i)" />                    
             </div>
 
             <div class="col-lg-3 mb-3">

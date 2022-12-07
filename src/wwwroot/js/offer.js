@@ -85,8 +85,8 @@ export default {
       experience,
       workday,
       category,
-      modalAddOffer, 
-      
+      modalAddOffer,       
+
     };
   },
   data() {
@@ -94,15 +94,15 @@ export default {
 
       userObject: {
         photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
-        full_name: "José Daniel Camarillo Villa",
-        tag_name: "@CamarilloVilla",
+        full_name: "José Daniel Camarillo Villa",        
         followers: 300,
         amount_offers: 21,
         role: "recruiters",
       },      
       offerInformation: [],
       update: false,
-      updatedOfferIndex: 0,                               
+      updatedOfferIndex: 0,
+      emptyOffers: true,                               
     };
   },
   mounted(){ 
@@ -216,8 +216,10 @@ export default {
       });
     },
     fillOffers() {
+
       this.offerInformation.push(
         {
+          id: 10,
           title: "Lorem ipsum 1",                              
           description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.`,
           category: "Tecnología y telecomunicaciones",
@@ -227,6 +229,9 @@ export default {
           jobAplicationsNumber: 24,          
         }
       );
+
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true;
+      
     },
     alterOfferItem(i) {           
       
@@ -245,10 +250,13 @@ export default {
 
       const offersRemove = this.offerInformation.filter((element, index) => index !== i);      
       this.offerInformation = offersRemove;
-      
+
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true;
+
     },
     showOffer(i) {
-      console.log(i);
+      console.log("Índice de elemento en arreglo "+i);
+      console.log("ID de offer "+this.offerInformation[i].id);      
     },
     closeOfferModal(){
       
@@ -269,9 +277,15 @@ export default {
       messagePublish.classList.add('text-success');
       const publishButton = document.getElementById('publish-offer-button');
       publishButton.setAttribute("disabled", "");
+
+      const offersLenght = this.offerInformation.length;
+
+      //Verificar que haya por lo menos un elemento
+      const lastOffer = this.offerInformation[offersLenght - 1];
       
       this.offerInformation.push(
         {
+          id: (lastOffer.id + 1),
           title: this.title,                              
           description: this.description,
           category: this.category,
@@ -281,6 +295,8 @@ export default {
           jobAplicationsNumber: 0,          
         }
       );
+
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true;
     },
     updateOffer(messageUpdate) {
       
@@ -299,7 +315,14 @@ export default {
       this.offerInformation[this.updatedOfferIndex] = newOffer;
                
     },
-
+    consultOffer(i) {
+      console.log(i);     
+      // this.$router.push({ name: 'about', params: { title: 'test title' }});
+      // this.$store.state.test = "Test title";
+      this.$store.state.offer = this.offerInformation[i];
+      this.$router.push('offerApplications');
+      
+    }
   }
 }
 
