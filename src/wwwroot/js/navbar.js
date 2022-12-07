@@ -1,6 +1,11 @@
-import HelloWorld from '@/components/HelloWorld.vue'
 import $ from 'jquery';
+import Cookies from "js-cookie";
+import { ref } from "vue";
+import { mapGetters } from "vuex";
 import {
+  MDBInput,
+  MDBCol,
+  MDBRow,
   MDBBtn,
   MDBNavbar,
   MDBNavbarToggler,
@@ -14,15 +19,14 @@ import {
   MDBDropdownItem,
   MDBIcon,
   MDBBadge,
-
 } from 'mdb-vue-ui-kit';
-import { ref } from 'vue';
 
 export default {
   name: 'Navbar',
   components: {
-    HelloWorld,
-
+    MDBInput,
+    MDBCol,
+    MDBRow,
     MDBBtn,
     MDBNavbar,
     MDBNavbarToggler,
@@ -35,37 +39,40 @@ export default {
     MDBDropdownMenu,
     MDBDropdownItem,
     MDBIcon,
-    MDBBadge,
-                              
+    MDBBadge,                      
+  },
+  computed: {
+    ...mapGetters(["user"]),
+  },
+  data() {
+    return {
+      profileImage: '',
+    }
   },
   setup() {
-    const collapse1 = ref(false);
-    const dropdown1 = ref(false); 
+    const collapse = ref(false);
+    const dropdownFilter = ref(false); 
     const dropdownBellNotifications = ref(false);
-    const dropdown21 = ref(false);
-    const dropdown13 = ref(false);      
+    const dropdownProfile = ref(false);      
 
     return {
-      collapse1,
-      dropdown1,
+      collapse,
+      dropdownFilter,
       dropdownBellNotifications,
-      dropdown21,
-      dropdown13,      
+      dropdownProfile,      
     }   
   },
   mounted(){   
-    
+    this.showInputSearchShadow();  
+    this.setUserImages();
     this.adaptDropDown("bellNotificationsButton", "dropDownBell", "1rem", "-9rem");
-    this.adaptDropDown("filterButton", "dropDownFilter", "-9rem", "0");    
-
+    this.adaptDropDown("filterButton", "dropDownFilter", "-9rem", "0");  
   },
-  methods:{
-            
+  methods:{ 
     adaptDropDown(button, item, value, oldValue) {
-
       const windowSize = 992;      
 
-      $( `#${button}` ).click(function() {
+      $(`#${ button }`).click(function() {
         
         if ($("#navbarSupportedContent").hasClass("show")) {          
           $(`#${item}`).css("margin-left", `${value}`);         
@@ -75,9 +82,27 @@ export default {
         
         if (width >= windowSize) {                    
           $(`#${item}`).css("margin-left", `${oldValue}`);
-        }       
-          
+        }                 
       });
-    }       
+    },
+    showInputSearchShadow() {
+      const inputSearch = document.getElementById("input-search");
+
+      inputSearch.addEventListener("focus", function() {
+        inputSearch.classList.add("shadow");        
+        inputSearch.style.backgroundColor = "#fff";
+      });
+
+      inputSearch.addEventListener("blur", function() {
+        inputSearch.classList.remove("shadow");
+        inputSearch.style.backgroundColor = "#f5f5f5";      
+      })
+    },
+    setUserImages() {
+      setInterval(() => {
+        this.profileImage = Cookies.get('profile_image_url');
+        // this.backgroundImage = Cookies.get('background_image_url');            
+      }, 100);
+    }      
   }
 }

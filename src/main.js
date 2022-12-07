@@ -5,15 +5,4 @@ import store from './store'
 import 'mdb-vue-ui-kit/css/mdb.min.css';
 import axios from 'axios';
 
-// axios.interceptors.response.use(undefined, function(error) {
-//   if (error) {
-//     const originalRequest = error.config;
-//     if (error.response.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-//       store.dispatch("LogOut");
-//       return router.push("/login");
-//     }
-//   }
-// });
-
 createApp(App).use(store).use(router).mount('#app')

@@ -1,0 +1,37 @@
+.outer-circle {
+  background-color: white;
+  border-radius: 50%;
+  height: 10.5rem;
+  width: 10.5rem;
+  position: relative;
+  margin: -5rem 0 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 268px) {
+  .outer-circle {
+    height: 5rem;
+    width: 5rem;
+  }
+}
+
+#profile-image {
+  position: absolute;
+  width: 10rem;
+}
+
+h3 {
+  color: #000;
+  font-size: 1.2rem;
+}
+
+#spinner-user-edit {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}

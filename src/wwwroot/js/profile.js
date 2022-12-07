@@ -1,11 +1,12 @@
 import Navbar from '@/components/Navbar.vue'
-import ModalCV from '@/components/ModalCV.vue'
-import $ from 'jquery';
+import FormCV from '@/components/FormCV.vue'
+import UserInformation from '@/components/UserInformation.vue'
 import axios from 'axios';
 import './axios'
-import { ref } from 'vue';
 import Cookies from 'js-cookie';
 import { mapGetters } from 'vuex';
+import _ from 'lodash';
+
 import {
   MDBIcon,
   MDBRow,
@@ -17,19 +18,15 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBCardLink,
-  MDBCardImg,
-  MDBModal,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-  
+  MDBCardImg
 } from "mdb-vue-ui-kit";
 
 export default {
   name: "ProfileView",
   components: {
+    FormCV,
     Navbar,
-    ModalCV,
+    UserInformation,
     MDBIcon,
     MDBInput,
     MDBRow,
@@ -41,43 +38,26 @@ export default {
     MDBCardText,
     MDBCardLink,
     MDBCardImg,
-    MDBModal,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
   },
   computed: {
     ...mapGetters(["user"]),
   },
-  data() {
-    return {
-       
-    }
-  },
-  setup() {
-    const modalUserInformation = ref(false);
+  created() {
+    const user = this.$store.getters.user;
 
-    return {
-      modalUserInformation,  
-    };
-  },
-  mounted() {
-    this.getEmployeeProfile();
-    this.modalLenguageCV = true;
-  },
-  methods: {
-    async getEmployeeProfile() {
-      const token = Cookies.get("access_token");
-      const url = "profile/my-cv";
+    if (!user) {
+      const urlProfile = "profile";
+      const token = Cookies.get('access_token');      
       const config = {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { 'Authorization': `Bearer ${token}` }
       };
-      const createCV = await axios.get(url, config)
-      .then((response) => {
-        const employee = response.data;
-        this.$store.dispatch("user", employee);
+      
+      axios.get(urlProfile, config).then((response) => {
+        const user = response.data;
+        
+        this.$store.dispatch("user", user);
+        this.$router.push('profile');
       });
-    },
-    
+    }
   },
 };

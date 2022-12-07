@@ -12,10 +12,10 @@ const routes = [
     component: () => import('../views/LogInView.vue')
   },
   {
-    path: '/change-password',
+    params: true,
+    path: '/change-password/:token',
     name: 'changePassword',
     component: () => import('../views/ChangePasswordView.vue'),
-    meta: { requiresAuth: true }
   },
   {
     path: '/about',
@@ -26,20 +26,20 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
     component: () => import('../views/HomeView.vue')
   },
   {
     path: '/profile',
     name: 'profile',
-    // meta: { requiresAuth: true },
+    meta: { requiresAuth: true },
     component: () => import('../views/ProfileView.vue')
   },
   {
-    path: '/',
-    name: 'dev',
-    // meta: { requiresAuth: true },
-    component: () => import('../views/OfferView.vue')
+    path: '/profile/cv/work-experiences',
+    name: 'workExperiences',
+    meta: { requiresAuth: true },
+    component: () => import('../views/CVWorksView.vue')    
   }
 ]
 

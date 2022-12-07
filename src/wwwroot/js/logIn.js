@@ -4,6 +4,7 @@ import axios from 'axios';
 import './axios'
 import { ref } from 'vue';
 import Cookies from 'js-cookie';
+import { mapGetters } from 'vuex';
 import {
   MDBRow,
   MDBCol,
@@ -18,7 +19,8 @@ import {
   MDBModalTitle,
   MDBModalBody,
   MDBModalFooter,
-  MDBRadio
+  MDBRadio,
+  MDBSpinner
 } from 'mdb-vue-ui-kit';
 export default {
   name: 'LogInView',
@@ -37,7 +39,11 @@ export default {
     MDBModalTitle,
     MDBModalBody,
     MDBModalFooter,
-    MDBRadio
+    MDBRadio,
+    MDBSpinner
+  },
+  computed: {
+    ...mapGetters(['user']),    
   },
   setup() {
     const email = ref('');
@@ -67,15 +73,16 @@ export default {
     };
   },
   mounted() {
-    Cookies.remove('access_token');
     this.setBackgroud();
-    this.loginWithGoogle();
+    Cookies.remove('access_token');
+    Cookies.remove('profile_image_url');
+    Cookies.remove('background_image_url');
+    this.$store.dispatch('user', null);
   },
   methods: {
     setBackgroud() {
       let width = $(window).width();
       const windowSize = 768;
-      const windowsForm = 576;
 
       if (width < windowSize) {
         emptyBackgroundContainers();
@@ -116,11 +123,7 @@ export default {
 
       if (!patterns[pattern].test(input)) {
         inputElement.classList.add('is-invalid');
-        const formsText = document.querySelectorAll('.form-text');
-                
-        formsText.forEach((formText) => {
-          formText.innerHTML = '';
-        });
+        this.removeSupportingText();
       } else {
         inputElement.classList.remove('is-invalid');
 
@@ -129,7 +132,7 @@ export default {
 
       return isValid;
     },
-    removeFormText() {
+    removeSupportingText() {
       const formsText = document.querySelectorAll('.form-text');
         
       formsText.forEach((formText) => {
@@ -161,24 +164,32 @@ export default {
     
       return numberOfErrors;
     },
+    createUser() {
+      let payload = {
+        fullName: this.fullName,
+        phone: this.phoneNumber,
+        user: {
+          rfc: this.rfc,
+          role: this.role,
+          email: this.emailRegister,
+          password: this.passwordRegister,
+          provider: 'Local',
+        }
+      };
+
+      return payload;
+    },
+    async loginWithGoogle() {            
+      const url = 'http://localhost:3000/api/v1/auth/google';
+      window.location.href = url; 
+    },
     async registerNewUser(event) {
       event.target.classList.add('was-validated');    
 
       const numberOfErrors = this.validateFormRegister();
 
       if (event.target.checkValidity() && numberOfErrors === 0) {        
-        let payload = {
-          fullName: this.fullName,
-          phone: this.phoneNumber,
-          user: {
-            rfc: this.rfc,
-            role: this.role,
-            email: this.emailRegister,
-            password: this.passwordRegister,
-            provider: 'Local',
-          }
-        };
-
+        const payload = this.createUser();
         const messageLogin = document.getElementById('message-register');
         const url = this.role === 'Recruiter' ? 'recruiters' : 'employees';
 
@@ -211,10 +222,13 @@ export default {
           messageLogin.innerHTML = messages[codeStatus];
         });
       } else {
-        this.removeFormText();
+        this.removeSupportingText();
       }
     },
     async login(event) {
+      const sppinerLogin = document.getElementById('spinner-login');
+      sppinerLogin.classList.remove('d-none');
+
       event.target.classList.add('was-validated');
 
       if (event.target.checkValidity()) {
@@ -222,22 +236,25 @@ export default {
           email: this.email,
           password: this.password,
         };
-        const url = 'auth/login';
+        const urlLogin = 'auth/login';
         const messageLogin = document.getElementById('message-login');
 
-        await axios.post(url, payload).then((data) => {
+        await axios.post(urlLogin, payload).then((data) => {
           const codeStatus = data.status; 
           const accessToken = data.data.token;
-          
-          if (codeStatus === 200) {           
+
+          if (codeStatus === 200) {          
+            this.createUserImages();
+
             Cookies.set('access_token', accessToken, { 
               httpOnly: false,
-              secure: true 
+              secure: false,
             });
-
-            this.$router.push('about');          
+          
+            this.setSession();
           } 
         }).catch((error) => {
+          sppinerLogin.classList.add('d-none');
           const inputEmail = document.getElementById('input-email');
           const inputPassword = document.getElementById('input-password');          
           const codeStatus = error.response.status;
@@ -253,12 +270,19 @@ export default {
         });
       }
     },
-    loginWithGoogle() {      
-      const googleButton = document.getElementById('google-button');
-      const url = 'http://localhost:3000/api/v1/auth/google';
-      googleButton.addEventListener('click', () => {        
-        window.location.href = url;        
-      });      
+    async setSession() {
+      const urlProfile = "profile";
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      
+      await axios.get(urlProfile, config).then((response) => {
+        const user = response.data;
+        
+        this.$store.dispatch("user", user);
+        this.$router.push('profile');
+      });
     },
     async changePassword(event) {
       event.target.classList.add('was-validated');
@@ -282,7 +306,6 @@ export default {
             messageChangePassword.innerHTML = 'Se ha enviado un correo a tu correo electrónico. Puede cerrar esta ventana 👍';
           } 
         }).catch((error) => {
-          console.log(error);
           const codeStatus = error.response.status;
           const messages = {
             '400': 'Verifique su correo nuevamente 🤔',
@@ -295,6 +318,28 @@ export default {
           inputEmail.classList.add('is-invalid');
         });
       }
+    },    
+    async createUserImages() {
+      const profileImageUrl = 'https://source.unsplash.com/random/160x160/?person';
+      const backgroundImageUrl = 'https://source.unsplash.com/random/1920x112/?color-solid';
+
+      await axios.get(profileImageUrl).then((response) => {
+        const profileImage = response.request.responseURL;
+
+        Cookies.set('profile_image_url', profileImage, {
+          httpOnly: false,
+          secure: false,
+        });
+      });
+
+      await axios.get(backgroundImageUrl).then((response) => {
+        const backgroundImage = response.request.responseURL;
+
+        Cookies.set('background_image_url', backgroundImage, {
+          httpOnly: false,
+          secure: false,
+        });
+      });
     }
   }
 };

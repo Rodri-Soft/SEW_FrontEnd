@@ -1,8 +1,11 @@
 <template>
-  <MDBNavbar light container class="shadow-0 background">
-    <MDBNavbarBrand href="#">
-      <img src="@/assets/logo.svg" alt="logo" class="logo" />
-    </MDBNavbarBrand>
+  <MDBNavbar light container class="shadow-0" position="top">
+    <router-link to="/login">
+      <MDBNavbarBrand
+        class="form-title ">
+        <img src="@/assets/logo-sew.svg" alt="logo" class="logo" />
+      </MDBNavbarBrand>
+    </router-link>
   </MDBNavbar> 
        
   <section>
@@ -39,10 +42,8 @@
                 />
             </MDBCol>
             <MDBCol md="12">              
-              <MDBInput type="password" label="Contraseña" v-model="password" class="input-password"
-                  id="input-password"
-                  invalidFeedback="Verifica tu contraseña"
-                  required inputGroup>
+              <MDBInput type="password" label="Contraseña" v-model="password"
+                class="input-password" id="input-password" invalidFeedback="Verifica tu contraseña" autocomplete="on" required inputGroup>
                 <span outline="primary" class="password-span input-group-text border-0" @click="showPassword">
                   <MDBIcon icon="eye" size="lg" class="password-icon"/>
                 </span>
@@ -55,14 +56,17 @@
             </MDBCol>            
           </MDBRow>
           
-          <MDBBtn type="submit" block class="mt-4 logIn-form-button"> Ingresar </MDBBtn>
+          <MDBBtn type="submit" class="mt-4 logIn-form-button" block> 
+            Ingresar
+            <MDBSpinner id="spinner-login" class="ms-2 d-none" tag="span" size="sm" />
+          </MDBBtn>
 
           <MDBRow class="mt-4">
             <p class="text-center form-options-text">─ O Inicia Sesión con ─</p>
           </MDBRow>
 
           <MDBRow class="mb-4 d-flex justify-content-center">
-            <MDBBtn id="google-button" outline="dark">
+            <MDBBtn outline="dark" @click="loginWithGoogle()">
               <MDBIcon iconStyle="fab" icon="google"></MDBIcon>
                 <strong>
                   Google
@@ -95,7 +99,7 @@
         </MDBModalTitle>
 
         <form @submit.prevent="registerNewUser" class="user-form" novalidate>        
-          <MDBRow class="g-3">
+          <MDBRow class="g-4">
             <MDBCol>
               <p id="message-register" class="text-center mt-3">
                 Registrate para encontrar ofertas laborales para ti
@@ -104,18 +108,21 @@
 
             <MDBCol md="12">
               <MDBInput type="text" label="Nombre Completo" id="input-full-name" v-model="fullName"
-                invalidFeedback="Verifica tu nombre completo" 
+                counter :maxlength="50"
+                invalidFeedback="Verifica tu nombre completo"
                 required/>
             </MDBCol>
             
             <MDBCol md="12">
-              <MDBInput type="text" label="RFC" id="input-rfc" v-model="rfc" 
+              <MDBInput type="text" label="RFC" id="input-rfc" v-model="rfc"
+                counter :maxlength="13" 
                 invalidFeedback="Verifica tu RFC" 
                 required/>            
             </MDBCol>
 
             <MDBCol md="12">
               <MDBInput type="tel" label="Número telefónico" id="input-phone-number" v-model="phoneNumber"
+                counter :maxlength="10"
                 invalidFeedback="Verifica tu número telefónico" 
                 required/>            
             </MDBCol>
@@ -160,7 +167,9 @@
               inline/>          
           </MDBCol>
           
-          <MDBBtn id="register-user-button" type="submit" class="mt-2 logIn-form-button" block>Registrarse</MDBBtn>
+          <MDBBtn id="register-user-button" type="submit" class="mt-2 logIn-form-button" block>
+            Registrarse
+          </MDBBtn>
         </form>
       </MDBModalBody>
     </MDBModal>
