@@ -4,6 +4,12 @@ import Navbar from '@/components/Navbar.vue'
 import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
 import MainFeed from '@/components/MainFeed.vue'
 import Category from '@/components/Category.vue'
+import { mapGetters } from "vuex";
+import Cookies from "js-cookie";
+import axios from 'axios';
+import './axios'
+import { ref } from "vue";
+
 
 export default {
 
@@ -69,6 +75,9 @@ export default {
       ]                       
       // offerInformation: [],
     };
+  },
+  computed: {
+    ...mapGetters(["user"]),
   },
   mounted(){   
     

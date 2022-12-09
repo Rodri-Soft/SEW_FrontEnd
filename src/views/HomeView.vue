@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 mb-3">
-                <ProfileMainMenu :user="userObject"/>                
+                <ProfileMainMenu/>                
             </div>
 
             <div class="col-lg-6 p-lg-0">                
