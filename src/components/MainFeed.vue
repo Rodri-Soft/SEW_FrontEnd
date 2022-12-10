@@ -5,11 +5,11 @@
             <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-start mt-3">
                     <img v-bind:src="userPhoto"
-                        class="img-fluid rounded-circle profileImageFeed" alt="Townhouses and Skyscrapers" />
+                        class="img-fluid rounded-circle profileImageFeed" alt="Foto de perfil de reclutador" />
                     <div class="ms-2">
-                        <MDBCardText class="mb-1">{{offers.full_name}}</MDBCardText>
+                        <MDBCardText class="recruiter-fullname mb-1">{{offers.recruiter.fullName}}</MDBCardText>
                         <MDBCardText class="text-muted d-flex justify-content-start">
-                            {{offers.role}}
+                            Reclutador
                         </MDBCardText>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 <MDBBtn class="shadow-0" tag="a" color="warning actionIcon" floating size="sm">
                     <i class="fas fa-star me-2"></i>
                 </MDBBtn>
-                <p class="fs-5 ms-1">{{offers.score}}</p>
+                <p class="fs-5 ms-1">{{ score }}</p>
             </div>            
 
             <MDBRow class="row mt-3 mb-2">

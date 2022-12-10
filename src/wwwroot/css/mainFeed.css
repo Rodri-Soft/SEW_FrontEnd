@@ -2,6 +2,10 @@
     border-color: white;
 }
 
+.recruiter-fullname {
+    margin-left: -1rem;
+}
+
 .profileImageFeed {    
     width: 4rem;    
 }
