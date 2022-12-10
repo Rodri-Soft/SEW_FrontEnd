@@ -45,4 +45,21 @@
     }
 }
 
+.star-widget{
+    padding: 10px;
+}
 
+.star-widget input {
+    display: none;
+}
+
+.star-widget label {
+    color: #444;
+    padding-left: 10px;
+    float: inline-start;
+    transition: all 0.2s ease;
+}
+
+.score-menu {
+    margin-left: -10px!important;
+}

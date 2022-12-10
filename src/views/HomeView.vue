@@ -16,7 +16,7 @@
             <div class="col-lg-3 mb-3">
                 <div class="col col-sm-12">
                     <div class="d-flex justify-content-lg-end justify-content-center">
-                        <Category/>
+                        <Category v-on:consultOffers="consultOffers"/>
                     </div>
                 </div>                
             </div>

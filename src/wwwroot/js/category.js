@@ -36,45 +36,15 @@ export default {
   },
   data() {
     return {            
-      categoryInformation: [{
-          title: "#Tecnología e Informática"
-        },
-        {
-          title: "#Ingeniería y Producción"
-        },
-        {
-          title: "#Compras y Lógistica"
-        },
-        {
-          title: "#Digital"
-        }  
-
-      ]     
-
-      // categoryInformation: [] 
+      
     };
   },
-  mounted(){   
-    
-    // this.fillCateogories();
+  mounted(){           
     
   },
-  methods:{
-            
-    fillCateogories() {      
-      let categoriesArray = [];
-      for (let i = 0; i < 4; i++) {
-        
-        let categoriesObject = {};
-        let text = "Item ";
-        categoriesObject.title = text+(i+1);        
-        categoriesArray[i] = categoriesObject;
-        
-      }
-      
-      this.categoryInformation = categoriesArray;      
-    }
-       
+  methods:{                
+    
+
   }
 }
 

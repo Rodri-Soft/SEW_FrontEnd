@@ -4,7 +4,7 @@
 
         <div class="d-flex justify-content-between">
             <p class="d-flex align-items-center mt-3 mb-1 text-wrap listText">{{categories.title}}</p>
-            <MDBBtn color="light shadow-0 listButton" rounded>Seguir</MDBBtn>
+            <MDBBtn color="light shadow-0 listButton" rounded>Ver</MDBBtn>
         </div>                    
                                                         
     </MDBListGroupItem>
