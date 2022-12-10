@@ -90,15 +90,7 @@ export default {
     };
   },
   data() {
-    return {
-
-      userObject: {
-        photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
-        full_name: "José Daniel Camarillo Villa",        
-        followers: 300,
-        amount_offers: 21,
-        role: "recruiters",
-      },      
+    return {          
       offerInformation: [],
       update: false,
       updatedOfferIndex: 0,

@@ -251,7 +251,7 @@ export default {
               secure: false,
             });
           
-            this.setSession();
+            this.setSession();            
           } 
         }).catch((error) => {
           sppinerLogin.classList.add('d-none');
@@ -283,7 +283,7 @@ export default {
         this.$store.dispatch("user", user);
         this.$router.push('profile');
       });
-    },
+    },    
     async changePassword(event) {
       event.target.classList.add('was-validated');
 

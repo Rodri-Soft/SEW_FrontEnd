@@ -66,6 +66,11 @@ export default {
   mounted() {
     this.setUserImages();
     this.fillEditModalFields();
+    if (this.user.role == 'Recruiter') {
+      this.setFollowers();
+      this.setAmountOffers();
+    }    
+    this.setMenuBackground();
   },  
   data() {
     return {
@@ -214,6 +219,63 @@ export default {
         this.profileImage = Cookies.get('profile_image_url');
         this.backgroundImage = Cookies.get('background_image_url');            
       }, 100);
-    }
+    },
+    async setFollowers() {      
+
+      const url = 'followers';
+      const payload = {         
+        recruiterId: this.user.recruiter.id,         
+      };
+      await axios.post(url, payload).then((response) => {
+        const codeStatus = response.status;                  
+        if (codeStatus === 200) {                    
+          const followers = response.data;          
+          this.$store.commit('setFollowers', followers);
+        }
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {
+          401: 'No autorizado 😡',
+          400: "Verifique el campo nuevamente 🤔",
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }          
+      });                    
+    },
+    async setAmountOffers(){
+              
+      const url = 'recruiter-offers/offersNumber';
+      const payload = {         
+        recruiterId: this.user.recruiter.id,         
+      };
+
+      await axios.post(url, payload).then((response) => {
+        const codeStatus = response.status;          
+        
+        if (codeStatus === 200) {                              
+          const amountOffers = response.data;          
+          this.$store.commit('setAmountOffers', amountOffers);
+        }
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {
+          401: 'No autorizado 😡',
+          400: "Verifique el campo nuevamente 🤔",
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }          
+      });              
+        
+    },
+    setMenuBackground(){
+      const min = 59;
+      const max = 71;
+      let indexBackground = Math.floor(Math.random()*(max-min+1)+min);
+      let urlBackground = `https://mdbootstrap.com/img/new/standard/city/0${indexBackground}.webp`;      
+
+      Cookies.set('background_profile_image', urlBackground, {
+        httpOnly: false,
+        secure: false,
+      });
+    },
+
   }
 };

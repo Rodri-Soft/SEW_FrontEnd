@@ -14,7 +14,7 @@
                         </MDBBtn>                         
                     </MDBCol>                    
                 </MDBRow>                        
-                <ProfileMainMenu :user="userObject" />
+                <ProfileMainMenu/>
             </div>
 
             <div class="col-lg-6 p-lg-0">

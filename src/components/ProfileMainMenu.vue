@@ -24,7 +24,7 @@
                         <p class="mb-2">Siguiendo</p>
                     </MDBListGroupItem>
                     <MDBListGroupItem class="backgroundFont borderColorProfile text-center">
-                        <p class="mt-3 mb-1">{{amount_offers}}</p>
+                        <p class="mt-3 mb-1">{{ amountOffers }}</p>
                         <p class="mb-2">Ofertas</p>
                     </MDBListGroupItem>
                 </MDBListGroup>

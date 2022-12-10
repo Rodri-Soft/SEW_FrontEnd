@@ -42,12 +42,12 @@ const routes = [
     meta: { requiresAuth: true },
     component: () => import('../views/CVWorksView.vue')
   },
-  // {
-  //   path: '/',
-  //   name: 'dev',
-  //   // meta: { requiresAuth: true },
-  //   component: () => import('../views/OfferView.vue')
-  // },
+  {
+    path: '/offers',
+    name: 'offers',
+    // meta: { requiresAuth: true },
+    component: () => import('../views/OfferView.vue')
+  },
   {
     path: '/offerApplications',
     name: 'offerApplications',
