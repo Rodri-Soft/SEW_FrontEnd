@@ -45,7 +45,7 @@
                 </MDBBtn>   
             </MDBCol>
             <MDBCol id="offersButton" col="12">
-                <MDBBtn v-show="user.role == 'Recruiter'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
+                <MDBBtn @click="consultRecruiterOffers" v-show="user.role == 'Recruiter'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-briefcase me-2 fa-lg"></i>
                     Mis Ofertas
                 </MDBBtn>   

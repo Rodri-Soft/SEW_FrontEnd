@@ -78,8 +78,10 @@ export default {
     }
   },
   mounted(){           
-    this.setOfferScore();    
-    this.setOfferApplied();
+    this.setOfferScore();   
+    if (this.user.role === 'Employee') {
+      this.setOfferApplied();
+    }     
   },
   methods:{
         
@@ -226,7 +228,25 @@ export default {
           alert('Algo salió mal, intenta más tarde 😞')
         });  
       } else {
-        console.log("Ya aplicaste a esta oferta");
+        
+        const url = "jobApplications/deleteJobApplication";     
+                      
+        await axios.delete(url, {
+          data: {
+            employeeId: this.user.employee.id,
+            offerId: this.offers.id
+          }
+        }).then((response) => {    
+                 
+          const codeStatus = response.status;          
+          if (codeStatus === 204) {
+            this.color = "light";  
+          }                    
+        }).catch((error) => {                  
+          alert('Algo salió mal, intenta más tarde 😞')
+        });  
+
+
       }        
     }  
 

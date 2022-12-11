@@ -74,7 +74,10 @@ export default {
         manageTextCenter(windowSize, "jobApplicationsButton");
         
       });     
-    },             
+    },       
+    consultRecruiterOffers(){
+      this.$router.push('offers');
+    }      
   }
 }
 

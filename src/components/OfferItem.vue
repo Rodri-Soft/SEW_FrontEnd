@@ -17,13 +17,14 @@
             </div>
 
             <div>                                
-                <a tag="button" v-on:click="consultOffer" class="text-decoration-none fs-3">{{personalOffers.title}}</a>                
+                <!-- <a tag="button" v-on:click="consultOffer" class="text-decoration-none fs-3">{{personalOffers.title}}</a>  -->
+                <h3>{{personalOffers.title}}</h3>               
             </div>
 
         </MDBCardHeader>
 
-        <MDBCardBody>
-            <h5 class="text-start">Descripción</h5>
+        <MDBCardBody class="offer-content">
+            <!-- <h5 class="text-start">Descripción</h5>
             <MDBCardText class="text-start">
                 {{personalOffers.description}}
             </MDBCardText>
@@ -41,7 +42,58 @@
             <h5 class="text-start">Jornada Laboral</h5>
             <MDBCardText class="text-start">
                 {{personalOffers.workday}}
-            </MDBCardText>
+            </MDBCardText> -->
+
+            <MDBRow class="row">
+            
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Descripción</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.description}}
+                    </MDBCardText>
+                </MDBCol>
+
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Categoría</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.category}}
+                    </MDBCardText>
+                </MDBCol>
+
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Experiencia</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.experience}}
+                    </MDBCardText>
+                </MDBCol>
+
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Jornada Laboral</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.workday}}
+                    </MDBCardText>
+                </MDBCol>
+
+                <MDBAccordion v-model="activeItem">
+                    <MDBAccordionItem
+                    headerTitle="Accordion Item #1"
+                    collapseId="collapseOne"
+                    >
+                    <strong>This is the first item's accordion body.</strong> It is
+                    shown by default, until the collapse plugin adds the appropriate
+                    classes that we use to style each element. These classes control
+                    the overall appearance, as well as the showing and hiding via
+                    CSS transitions. You can modify any of this with custom CSS or
+                    overriding our default variables. It's also worth noting that
+                    just about any HTML can go within the
+                    MDBAccordionItem, though the transition does limit
+                    overflow.
+                    </MDBAccordionItem>                    
+                </MDBAccordion>
+                
+            </MDBRow>
+
+
         </MDBCardBody>
 
         <MDBCardFooter>
@@ -50,11 +102,11 @@
                 <MDBBtn class="shadow-0" tag="a" color="danger" floating size="sm">
                     <i class="fas fa-heart me-2"></i>
                 </MDBBtn>
-                <p class="fs-5 ms-1 me-4 fs-6">{{personalOffers.jobAplicationsNumber}} Solicitudes</p>
+                <p class="fs-5 ms-1 me-4 fs-6">{{jobApplicationsNumber}} Solicitudes</p>
                 <MDBBtn class="shadow-0" tag="a" color="warning" floating size="sm">
                     <i class="fas fa-star me-2"></i>
                 </MDBBtn>
-                <p class="fs-5 ms-1 fs-6">{{personalOffers.score}} Calificación</p>
+                <p class="fs-5 ms-1 fs-6">{{score}} Calificación</p>
             </div>                              
         </MDBCardFooter>
     </MDBCard>

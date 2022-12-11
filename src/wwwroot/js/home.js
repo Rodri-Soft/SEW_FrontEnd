@@ -10,7 +10,6 @@ import axios from 'axios';
 import './axios'
 import { ref } from "vue";
 
-
 export default {
 
   name: 'HomeView',
@@ -39,9 +38,9 @@ export default {
       const url = "offers";
       await axios.get(url).then((response) => {
         const offers = response.data;                
-        this.offerInformation = offers;   
-        this.emptyOffers = this.offerInformation.length > 0 ? false : true;
+        this.offerInformation = offers;           
       });            
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true;
     },
     async consultOffers(category){
 
@@ -52,8 +51,7 @@ export default {
       
       await axios.post(url, payload).then((response) => {
         const offers = response.data;                
-        this.offerInformation = offers; 
-        this.emptyOffers = this.offerInformation.length > 0 ? false : true;        
+        this.offerInformation = offers;              
 
       }).catch((error) => {
         const codeStatus = error.response.status;
@@ -63,6 +61,8 @@ export default {
           500: 'Algo salió mal, intenta más tarde 😔'
         }          
       });       
+
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true;   
 
     },    
   }

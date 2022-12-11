@@ -17,7 +17,7 @@
                 <ProfileMainMenu/>
             </div>
 
-            <div class="col-lg-6 p-lg-0">
+            <div class="col-lg-8 p-lg-0">
                 <h2>Mis Ofertas</h2>     
                 <h3 v-show="emptyOffers == true" class="mt-5 text-center">No hay ofertas por mostrar 🤔</h3>           
                 <OfferItem v-for="(offer, i) in offerInformation"
@@ -29,13 +29,13 @@
                             v-on:consultOffer="consultOffer(i)" />                    
             </div>
 
-            <div class="col-lg-3 mb-3">
+            <!-- <div class="col-lg-3 mb-3">
                 <div class="col col-sm-12">
                     <div class="d-flex justify-content-lg-end justify-content-center">
                         <Category/>
                     </div>
                 </div>                
-            </div>
+            </div> -->
         </div>
     </div>
 
