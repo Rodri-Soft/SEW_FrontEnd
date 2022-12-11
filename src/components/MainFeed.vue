@@ -65,7 +65,7 @@
                 </MDBBtn>
                 <MDBBtn class="shadow-0" tag="a" color="danger actionIcon" floating size="sm">
                     <i class="fas fa-heart me-2"></i>
-                </MDBBtn>
+                </MDBBtn>                
                 <MDBBtn class="shadow-0" tag="a" color="warning actionIcon" floating size="sm">
                     <i class="fas fa-star me-2"></i>
                 </MDBBtn>
@@ -76,7 +76,7 @@
                 <MDBCol col="12" sm="6" md="3" lg="6" xl="3">
                     <div class="d-flex justify-content-sm-center justify-content-md-between
                                 justify-content-lg-center justify-content-xl-between mt-3 mb-2">
-                        <MDBBtn color="light" class="shadow-0 reactionButton" rounded tag="a" href="#!">
+                        <MDBBtn @click="applyToJobApplication" color="light" class="shadow-0 reactionButton icon-jobapplication" rounded tag="a" href="#!">
                             <i class="fas fa-heart me-2"></i>Solicitar
                         </MDBBtn>                       
                     </div>

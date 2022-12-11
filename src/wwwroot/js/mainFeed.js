@@ -78,6 +78,7 @@ export default {
   },
   mounted(){           
     this.setOfferScore();    
+    this.setOfferApplied();
   },
   methods:{
         
@@ -112,7 +113,33 @@ export default {
       }).catch((error) => {        
         alert('Algo salió mal, intenta más tarde 😞')
       });  
-    },           
+    },      
+    async setOfferApplied(){
+
+      const url = "jobApplications/oneJobApplication";     
+      const payload = {   
+        id: this.offers.id,         
+        employeeId: this.user.id,
+        offerId: this.offers.id   
+      };
+      
+      await axios.post(url, payload).then((response) => {    
+
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const offerScore = response.data;
+          let sumScore = offerScore.score;      
+          if (sumScore > 0) {
+            let averageScore = sumScore / offerScore.reportsNumber;
+            this.score = averageScore.toFixed(2);
+          } else {
+            this.score = sumScore;
+          }    
+        }
+      }).catch((error) => {        
+        alert('Algo salió mal, intenta más tarde 😞')
+      });  
+    },    
     setScoreReaction(length, color){
 
       if (!this.hasScore){
@@ -126,6 +153,13 @@ export default {
     async qualifyOffer(score){      
 
       if (this.hasScore) {
+
+        for (let index = 1; index <= 5; index++) {
+          let id = `label-rate-${index}`;
+          let element = document.getElementById(id);
+          element.style.color = "#444";
+        }
+
         for (let index = 1; index <= score; index++) {
           let id = `label-rate-${index}`;
           let element = document.getElementById(id);
@@ -182,7 +216,19 @@ export default {
       if (!dropdownScoreState) {
         this.hasScore = false;
       }
-    },    
+    },  
+    async applyToJobApplication(){
+        
+      // const urlOffer = "offers/oneOffer";     
+      // const payloadOffer = {   
+      //   id: this.offers.id,             
+      // };
+
+
+
+
+
+    }  
 
   }
 }
