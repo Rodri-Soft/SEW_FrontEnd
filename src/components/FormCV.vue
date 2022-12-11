@@ -7,7 +7,9 @@
   <MDBModal tabindex="-1" staticBackdrop centered v-model="cvModal">
     <MDBModalBody>
       <a href="#" class="text-reset">
-        <MDBIcon icon="close" size="lg" class="d-flex justify-content-end" @click="cvModal = false, closeCVStages()" />
+        <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
+          data-mdb-toggle="tooltip" title="Cerrar"
+          @click="cvModal = false, closeCVStages()" />
       </a>
 
       <MDBModalTitle class="text-center form-title">

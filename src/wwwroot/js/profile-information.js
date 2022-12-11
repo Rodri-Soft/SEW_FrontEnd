@@ -21,6 +21,7 @@ import {
   MDBBadge,
   MDBSpinner
 } from "mdb-vue-ui-kit";
+
 export default {
   name: "UserInformation",
   components: {
@@ -43,25 +44,6 @@ export default {
   },
   computed: {
     ...mapGetters(["user"]),
-  },
-  beforeCreate() {
-    // const user = this.$store.getters.user;
-    // console.log({user});
-    // if (!user) {
-    //   const urlProfile = "profile";
-    //   const token = Cookies.get('access_token');      
-    //   console.log({token});
-    //   const config = {
-    //     headers: { 'Authorization': `Bearer ${token}` }
-    //   };
-      
-    //   axios.get(urlProfile, config).then((response) => {
-    //     const user = response.data;
-        
-    //     this.$store.dispatch("user", user);
-    //     this.$router.push('profile');
-    //   });
-    // }
   },
   mounted() {
     this.setUserImages();

@@ -25,7 +25,7 @@ import {
 } from "mdb-vue-ui-kit";
 
 export default {
-  name: "CVLenguagesView",
+  name: "CVCertificationsView",
   components: {
     Navbar,
     UserInformation,
@@ -52,56 +52,56 @@ export default {
   data() {
     return {
       data: '',
-      modalEditTile: 'Idiomas',
+      modalEditTile: 'Certificaciones',
       modalEditMessage: '',
       buttonEditText: '',
-      isEditLenguage: false,
+      isEditCertification: false,
     }
   },
   setup() {
-    const lenguage = ref('');
-    const modalLenguageEdit = ref(false);
-    const modalLenguageDelete = ref(false);
+    const certification = ref('');
+    const modalCertificationEdit = ref(false);
+    const modalCertificationDelete = ref(false);
 
     return {
-      lenguage,
-      modalLenguageEdit,
-      modalLenguageDelete,
+      certification,
+      modalCertificationEdit,
+      modalCertificationDelete,
     };
   },
   methods: {
-    verifyNumberOfLenguages() {
-      const lenguages = this.user.employee.cv.lenguages.length;
+    verifyNumberOfCertifications() {
+      const certifications = this.user.employee.cv.certifications.length;
 
-      if (lenguages > 1) {
-        this.modalLenguageDelete = true;
+      if (certifications > 1) {
+        this.modalCertificationDelete = true;
       }
     },
     showDataToOperate(data, operation) {
       this.data = data;
 
       if (operation === 'delete') {        
-        this.modalLenguageDelete = true;
+        this.modalCertificationDelete = true;
 
-        this.verifyNumberOfLenguages();
+        this.verifyNumberOfCertifications();
       } else if (operation === 'edit') { 
-        this.modalLenguageEdit = true; 
-        this.lenguage = data.lenguage;
-        this.modalEditMessage = 'Recuerda mantener tus Idiomas actualizados';
+        this.modalCertificationEdit = true; 
+        this.certification = data.certification;
+        this.modalEditMessage = 'Recuerda mantener tus Certificaciones actualizadas';
         this.buttonEditText = 'Guardar';
-        this.isEditLenguage = true;
+        this.isEditCertification = true;
       } else {
-        this.lenguage  = '';
-        this.modalLenguageEdit = true; 
-        this.modalEditMessage = 'Agrega todos los idiomas que domines para que los reclutadores' 
+        this.certification  = '';
+        this.modalCertificationEdit = true; 
+        this.modalEditMessage = 'Agrega todas tus certificaciones para que los reclutadores' 
          + ' puedan conocer más sobre ti';
         this.buttonEditText = 'Agregar';
-        this.isEditLenguage = false;
+        this.isEditCertification = false;
       }
     },
     checkInput() {
       let isValid = true;
-      const inputElement = document.getElementById('input-lenguage');
+      const inputElement = document.getElementById('input-certification');
       const inputElementValue = inputElement.value;
 
       if (inputElementValue.trim().length === 0) {
@@ -118,42 +118,42 @@ export default {
       const isValid = this.checkInput();
 
       if (isValid) {
-        this.isEditLenguage ? 
-          await this.editLenguage() : await this.addLenguage();
+        this.isEditCertification ? 
+          await this.editCertification() : await this.addCertification();
       }
     },
-    async addLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async addCertification() {
+      const certificationContainer = document.getElementById('certification-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = 'cv-lenguages';
+      const url = 'cv-certifications';
       const payload = {
         cvId: this.user.employee.cv.id,
-        lenguage: this.lenguage,
+        certification: this.certification,
       };
-      this.modalEditMessage = 'Agregando idioma';
+      this.modalEditMessage = 'Agregando certificación';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      certificationContainer.classList.add('d-none');
 
       await axios.post(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const certification = response.data;
 
         if (codeStatus === 201) {
-          this.setCVState('add', lenguage);
+          this.setCVState('add', certification);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma agregado correctamente 👍';
+            this.modalEditMessage = 'Certificación agregada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalCertificationEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -165,41 +165,43 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        certificationContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async editLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async editCertification() {
+      const certificationContainer = document.getElementById('certification-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${this.data.id}`;
+      const url = `cv-certifications/${this.data.id}`;
       const payload = {
-        lenguage: this.lenguage,
+        certification: this.certification,
       };
-      this.modalEditMessage = 'Actualizando Idioma';
+      this.modalEditMessage = 'Actualizando Certificación';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      certificationContainer.classList.add('d-none');
+
+      // console.log({url, payload, data: this.data});
 
       await axios.patch(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const certification = response.data;
 
         if (codeStatus === 200) {
-          this.setCVState('edit', lenguage);
+          this.setCVState('edit', certification);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma actualizado correctamente 👍';
+            this.modalEditMessage = 'Certificación actualizada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalCertificationEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -211,78 +213,78 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        certificationContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async deleteLenguage() {
-      const messageDelete = document.getElementById('message-lenguages-delete');
-      const spinner = document.getElementById('spinner-lenguage-delete');
-      const lenguageContainer = document.getElementById('lenguage-info-container');
-      const lenguageId = this.data.id;   
+    async deleteCertification() {
+      const messageDelete = document.getElementById('message-certifications-delete');
+      const spinner = document.getElementById('spinner-certification-delete');
+      const certificationContainer = document.getElementById('certification-info-container');
+      const certificationId = this.data.id;   
       const token = Cookies.get('access_token');
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${lenguageId}`;
+      const url = `cv-certifications/${certificationId}`;
 
-      messageDelete.innerHTML = 'Eliminando Idioma';
+      messageDelete.innerHTML = 'Eliminando Certificación';
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      certificationContainer.classList.add('d-none');
 
       await axios.delete(url, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const certification = response.data;
 
         if (codeStatus === 204) {
           this.setCVState('delete', this.data);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
-            messageDelete.innerHTML = 'Idioma eliminado correctamente 👍';            
+            messageDelete.innerHTML = 'Certificación eliminada correctamente 👍';            
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageDelete = false;
+            this.modalCertificationDelete = false;
           }, 2000);
         }
       }).catch((error) => {
         const codeStatus = error.response.status;
         const messages = {
           401: 'No autorizado 😡',
-          404: 'No se encontró ese Idioma. Vuelve a iniciar sesión 😢',
+          404: 'No se encontró esa certificación. Vuelve a iniciar sesión 😢',
           500: 'Algo salió mal, intenta más tarde 😔'
         }
         messageDelete.innerHTML = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        certificationContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    setCVState(operation, lenguage) {
-      const lenguages = this.user.employee.cv.lenguages;
+    setCVState(operation, certification) {
+      const certifications = this.user.employee.cv.certifications;
 
       if (operation === 'add') {
-        lenguages.push(lenguage);
+        certifications.push(certification);
         
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.certifications = certifications;
 
         this.$store.commit('setUser', this.user);
       } else if (operation === 'edit') {
-        const index = lenguages.findIndex((item) => item.id === lenguage.id);
+        const index = certifications.findIndex((item) => item.id === certification.id);
 
-        lenguages[index] = lenguage;
-        this.user.employee.cv.lenguages = lenguages;
+        certifications[index] = certification;
+        this.user.employee.cv.certifications = certifications;
 
         this.$store.commit('setUser', this.user);
       } else {
-        lenguages.forEach((element, index) => {
-          if (lenguage === element) {
-            lenguages.splice(index, 1);
+        certifications.forEach((element, index) => {
+          if (certification === element) {
+            certifications.splice(index, 1);
           }
         });
   
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.certifications = certifications;
 
         this.$store.commit('setUser', this.user);
       }

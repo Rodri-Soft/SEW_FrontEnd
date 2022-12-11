@@ -25,7 +25,7 @@ import {
 } from "mdb-vue-ui-kit";
 
 export default {
-  name: "CVLenguagesView",
+  name: "CVAcademicsView",
   components: {
     Navbar,
     UserInformation,
@@ -52,56 +52,56 @@ export default {
   data() {
     return {
       data: '',
-      modalEditTile: 'Idiomas',
+      modalEditTile: 'Educación',
       modalEditMessage: '',
       buttonEditText: '',
-      isEditLenguage: false,
+      isEditAcademic: false,
     }
   },
   setup() {
-    const lenguage = ref('');
-    const modalLenguageEdit = ref(false);
-    const modalLenguageDelete = ref(false);
+    const academic = ref('');
+    const modalAcademicEdit = ref(false);
+    const modalAcademicDelete = ref(false);
 
     return {
-      lenguage,
-      modalLenguageEdit,
-      modalLenguageDelete,
+      academic,
+      modalAcademicEdit,
+      modalAcademicDelete,
     };
   },
   methods: {
-    verifyNumberOfLenguages() {
-      const lenguages = this.user.employee.cv.lenguages.length;
+    verifyNumberOfAcademics() {
+      const academics = this.user.employee.cv.academicTrainings.length;
 
-      if (lenguages > 1) {
-        this.modalLenguageDelete = true;
+      if (academics > 1) {
+        this.modalAcademicDelete = true;
       }
     },
     showDataToOperate(data, operation) {
       this.data = data;
 
       if (operation === 'delete') {        
-        this.modalLenguageDelete = true;
+        this.modalAcademicDelete = true;
 
-        this.verifyNumberOfLenguages();
+        this.verifyNumberOfAcademics();
       } else if (operation === 'edit') { 
-        this.modalLenguageEdit = true; 
-        this.lenguage = data.lenguage;
-        this.modalEditMessage = 'Recuerda mantener tus Idiomas actualizados';
+        this.modalAcademicEdit = true; 
+        this.academic = data.academicTraining;
+        this.modalEditMessage = 'Recuerda mantener tu trayectoria académica actualizada';
         this.buttonEditText = 'Guardar';
-        this.isEditLenguage = true;
+        this.isEditAcademic = true;
       } else {
-        this.lenguage  = '';
-        this.modalLenguageEdit = true; 
-        this.modalEditMessage = 'Agrega todos los idiomas que domines para que los reclutadores' 
-         + ' puedan conocer más sobre ti';
+        this.academic  = '';
+        this.modalAcademicEdit = true; 
+        this.modalEditMessage = 'Agrega toda tu trayectoria académica para que los reclutadores' 
+         + 'puedan conocer más sobre ti';
         this.buttonEditText = 'Agregar';
-        this.isEditLenguage = false;
+        this.isEditAcademic = false;
       }
     },
     checkInput() {
       let isValid = true;
-      const inputElement = document.getElementById('input-lenguage');
+      const inputElement = document.getElementById('input-academic');
       const inputElementValue = inputElement.value;
 
       if (inputElementValue.trim().length === 0) {
@@ -118,42 +118,42 @@ export default {
       const isValid = this.checkInput();
 
       if (isValid) {
-        this.isEditLenguage ? 
-          await this.editLenguage() : await this.addLenguage();
+        this.isEditAcademic ? 
+          await this.editAcademic() : await this.addAcademic();
       }
     },
-    async addLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async addAcademic() {
+      const academicContainer = document.getElementById('academic-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = 'cv-lenguages';
+      const url = 'cv-academic-trainings';
       const payload = {
         cvId: this.user.employee.cv.id,
-        lenguage: this.lenguage,
+        academicTraining: this.academic,
       };
-      this.modalEditMessage = 'Agregando idioma';
+      this.modalEditMessage = 'Agregando trayectoria académica';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      academicContainer.classList.add('d-none');
 
       await axios.post(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const academic = response.data;
 
         if (codeStatus === 201) {
-          this.setCVState('add', lenguage);
+          this.setCVState('add', academic);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma agregado correctamente 👍';
+            this.modalEditMessage = 'Trayectoria académica agregada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalAcademicEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -165,41 +165,41 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        academicContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async editLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async editAcademic() {
+      const academicContainer = document.getElementById('academic-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${this.data.id}`;
+      const url = `cv-academic-trainings/${this.data.id}`;
       const payload = {
-        lenguage: this.lenguage,
+        academicTraining: this.academic,
       };
-      this.modalEditMessage = 'Actualizando Idioma';
+      this.modalEditMessage = 'Actualizando Trayectoria Académica';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      academicContainer.classList.add('d-none');
 
       await axios.patch(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const academic = response.data;
 
         if (codeStatus === 200) {
-          this.setCVState('edit', lenguage);
+          this.setCVState('edit', academic);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma actualizado correctamente 👍';
+            this.modalEditMessage = 'Trayectoria Académica actualizada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalAcademicEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -211,78 +211,78 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        academicContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async deleteLenguage() {
-      const messageDelete = document.getElementById('message-lenguages-delete');
-      const spinner = document.getElementById('spinner-lenguage-delete');
-      const lenguageContainer = document.getElementById('lenguage-info-container');
-      const lenguageId = this.data.id;   
+    async deleteAcademic() {
+      const messageDelete = document.getElementById('message-academics-delete');
+      const spinner = document.getElementById('spinner-academic-delete');
+      const academicContainer = document.getElementById('academic-info-container');
+      const academicId = this.data.id;   
       const token = Cookies.get('access_token');
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${lenguageId}`;
+      const url = `cv-academic-trainings/${academicId}`;
 
-      messageDelete.innerHTML = 'Eliminando Idioma';
+      messageDelete.innerHTML = 'Eliminando Trayectoria Académica';
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      academicContainer.classList.add('d-none');
 
       await axios.delete(url, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const academic = response.data;
 
         if (codeStatus === 204) {
           this.setCVState('delete', this.data);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
-            messageDelete.innerHTML = 'Idioma eliminado correctamente 👍';            
+            messageDelete.innerHTML = 'Trayectoria Académica eliminada correctamente 👍';            
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageDelete = false;
+            this.modalAcademicDelete = false;
           }, 2000);
         }
       }).catch((error) => {
         const codeStatus = error.response.status;
         const messages = {
           401: 'No autorizado 😡',
-          404: 'No se encontró ese Idioma. Vuelve a iniciar sesión 😢',
+          404: 'No se encontró esa trayectoria académica. Vuelve a iniciar sesión 😢',
           500: 'Algo salió mal, intenta más tarde 😔'
         }
         messageDelete.innerHTML = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        academicContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    setCVState(operation, lenguage) {
-      const lenguages = this.user.employee.cv.lenguages;
+    setCVState(operation, academic) {
+      const academicTrainings = this.user.employee.cv.academicTrainings;
 
       if (operation === 'add') {
-        lenguages.push(lenguage);
+        academicTrainings.push(academic);
         
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.academicTrainings = academicTrainings;
 
         this.$store.commit('setUser', this.user);
       } else if (operation === 'edit') {
-        const index = lenguages.findIndex((item) => item.id === lenguage.id);
+        const index = academicTrainings.findIndex((item) => item.id === academic.id);
 
-        lenguages[index] = lenguage;
-        this.user.employee.cv.lenguages = lenguages;
+        academicTrainings[index] = academic;
+        this.user.employee.cv.academicTrainings = academicTrainings;
 
         this.$store.commit('setUser', this.user);
       } else {
-        lenguages.forEach((element, index) => {
-          if (lenguage === element) {
-            lenguages.splice(index, 1);
+        academicTrainings.forEach((element, index) => {
+          if (academic === element) {
+            academicTrainings.splice(index, 1);
           }
         });
   
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.academicTrainings = academicTrainings;
 
         this.$store.commit('setUser', this.user);
       }

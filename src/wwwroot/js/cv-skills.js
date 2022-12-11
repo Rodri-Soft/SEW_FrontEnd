@@ -25,7 +25,7 @@ import {
 } from "mdb-vue-ui-kit";
 
 export default {
-  name: "CVLenguagesView",
+  name: "CVSkillsView",
   components: {
     Navbar,
     UserInformation,
@@ -52,56 +52,56 @@ export default {
   data() {
     return {
       data: '',
-      modalEditTile: 'Idiomas',
+      modalEditTile: 'Habilidades',
       modalEditMessage: '',
       buttonEditText: '',
-      isEditLenguage: false,
+      isEditSkill: false,
     }
   },
   setup() {
-    const lenguage = ref('');
-    const modalLenguageEdit = ref(false);
-    const modalLenguageDelete = ref(false);
+    const skill = ref('');
+    const modalSkillEdit = ref(false);
+    const modalSkillDelete = ref(false);
 
     return {
-      lenguage,
-      modalLenguageEdit,
-      modalLenguageDelete,
+      skill,
+      modalSkillEdit,
+      modalSkillDelete,
     };
   },
   methods: {
-    verifyNumberOfLenguages() {
-      const lenguages = this.user.employee.cv.lenguages.length;
+    verifyNumberOfSkills() {
+      const skills = this.user.employee.cv.skills.length;
 
-      if (lenguages > 1) {
-        this.modalLenguageDelete = true;
+      if (skills > 1) {
+        this.modalSkillDelete = true;
       }
     },
     showDataToOperate(data, operation) {
       this.data = data;
 
       if (operation === 'delete') {        
-        this.modalLenguageDelete = true;
+        this.modalSkillDelete = true;
 
-        this.verifyNumberOfLenguages();
+        this.verifyNumberOfSkills();
       } else if (operation === 'edit') { 
-        this.modalLenguageEdit = true; 
-        this.lenguage = data.lenguage;
-        this.modalEditMessage = 'Recuerda mantener tus Idiomas actualizados';
+        this.modalSkillEdit = true; 
+        this.skill = data.skill;
+        this.modalEditMessage = 'Recuerda mantener tus Habilidades actualizadas';
         this.buttonEditText = 'Guardar';
-        this.isEditLenguage = true;
+        this.isEditSkill = true;
       } else {
-        this.lenguage  = '';
-        this.modalLenguageEdit = true; 
-        this.modalEditMessage = 'Agrega todos los idiomas que domines para que los reclutadores' 
+        this.skill  = '';
+        this.modalSkillEdit = true; 
+        this.modalEditMessage = 'Agrega todas tus habilidades para que los reclutadores' 
          + ' puedan conocer más sobre ti';
         this.buttonEditText = 'Agregar';
-        this.isEditLenguage = false;
+        this.isEditSkill = false;
       }
     },
     checkInput() {
       let isValid = true;
-      const inputElement = document.getElementById('input-lenguage');
+      const inputElement = document.getElementById('input-skill');
       const inputElementValue = inputElement.value;
 
       if (inputElementValue.trim().length === 0) {
@@ -118,42 +118,42 @@ export default {
       const isValid = this.checkInput();
 
       if (isValid) {
-        this.isEditLenguage ? 
-          await this.editLenguage() : await this.addLenguage();
+        this.isEditSkill ? 
+          await this.editSkill() : await this.addSkill();
       }
     },
-    async addLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async addSkill() {
+      const skillContainer = document.getElementById('skill-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = 'cv-lenguages';
+      const url = 'cv-skills';
       const payload = {
         cvId: this.user.employee.cv.id,
-        lenguage: this.lenguage,
+        skill: this.skill,
       };
-      this.modalEditMessage = 'Agregando idioma';
+      this.modalEditMessage = 'Agregando habilidad';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      skillContainer.classList.add('d-none');
 
       await axios.post(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const skill = response.data;
 
         if (codeStatus === 201) {
-          this.setCVState('add', lenguage);
+          this.setCVState('add', skill);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma agregado correctamente 👍';
+            this.modalEditMessage = 'Habilidad agregada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalSkillEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -165,41 +165,43 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        skillContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async editLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async editSkill() {
+      const skillContainer = document.getElementById('skill-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${this.data.id}`;
+      const url = `cv-skills/${this.data.id}`;
       const payload = {
-        lenguage: this.lenguage,
+        skill: this.skill,
       };
-      this.modalEditMessage = 'Actualizando Idioma';
+      this.modalEditMessage = 'Actualizando Habilidad';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      skillContainer.classList.add('d-none');
+
+      // console.log({url, payload, data: this.data});
 
       await axios.patch(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const skill = response.data;
 
         if (codeStatus === 200) {
-          this.setCVState('edit', lenguage);
+          this.setCVState('edit', skill);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma actualizado correctamente 👍';
+            this.modalEditMessage = 'Habilidad actualizada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalSkillEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -211,78 +213,78 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        skillContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async deleteLenguage() {
-      const messageDelete = document.getElementById('message-lenguages-delete');
-      const spinner = document.getElementById('spinner-lenguage-delete');
-      const lenguageContainer = document.getElementById('lenguage-info-container');
-      const lenguageId = this.data.id;   
+    async deleteSkill() {
+      const messageDelete = document.getElementById('message-skills-delete');
+      const spinner = document.getElementById('spinner-skill-delete');
+      const skillContainer = document.getElementById('skill-info-container');
+      const skillId = this.data.id;   
       const token = Cookies.get('access_token');
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${lenguageId}`;
+      const url = `cv-skills/${skillId}`;
 
-      messageDelete.innerHTML = 'Eliminando Idioma';
+      messageDelete.innerHTML = 'Eliminando Habilidad';
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      skillContainer.classList.add('d-none');
 
       await axios.delete(url, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const skill = response.data;
 
         if (codeStatus === 204) {
           this.setCVState('delete', this.data);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
-            messageDelete.innerHTML = 'Idioma eliminado correctamente 👍';            
+            messageDelete.innerHTML = 'Habilidad eliminada correctamente 👍';            
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageDelete = false;
+            this.modalSkillDelete = false;
           }, 2000);
         }
       }).catch((error) => {
         const codeStatus = error.response.status;
         const messages = {
           401: 'No autorizado 😡',
-          404: 'No se encontró ese Idioma. Vuelve a iniciar sesión 😢',
+          404: 'No se encontró esa habilidad. Vuelve a iniciar sesión 😢',
           500: 'Algo salió mal, intenta más tarde 😔'
         }
         messageDelete.innerHTML = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        skillContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    setCVState(operation, lenguage) {
-      const lenguages = this.user.employee.cv.lenguages;
+    setCVState(operation, skill) {
+      const skills = this.user.employee.cv.skills;
 
       if (operation === 'add') {
-        lenguages.push(lenguage);
+        skills.push(skill);
         
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.skills = skills;
 
         this.$store.commit('setUser', this.user);
       } else if (operation === 'edit') {
-        const index = lenguages.findIndex((item) => item.id === lenguage.id);
+        const index = skills.findIndex((item) => item.id === skill.id);
 
-        lenguages[index] = lenguage;
-        this.user.employee.cv.lenguages = lenguages;
+        skills[index] = skill;
+        this.user.employee.cv.skills = skills;
 
         this.$store.commit('setUser', this.user);
       } else {
-        lenguages.forEach((element, index) => {
-          if (lenguage === element) {
-            lenguages.splice(index, 1);
+        skills.forEach((element, index) => {
+          if (skill === element) {
+            skills.splice(index, 1);
           }
         });
   
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.skills = skills;
 
         this.$store.commit('setUser', this.user);
       }

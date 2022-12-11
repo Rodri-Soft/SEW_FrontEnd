@@ -21,7 +21,7 @@
             <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
               role="button"
               @click="(modalUserEdit = true)">
-              <MDBIcon icon="pencil-alt" size="lg" />
+              <MDBIcon icon="pencil-alt" size="lg" data-mdb-toggle="tooltip" title="Editar mi información"/>
             </a>  
           </h2>
           <h2 class="text-center form-title" 
@@ -30,7 +30,7 @@
             <a class="m-1 form-options-text btn btn-link btn-floating" href="#!"
               role="button"
               @click="(modalUserEdit = true)">
-              <MDBIcon icon="pencil-alt" size="lg" />
+              <MDBIcon icon="pencil-alt" size="lg" data-mdb-toggle="tooltip" title="Editar mi información"/>
             </a>
           </h2>
           <a class="m-1" @click="modalUserInformation = true" href="#" role="button">
@@ -63,6 +63,7 @@
     <MDBModalBody>
       <a href="#" class="text-reset">
         <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
+          data-mdb-toggle="tooltip" title="Cerrar"
           @click="modalUserInformation = false, fillEditModalFields()" />
       </a>
 
@@ -106,6 +107,7 @@
     <MDBModalBody>
       <a href="#" class="text-reset">
         <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
+          data-mdb-toggle="tooltip" title="Cerrar"
           @click="modalUserEdit = false" />
       </a>
 
@@ -194,5 +196,5 @@
 </template>
 
 <style scoped src="@/wwwroot/css/logIn.css"></style>
-<style scoped src="@/wwwroot/css/user-information.css"></style>
-<script src="@/wwwroot/js/user-information.js"></script>
+<style scoped src="@/wwwroot/css/profile-information.css"></style>
+<script src="@/wwwroot/js/profile-information.js"></script>

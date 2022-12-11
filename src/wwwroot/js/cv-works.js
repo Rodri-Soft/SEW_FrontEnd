@@ -25,7 +25,7 @@ import {
 } from "mdb-vue-ui-kit";
 
 export default {
-  name: "CVLenguagesView",
+  name: "CVWorksView",
   components: {
     Navbar,
     UserInformation,
@@ -52,56 +52,56 @@ export default {
   data() {
     return {
       data: '',
-      modalEditTile: 'Idiomas',
+      modalEditTile: 'Experiencia Laboral',
       modalEditMessage: '',
       buttonEditText: '',
-      isEditLenguage: false,
+      isEditWork: false,
     }
   },
   setup() {
-    const lenguage = ref('');
-    const modalLenguageEdit = ref(false);
-    const modalLenguageDelete = ref(false);
+    const work = ref('');
+    const modalWorkEdit = ref(false);
+    const modalWorkDelete = ref(false);
 
     return {
-      lenguage,
-      modalLenguageEdit,
-      modalLenguageDelete,
+      work,
+      modalWorkEdit,
+      modalWorkDelete
     };
   },
   methods: {
-    verifyNumberOfLenguages() {
-      const lenguages = this.user.employee.cv.lenguages.length;
+    verifyNumberOfWorks() {
+      const works = this.user.employee.cv.workExperiences.length;
 
-      if (lenguages > 1) {
-        this.modalLenguageDelete = true;
+      if (works > 1) {
+        this.modalWorkDelete = true;
       }
     },
     showDataToOperate(data, operation) {
       this.data = data;
 
       if (operation === 'delete') {        
-        this.modalLenguageDelete = true;
+        this.modalWorkDelete = true;
 
-        this.verifyNumberOfLenguages();
+        this.verifyNumberOfWorks();
       } else if (operation === 'edit') { 
-        this.modalLenguageEdit = true; 
-        this.lenguage = data.lenguage;
-        this.modalEditMessage = 'Recuerda mantener tus Idiomas actualizados';
+        this.modalWorkEdit = true; 
+        this.work = data.workExperience;
+        this.modalEditMessage = 'Recuerda mantener tus Experiencias Laborales actualizadas';
         this.buttonEditText = 'Guardar';
-        this.isEditLenguage = true;
+        this.isEditWork = true;
       } else {
-        this.lenguage  = '';
-        this.modalLenguageEdit = true; 
-        this.modalEditMessage = 'Agrega todos los idiomas que domines para que los reclutadores' 
-         + ' puedan conocer más sobre ti';
+        this.work  = '';
+        this.modalWorkEdit = true; 
+        this.modalEditMessage = 'Agrega tus experiencias laborales para que los reclutadores' 
+         + 'puedan conocer más sobre ti';
         this.buttonEditText = 'Agregar';
-        this.isEditLenguage = false;
+        this.isEditWork = false;
       }
     },
     checkInput() {
       let isValid = true;
-      const inputElement = document.getElementById('input-lenguage');
+      const inputElement = document.getElementById('input-work');
       const inputElementValue = inputElement.value;
 
       if (inputElementValue.trim().length === 0) {
@@ -118,42 +118,42 @@ export default {
       const isValid = this.checkInput();
 
       if (isValid) {
-        this.isEditLenguage ? 
-          await this.editLenguage() : await this.addLenguage();
+        this.isEditWork ? 
+          await this.editWork() : await this.addWork();
       }
     },
-    async addLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async addWork() {
+      const workContainer = document.getElementById('work-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = 'cv-lenguages';
+      const url = 'cv-work-experiences';
       const payload = {
         cvId: this.user.employee.cv.id,
-        lenguage: this.lenguage,
+        workExperience: this.work,
       };
-      this.modalEditMessage = 'Agregando idioma';
+      this.modalEditMessage = 'Agregando Experiencia Laboral';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      workContainer.classList.add('d-none');
 
       await axios.post(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const work = response.data;
 
         if (codeStatus === 201) {
-          this.setCVState('add', lenguage);
+          this.setCVState('add', work);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma agregado correctamente 👍';
+            this.modalEditMessage = 'Experiencia Laboral agregada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalWorkEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -165,41 +165,43 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        workContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async editLenguage() {
-      const lenguageContainer = document.getElementById('lenguage-form-container');
+    async editWork() {
+      const workContainer = document.getElementById('work-form-container');
       const spinner = document.getElementById('spinner-edit');
       const token = Cookies.get('access_token');
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${this.data.id}`;
+      const url = `cv-work-experiences/${this.data.id}`;
       const payload = {
-        lenguage: this.lenguage,
+        workExperience: this.work,
       };
-      this.modalEditMessage = 'Actualizando Idioma';
+      this.modalEditMessage = 'Actualizando Experiencia Laboral';
       
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      workContainer.classList.add('d-none');
+
+      console.log({url, payload, data: this.data});
 
       await axios.patch(url, payload, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const work = response.data;
 
         if (codeStatus === 200) {
-          this.setCVState('edit', lenguage);
+          this.setCVState('edit', work);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
             
-            this.modalEditMessage = 'Idioma actualizado correctamente 👍';
+            this.modalEditMessage = 'Experiencia Laboral actualizada correctamente 👍';
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageEdit = false;
+            this.modalWorkEdit = false;
           }, 2000);
         }
       }).catch((error) => {
@@ -211,78 +213,78 @@ export default {
         }
         this.modalEditMessage = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        workContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    async deleteLenguage() {
-      const messageDelete = document.getElementById('message-lenguages-delete');
-      const spinner = document.getElementById('spinner-lenguage-delete');
-      const lenguageContainer = document.getElementById('lenguage-info-container');
-      const lenguageId = this.data.id;   
+    async deleteWork() {
+      const messageDelete = document.getElementById('message-works-delete');
+      const spinner = document.getElementById('spinner-work-delete');
+      const workContainer = document.getElementById('work-info-container');
+      const workId = this.data.id;   
       const token = Cookies.get('access_token');
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
-      const url = `cv-lenguages/${lenguageId}`;
+      const url = `cv-work-experiences/${workId}`;
 
-      messageDelete.innerHTML = 'Eliminando Idioma';
+      messageDelete.innerHTML = 'Eliminando Experiencia Laboral';
       spinner.classList.remove('d-none');
-      lenguageContainer.classList.add('d-none');
+      workContainer.classList.add('d-none');
 
       await axios.delete(url, config).then((response) => {
         const codeStatus = response.status;
-        const lenguage = response.data;
+        const work = response.data;
 
         if (codeStatus === 204) {
           this.setCVState('delete', this.data);
 
           setTimeout(() => {
             spinner.classList.add('d-none');
-            messageDelete.innerHTML = 'Idioma eliminado correctamente 👍';            
+            messageDelete.innerHTML = 'Experiencia Laboral eliminada correctamente 👍';            
           }, 1000);
 
           setTimeout(() => {
-            this.modalLenguageDelete = false;
+            this.modalWorkDelete = false;
           }, 2000);
         }
       }).catch((error) => {
         const codeStatus = error.response.status;
         const messages = {
           401: 'No autorizado 😡',
-          404: 'No se encontró ese Idioma. Vuelve a iniciar sesión 😢',
+          404: 'No se encontró esa experiencia laboral. Vuelve a iniciar sesión 😢',
           500: 'Algo salió mal, intenta más tarde 😔'
         }
         messageDelete.innerHTML = messages[codeStatus];
 
-        lenguageContainer.classList.remove('d-none');
+        workContainer.classList.remove('d-none');
         spinner.classList.add('d-none');
       });
     },
-    setCVState(operation, lenguage) {
-      const lenguages = this.user.employee.cv.lenguages;
+    setCVState(operation, work) {
+      const workExperiences = this.user.employee.cv.workExperiences;
 
       if (operation === 'add') {
-        lenguages.push(lenguage);
+        workExperiences.push(work);
         
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.workExperiences = workExperiences;
 
         this.$store.commit('setUser', this.user);
       } else if (operation === 'edit') {
-        const index = lenguages.findIndex((item) => item.id === lenguage.id);
+        const index = workExperiences.findIndex((item) => item.id === work.id);
 
-        lenguages[index] = lenguage;
-        this.user.employee.cv.lenguages = lenguages;
+        workExperiences[index] = work;
+        this.user.employee.cv.workExperiences = workExperiences;
 
         this.$store.commit('setUser', this.user);
       } else {
-        lenguages.forEach((element, index) => {
-          if (lenguage === element) {
-            lenguages.splice(index, 1);
+        workExperiences.forEach((element, index) => {
+          if (work === element) {
+            workExperiences.splice(index, 1);
           }
         });
   
-        this.user.employee.cv.lenguages = lenguages;
+        this.user.employee.cv.workExperiences = workExperiences;
 
         this.$store.commit('setUser', this.user);
       }

@@ -35,3 +35,7 @@ h3 {
   align-items: center;
   justify-content: center;
 }
+
+.container-button {
+  width: 10rem;
+}

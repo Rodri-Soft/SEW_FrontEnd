@@ -45,7 +45,7 @@
               <MDBInput type="password" label="Contraseña" v-model="password"
                 class="input-password" id="input-password" invalidFeedback="Verifica tu contraseña" autocomplete="on" required inputGroup>
                 <span outline="primary" class="password-span input-group-text border-0" @click="showPassword">
-                  <MDBIcon icon="eye" size="lg" class="password-icon"/>
+                  <MDBIcon icon="eye" size="lg" class="password-icon" data-mdb-toggle="tooltip" title="Mostrar contraseña"/>
                 </span>
               </MDBInput>
             </MDBCol>
@@ -137,10 +137,10 @@
               <MDBInput type="password" label="Contraseña" id="input-password-register" v-model="passwordRegister"
                 invalidFeedback="Recuerda usar mayusculas, minusculas, números y símbolos" 
                 formText="Usa 8 o más caracteres con una combinación de mayusculas, minusculas, números y símbolos"
-                required
-                inputGroup>
-                <span outline="primary" class="password-span input-group-text border-0" @click="showPassword">
-                  <MDBIcon icon="eye" size="lg" class="password-icon"/>
+                required inputGroup>
+                <span outline="primary" class="password-span input-group-text border-0" 
+                  @click="showPassword">
+                  <MDBIcon icon="eye" size="lg" class="password-icon" data-mdb-toggle="tooltip" title="Mostrar contraseña"/>
                 </span>
               </MDBInput>            
             </MDBCol>

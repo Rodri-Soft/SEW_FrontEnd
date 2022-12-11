@@ -43,6 +43,36 @@ const routes = [
     component: () => import('../views/CVWorksView.vue')
   },
   {
+    path: '/profile/cv/academic-trainings',
+    name: 'academicTrainings',
+    meta: { requiresAuth: true },
+    component: () => import('../views/CVAcademicsView.vue')
+  },
+  {
+    path: '/profile/cv/certifications',
+    name: 'certifications',
+    meta: { requiresAuth: true },
+    component: () => import('../views/CVCertificationsView.vue')
+  },
+  {
+    path: '/profile/cv/skills',
+    name: 'skills',
+    meta: { requiresAuth: true },
+    component: () => import('../views/CVSkillsView.vue')
+  },
+  {
+    path: '/profile/cv/lenguages',
+    name: 'lenguages',
+    meta: { requiresAuth: true },
+    component: () => import('../views/CVLenguagesView.vue')
+  },
+  {
+    path: '/user/:rfc',
+    name: 'user',
+    meta: { requiresAuth: true },
+    component: () => import('../views/UserProfileView.vue')
+  },
+  {
     path: '/',
     name: 'dev',
     // meta: { requiresAuth: true },

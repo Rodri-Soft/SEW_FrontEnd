@@ -4,7 +4,7 @@
 
   <MDBRow class="m-0 p-0">
     <MDBCol md="8" class="offset-md-2">
-      <MDBCard id="works-card">
+      <MDBCard id="skills-card">
         <MDBCardBody>      
           <MDBRow class="d-flex justify-content-center mb-5">
             <MDBCol col="3" class="d-flex align-items-center text-start">
@@ -15,19 +15,22 @@
             </MDBCol>
             <MDBCol col="6" class="d-flex align-items-center justify-content-center">
               <MDBCardTitle class="text-center form-title">
-                Experiencia Laboral
+                Habilidades
               </MDBCardTitle>
             </MDBCol>
             <MDBCol col="3" class="d-flex align-items-center justify-content-end">
               <MDBBtn class="logIn-form-button" floating
                 @click="showDataToOperate(operation = 'add')">
-                <MDBIcon icon="plus" size="lg" data-mdb-toggle="tooltip" title="Agregar Experiencia Laboral"/>
+                <MDBIcon icon="plus" size="lg" data-mdb-toggle="tooltip" title="Agregar Habilidad"/>
               </MDBBtn>
             </MDBCol>
           </MDBRow>
           
           <MDBRow>
-            <p class="form-options-text text-center">─ Recuerda que, una Experiencia Laboral es un conjunto de datos que te ayudarán a ser más visible en el mercado laboral ─</p>            
+            <p class="form-options-text text-center">
+              ─ Recuerda que, las Habilidades que agregues, permitirán a los Reclutadores
+                conocer tus habilidades y destrezas, para así ofrecerte un puesto de trabajo. ─ 
+            </p>            
             <br><br>
           </MDBRow>
 
@@ -40,18 +43,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(workExperience, index) in user.employee.cv.workExperiences">
-                  <td class="text-start"> {{ (index + 1) + '.' + workExperience.workExperience }}</td>
+                <tr v-for="(skill, index) in user.employee.cv.skills">
+                  <td class="text-start"> {{ (index + 1) + '.' + skill.skill }}</td>
                   <td>
                     <MDBBtn color="primary" class="btn btn-primary btn-floating" size="sm"
-                      @click="showDataToOperate(workExperience, 'edit')">
-                      <MDBIcon icon="pencil-alt" data-mdb-toggle="tooltip" title="Editar Experiencia Laboral"/>
+                      @click="showDataToOperate(skill, 'edit')">
+                      <MDBIcon icon="pencil-alt" data-mdb-toggle="tooltip" title="Editar Habilidad"/>
                     </MDBBtn>
                   </td>
-                  <td v-if="(this.user.employee.cv.workExperiences.length > 1)">                    
+                  <td v-if="(this.user.employee.cv.skills.length > 1)">                    
                     <MDBBtn color="danger" class="btn btn-primary btn-floating" size="sm"
-                      @click="showDataToOperate(workExperience, 'delete')">
-                      <MDBIcon icon="trash" data-mdb-toggle="tooltip" title="Eliminar Experiencia Laboral"/>
+                      @click="showDataToOperate(skill, 'delete')">
+                      <MDBIcon icon="trash" data-mdb-toggle="tooltip" title="Eliminar Habilidad"/>
                     </MDBBtn>
                   </td>
                 </tr>
@@ -62,43 +65,43 @@
     </MDBCol>
   </MDBRow>
 
-  <MDBModal tabindex="-1" staticBackdrop centered v-model="modalWorkEdit">
+  <MDBModal tabindex="-1" staticBackdrop centered v-model="modalSkillEdit">
     <MDBModalBody>
       <a href="#" class="text-reset">
         <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
           data-mdb-toggle="tooltip" title="Cerrar"
-          @click="modalWorkEdit = false" />
+          @click="modalSkillEdit = false" />
       </a>
 
       <MDBRow class="m-0">
-        <MDBModalTitle class="text-center form-title" id="title-works-edit">
+        <MDBModalTitle class="text-center form-title" id="title-skills-edit">
           {{ this.modalEditTile }}
         </MDBModalTitle>
   
-        <p class="text-center mt-4 form-options-text" id="message-works-edit">
+        <p class="text-center mt-4 form-options-text" id="message-skills-edit">
           {{ this.modalEditMessage }}
         </p>
       </MDBRow>
       
       <MDBSpinner id="spinner-edit" class="m-auto d-flex align-items-center mb-2 d-none" size="sm" />
 
-      <MDBRow id="work-form-container">
+      <MDBRow id="skill-form-container">
         <form class="form-options-text needs-validation"
           id="form-user-edit" novalidate 
           @submit.prevent="verifyFormOperation">
           <MDBRow class="my-2 mx-2">
             <MDBCol col="1" class="d-flex align-items-center">
-              <MDBIcon icon="briefcase" size="lg" class="mr-2"/>
+              <MDBIcon icon="check" size="lg" class="mr-2"/>
             </MDBCol>
             <MDBCol col="11" class="mb-2">
-              <MDBInput type="text" class="form-control" name="work" id="input-work"
-                label="Experiencia Laboral" invalidFeedback="Verifica la experiencia laboral" 
-                counter maxlength="200" v-model="work"/>
+              <MDBInput type="text" class="form-control" name="skill" id="input-skill"
+                label="Habilidad" invalidFeedback="Verifica la habilidad" 
+                counter maxlength="200" v-model="skill"/>
             </MDBCol>
           </MDBRow>
           
           <MDBRow class="mx-3 my-4 d-flex justify-content-center">
-            <MDBBtn class="logIn-form-button" type="submit" id="button-wokr-edit" block>
+            <MDBBtn class="logIn-form-button" type="submit" id="button-skill-edit" block>
               {{ this.buttonEditText }}
             </MDBBtn>
           </MDBRow>
@@ -107,44 +110,44 @@
     </MDBModalBody>
   </MDBModal>
 
-  <MDBModal tabindex="-1" staticBackdrop centered v-model="modalWorkDelete">
+  <MDBModal tabindex="-1" staticBackdrop centered v-model="modalSkillDelete">
     <MDBModalBody>
       <a href="#" class="text-reset">
         <MDBIcon icon="close" size="lg" class="d-flex justify-content-end"
           data-mdb-toggle="tooltip" title="Cerrar"
-          @click="modalWorkDelete = false" />
+          @click="modalSkillDelete = false" />
       </a>
 
       <MDBModalTitle class="text-center form-title">
-        Eliminar Experiencia Laboral
+        Eliminar Habilidad
       </MDBModalTitle>
-      <p class="text-center mt-4 form-options-text" id="message-works-delete">
-        ¿Estás seguro de eliminar esta Experiencia Laboral?
+      <p class="text-center mt-4 form-options-text" id="message-skills-delete">
+        ¿Estás seguro de eliminar esta habilIdad?
         <br>
         Una vez eliminada no se podrá recuperar la información:
       </p> 
       
-      <MDBSpinner id="spinner-work-delete" class="d-none m-auto d-flex align-items-center justify-elements-center" size="sm" />
+      <MDBSpinner id="spinner-skill-delete" class="d-none m-auto d-flex align-items-center justify-elements-center" size="sm" />
 
-      <MDBRow class="m-0 mt-3" id="work-info-container">
+      <MDBRow class="m-0 mt-3" id="skill-info-container">
         <MDBRow class="">
           <hr>
-          <p class="m-0 p-0 text-center mx-4 mb-3 form-options-text" id="work-delete">
-            {{ this.data.workExperience }}
+          <p class="m-0 p-0 text-center mx-4 mb-3 form-options-text" id="skill-delete">
+            {{ this.data.skill }}
           </p>
           <hr>
         </MDBRow>
         <MDBRow class="m-0 p-0 my-2 text-center">
           <MDBCol>
             <MDBBtn class="logIn-form-button"
-              @click="deleteWork">
+              @click="deleteSkill">
               <MDBIcon icon="check" size="lg" class="mr-2" />
               Aceptar
             </MDBBtn>
           </MDBCol>
           <MDBCol>
             <MDBBtn class="logIn-form-button"
-              @click="modalWorkDelete = false">
+              @click="modalSkillDelete = false">
               <MDBIcon icon="times" size="lg" class="mr-2" />
               Cancelar
             </MDBBtn>
@@ -156,4 +159,4 @@
 </template>
 
 <style scoped src="@/wwwroot/css/logIn.css"></style>
-<script src="@/wwwroot/js/cv-works.js"></script>
+<script src="@/wwwroot/js/cv-skills.js"></script>
