@@ -74,6 +74,7 @@ export default {
       score: null,
       hasScore: false,      
       localScore: null,
+      color: "light",
     }
   },
   mounted(){           
@@ -117,27 +118,15 @@ export default {
     async setOfferApplied(){
 
       const url = "jobApplications/oneJobApplication";     
-      const payload = {   
-        id: this.offers.id,         
-        employeeId: this.user.id,
+      const payload = {              
+        employeeId: this.user.employee.id,
         offerId: this.offers.id   
-      };
+      };          
       
       await axios.post(url, payload).then((response) => {    
-
-        const codeStatus = response.status;              
-        if (codeStatus === 200) {          
-          const offerScore = response.data;
-          let sumScore = offerScore.score;      
-          if (sumScore > 0) {
-            let averageScore = sumScore / offerScore.reportsNumber;
-            this.score = averageScore.toFixed(2);
-          } else {
-            this.score = sumScore;
-          }    
-        }
-      }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
+        if (response.data != null) {
+          this.color = "danger";   
+        }                                   
       });  
     },    
     setScoreReaction(length, color){
@@ -219,15 +208,26 @@ export default {
     },  
     async applyToJobApplication(){
         
-      // const urlOffer = "offers/oneOffer";     
-      // const payloadOffer = {   
-      //   id: this.offers.id,             
-      // };
-
-
-
-
-
+      if (this.color === "light") {
+        const url = "jobApplications/createJobApplication";     
+        const payload = {   
+          status: "Pendiente",
+          employeeId: this.user.employee.id,
+          offerId: this.offers.id                
+        };
+  
+        await axios.post(url, payload).then((response) => {    
+  
+          const codeStatus = response.status;              
+          if (codeStatus === 200) {          
+            this.color = "danger";  
+          }
+        }).catch((error) => {        
+          alert('Algo salió mal, intenta más tarde 😞')
+        });  
+      } else {
+        console.log("Ya aplicaste a esta oferta");
+      }        
     }  
 
   }

@@ -76,7 +76,7 @@
                 <MDBCol col="12" sm="6" md="3" lg="6" xl="3">
                     <div class="d-flex justify-content-sm-center justify-content-md-between
                                 justify-content-lg-center justify-content-xl-between mt-3 mb-2">
-                        <MDBBtn @click="applyToJobApplication" color="light" class="shadow-0 reactionButton icon-jobapplication" rounded tag="a" href="#!">
+                        <MDBBtn @click="applyToJobApplication" v-bind:color="color" class="shadow-0 reactionButton icon-jobapplication" rounded tag="a" href="#!">
                             <i class="fas fa-heart me-2"></i>Solicitar
                         </MDBBtn>                       
                     </div>
