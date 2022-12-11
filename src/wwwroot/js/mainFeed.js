@@ -72,12 +72,12 @@ export default {
     return {
       userPhoto: "https://images.unsplash.com/photo-1534351829608-2890b57a4ba8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=160&ixid=MnwxfDB8MXxyYW5kb218MHx8cGVyc29ufHx8fHx8MTY3MDY0MDQ3MQ&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=160",      
       score: null,
+      hasScore: false,      
+      localScore: null,
     }
   },
   mounted(){           
-    this.setOfferScore();
-    // this.scoreReactions();
-    // this.setRecruiterPhoto();    
+    this.setOfferScore();    
   },
   methods:{
         
@@ -89,36 +89,100 @@ export default {
         this.userPhoto = profileImage;
       });
     },
-    setOfferScore(){
-      let sumScore = this.offers.score;
-      let averageScore = sumScore / this.offers.reportsNumber;
-      this.score = averageScore.toFixed(2);
-    },
-    showScoreInformation(score){
-      console.log(score);
-    },
-    setScoreReactions(length){    
-      for (let index = 1; index <= length; index++) {
-        let id = `label-rate-${index}`;
-        let element = document.getElementById(id);
-        element.style.color = "#eeca06";
-      }        
-    },
-    removeScoreReactions(length){
-      for (let index = 1; index <= length; index++) {
-        let id = `label-rate-${index}`;
-        let element = document.getElementById(id);
-        element.style.color = "#444";
-      }           
-    }
-    , 
+    async setOfferScore(){
+
+      const url = "offers/oneOffer";     
+      const payload = {   
+        id: this.offers.id,             
+      };
+      
+      await axios.post(url, payload).then((response) => {    
+
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const offerScore = response.data;
+          let sumScore = offerScore.score;      
+          if (sumScore > 0) {
+            let averageScore = sumScore / offerScore.reportsNumber;
+            this.score = averageScore.toFixed(2);
+          } else {
+            this.score = sumScore;
+          }    
+        }
+      }).catch((error) => {        
+        alert('Algo salió mal, intenta más tarde 😞')
+      });  
+    },           
     setScoreReaction(length, color){
-      for (let index = 1; index <= length; index++) {
-        let id = `label-rate-${index}`;
-        let element = document.getElementById(id);
-        element.style.color = color;
-      }     
-    }
+
+      if (!this.hasScore){
+        for (let index = 1; index <= length; index++) {
+          let id = `label-rate-${index}`;
+          let element = document.getElementById(id);
+          element.style.color = color;
+        }
+      }           
+    },
+    async qualifyOffer(score){      
+
+      if (this.hasScore) {
+        for (let index = 1; index <= score; index++) {
+          let id = `label-rate-${index}`;
+          let element = document.getElementById(id);
+          element.style.color = "#eeca06";
+        }
+      }
+
+      const urlOffer = "offers/oneOffer";     
+      const payloadOffer = {   
+        id: this.offers.id,             
+      };
+      let offerScore;
+      
+      await axios.post(urlOffer, payloadOffer).then((response) => {    
+
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          offerScore = response.data;         
+        }
+      }).catch((error) => {        
+        alert('Algo salió mal, intenta más tarde 😞')
+      });        
+            
+      const url = "offers/";
+      let newScore = offerScore.score + score;
+      let newReportNumber = offerScore.reportsNumber + 1;
+      const payload = {   
+        id: this.offers.id,      
+        changes: {
+          score: newScore,
+          reportsNumber: newReportNumber,
+        }
+      };
+      
+      await axios.patch(url, payload).then((response) => {        
+        
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {
+          this.hasScore = true;
+          this.setOfferScore();
+          this.setScoreReaction(score, "#eeca06");
+        }
+
+      }).catch((error) => {        
+        alert('Algo salió mal, intenta más tarde 😞')
+      });       
+      
+    }, 
+    showScoreDrop() {
+      
+      this.dropdownScore = !this.dropdownScore;    
+      
+      let dropdownScoreState = document.getElementById("dropDownScore").getAttribute("aria-expanded");;
+      if (!dropdownScoreState) {
+        this.hasScore = false;
+      }
+    },    
 
   }
 }

@@ -243,7 +243,7 @@ export default {
     },
     async setAmountOffers(){
               
-      const url = 'recruiter-offers/offersNumber';
+      const url = 'offers/offersNumber';
       const payload = {         
         recruiterId: this.user.recruiter.id,         
       };

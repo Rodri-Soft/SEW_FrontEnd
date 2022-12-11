@@ -92,8 +92,8 @@
                 <MDBCol col="12" sm="6" md="3" lg="6" xl="3">
                     <div class="d-flex justify-content-sm-center justify-content-md-between
                                 justify-content-lg-center justify-content-xl-between mt-3 mb-2 button-dropdown">                                                    
-                        <MDBDropdown btnGroup v-model="dropdownScore">
-                            <MDBDropdownToggle color="light" @click="dropdownScore = !dropdownScore" class="reactionButton rounded-7">
+                        <MDBDropdown id="dropDownScore" btnGroup v-model="dropdownScore">
+                            <MDBDropdownToggle color="light" @click="showScoreDrop" class="reactionButton rounded-7">
                                 <i class="fas fa-star me-2"></i>Calificar
                             </MDBDropdownToggle>
                             <MDBDropdownMenu class="score-menu">
@@ -101,23 +101,23 @@
                                     <div class="star-widget">
                                         <input type="radio" name="rate" id="rate-1">
                                         <label @mouseover="setScoreReaction(1, '#eeca06')" @mouseleave="setScoreReaction(1, '#444')" id="label-rate-1"                                           
-                                               @click="showScoreInformation(1)" for="rate-1" class="fas fa-star star-label"></label>                                               
+                                               @click="qualifyOffer(1)" for="rate-1" class="fas fa-star star-label"></label>                                               
 
                                         <input type="radio" name="rate" id="rate-2">
                                         <label @mouseover="setScoreReaction(2, '#eeca06')" @mouseleave="setScoreReaction(2, '#444')" id="label-rate-2"
-                                               @click="showScoreInformation(2)" for="rate-2" class="fas fa-star star-label"></label>
+                                               @click="qualifyOffer(2)" for="rate-2" class="fas fa-star star-label"></label>
                                             
                                         <input type="radio" name="rate" id="rate-3">
                                         <label @mouseover="setScoreReaction(3, '#eeca06')" @mouseleave="setScoreReaction(3, '#444')" id="label-rate-3"
-                                               @click="showScoreInformation(3)" for="rate-3" class="fas fa-star star-label"></label>
+                                               @click="qualifyOffer(3)" for="rate-3" class="fas fa-star star-label"></label>
                                                 
                                         <input type="radio" name="rate" id="rate-4">
                                         <label @mouseover="setScoreReaction(4, '#eeca06')" @mouseleave="setScoreReaction(4, '#444')" id="label-rate-4"
-                                               @click="showScoreInformation(4)" for="rate-4" class="fas fa-star star-label"></label>
+                                               @click="qualifyOffer(4)" for="rate-4" class="fas fa-star star-label"></label>
                                                 
                                         <input type="radio" name="rate" id="rate-5">
                                         <label @mouseover="setScoreReaction(5, '#eeca06')" @mouseleave="setScoreReaction(5, '#444')" id="label-rate-5"
-                                               @click="showScoreInformation(5)" for="rate-5" class="fas fa-star star-label"></label>                                            
+                                               @click="qualifyOffer(5)" for="rate-5" class="fas fa-star star-label"></label>                                            
                                     </div>
                                 </MDBDropdownItem>                                
                             </MDBDropdownMenu>

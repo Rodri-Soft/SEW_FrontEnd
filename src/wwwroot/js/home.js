@@ -36,23 +36,25 @@ export default {
     
     async fillFeed(){
 
-      const url = "recruiter-offers";
+      const url = "offers";
       await axios.get(url).then((response) => {
         const offers = response.data;                
         this.offerInformation = offers;   
+        this.emptyOffers = this.offerInformation.length > 0 ? false : true;
       });            
     },
     async consultOffers(category){
-      console.log(category);
 
-      const url = "recruiter-offers/offersCategory";
+      const url = "offers/offersCategory";
       const payload = {         
         category: category,
       };
       
       await axios.post(url, payload).then((response) => {
         const offers = response.data;                
-        this.offerInformation = offers;   
+        this.offerInformation = offers; 
+        this.emptyOffers = this.offerInformation.length > 0 ? false : true;        
+
       }).catch((error) => {
         const codeStatus = error.response.status;
         const messages = {
@@ -62,7 +64,7 @@ export default {
         }          
       });       
 
-    }
+    },    
   }
 }
 
