@@ -3,9 +3,11 @@ import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
 import Category from '@/components/Category.vue'
 import OfferItem from '@/components/OfferItem.vue'
 import $ from 'jquery';
-import { ref } from 'vue';
+import { mapGetters } from "vuex";
+import Cookies from "js-cookie";
 import axios from 'axios';
 import './axios'
+import { ref } from "vue";
 
 import {   
 
@@ -90,20 +92,15 @@ export default {
     };
   },
   data() {
-    return {
-
-      userObject: {
-        photo: "https://mdbootstrap.com/img/Photos/Avatars/img (21).jpg",
-        full_name: "José Daniel Camarillo Villa",        
-        followers: 300,
-        amount_offers: 21,
-        role: "recruiters",
-      },      
+    return {          
       offerInformation: [],
       update: false,
       updatedOfferIndex: 0,
       emptyOffers: true,                               
     };
+  },
+  computed: {
+    ...mapGetters(["user"]),
   },
   mounted(){ 
     this.fillOffers();
@@ -215,20 +212,18 @@ export default {
         formText.innerHTML = '';
       });
     },
-    fillOffers() {
-
-      this.offerInformation.push(
-        {
-          id: 10,
-          title: "Lorem ipsum 1",                              
-          description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.`,
-          category: "Tecnología y telecomunicaciones",
-          experience: "2-4 años",
-          workday: "8 horas diarias",
-          score: 3.5,
-          jobAplicationsNumber: 24,          
-        }
-      );
+    async fillOffers() {
+      
+      const url = "offers/";
+      const payload = {         
+        recruiterId: this.user.recruiter.id,
+      };
+      await axios.post(url, payload).then((response) => {
+        const offers = response.data;                
+        this.offerInformation = offers;           
+      }).catch((error) => {        
+        alert('Algo salió mal, intenta más tarde 😞')
+      });    
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
       
@@ -322,7 +317,7 @@ export default {
       this.$store.state.offer = this.offerInformation[i];
       this.$router.push('offerApplications');
       
-    }
+    },
   }
 }
 

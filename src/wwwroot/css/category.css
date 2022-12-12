@@ -1,0 +1,44 @@
+.listText {
+    width: 100%;
+    margin-right: 1rem; 
+    font-size: larger;   
+}
+
+.listButton {    
+    margin: 8% 0;
+    width: 45%;   
+}
+
+@media (min-width: 992px) {
+    .listText {
+        width: 7rem;
+        font-size: small;
+    }
+
+    .listText-large {
+        width: 5.5rem;
+        font-size: 9px;
+    }
+
+    .listButton {            
+        width: 60%;   
+    }
+}
+
+@media (min-width: 1103px) {
+    .listText {
+        font-size: medium;
+    }
+
+    .listText-large {        
+        font-size: 12px;
+    }
+
+    .listButton {            
+        width: 45%;   
+    }
+}
+
+.categoryListItem {
+    padding: .5rem;
+}

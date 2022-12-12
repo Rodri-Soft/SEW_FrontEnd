@@ -17,31 +17,85 @@
             </div>
 
             <div>                                
-                <a tag="button" v-on:click="consultOffer" class="text-decoration-none fs-3">{{personalOffers.title}}</a>                
+                <!-- <a tag="button" v-on:click="consultOffer" class="text-decoration-none fs-3">{{personalOffers.title}}</a>  -->
+                <h3>{{personalOffers.title}}</h3>               
             </div>
 
         </MDBCardHeader>
 
         <MDBCardBody>
-            <h5 class="text-start">Descripción</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.description}}
-            </MDBCardText>
+           
+            <MDBRow class="row">
+            
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Descripción</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.description}}
+                    </MDBCardText>
+                </MDBCol>
 
-            <h5 class="text-start">Categoría</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.category}}
-            </MDBCardText>
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Categoría</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.category}}
+                    </MDBCardText>
+                </MDBCol>
 
-            <h5 class="text-start">Experiencia</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.experience}}
-            </MDBCardText>
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Experiencia</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.experience}}
+                    </MDBCardText>
+                </MDBCol>
 
-            <h5 class="text-start">Jornada Laboral</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.workday}}
-            </MDBCardText>
+                <MDBCol class="mb-4" col="12" lg="6">
+                    <h5 class="text-start">Jornada Laboral</h5>
+                    <MDBCardText class="text-start">
+                        {{personalOffers.workday}}
+                    </MDBCardText>
+                </MDBCol>
+
+                <MDBAccordion class="mt-2" v-model="activeItem">
+                    <MDBAccordionItem class="accordion-applications"
+                    headerTitle="Solicitudes"
+                    collapseId="collapseOne"
+                    >
+                        
+                        <MDBTable bordered hover class="mb-0 bg-white text-center table-jobApplications">
+                            <thead>
+                                <tr>
+                                <th>ID Trabajador</th>
+                                <th>Estado</th>
+                                <th>Aceptar</th>
+                                <th>Rechazar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(element, index) in jobApplications" :key="index">
+                                    <td>{{ element.employeeId }}</td>
+                                    <td>{{ element.status }}</td>
+                                    <td>
+                                        <MDBBtn color="success" class="btn btn-primary btn-floating" size="sm"
+                                            @click="acceptJobApplication(index, jobApplications)">
+                                            <MDBIcon icon="check" />
+                                        </MDBBtn>
+                                    </td>
+                                    <td>
+                                        <MDBBtn color="danger" class="btn btn-primary btn-floating" size="sm"
+                                            @click="refuseJobApplication(index, jobApplications)">
+                                            <MDBIcon icon="trash" />
+                                        </MDBBtn>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </MDBTable>                                             
+                    </MDBAccordionItem>                    
+                </MDBAccordion>
+                
+                
+            </MDBRow>
+
+
         </MDBCardBody>
 
         <MDBCardFooter>
@@ -50,11 +104,11 @@
                 <MDBBtn class="shadow-0" tag="a" color="danger" floating size="sm">
                     <i class="fas fa-heart me-2"></i>
                 </MDBBtn>
-                <p class="fs-5 ms-1 me-4 fs-6">{{personalOffers.jobAplicationsNumber}} Solicitudes</p>
+                <p class="fs-5 ms-1 me-4 fs-6">{{jobApplicationsNumber}} Solicitudes</p>
                 <MDBBtn class="shadow-0" tag="a" color="warning" floating size="sm">
                     <i class="fas fa-star me-2"></i>
                 </MDBBtn>
-                <p class="fs-5 ms-1 fs-6">{{personalOffers.score}} Calificación</p>
+                <p class="fs-5 ms-1 fs-6">{{score}} Calificación</p>
             </div>                              
         </MDBCardFooter>
     </MDBCard>

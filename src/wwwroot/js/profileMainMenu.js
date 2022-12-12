@@ -1,6 +1,11 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue';
 import $ from 'jquery';
+import { mapGetters } from "vuex";
+import Cookies from "js-cookie";
+import axios from 'axios';
+import './axios'
+import { ref } from "vue";
 
 import { 
   MDBBtn,  
@@ -39,19 +44,19 @@ export default {
     MDBCol,
     MDBRow
   },    
-  props:
-    ["user"],             
+  computed: {
+    ...mapGetters(["user", "followers", "amountOffers"]),
+  },        
   data() {
-    return {
-      userPhoto: this.user.photo,      
-      role: this.user.role, 
+    return {      
+      userPhoto: Cookies.get('profile_image_url'),
+      userBackground: Cookies.get('background_profile_image'),            
     }
   },
-  mounted(){ 
-    this.adaptProfileButtons();
+  mounted(){       
+    this.adaptProfileButtons();         
   },
-  methods:{
-          
+  methods:{          
     adaptProfileButtons() {
       
       const windowSize = 975;  
@@ -69,7 +74,10 @@ export default {
         manageTextCenter(windowSize, "jobApplicationsButton");
         
       });     
-    } 
+    },       
+    consultRecruiterOffers(){
+      this.$router.push('offers');
+    }      
   }
 }
 
