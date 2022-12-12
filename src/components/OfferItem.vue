@@ -17,7 +17,6 @@
             </div>
 
             <div>                                
-                <!-- <a tag="button" v-on:click="consultOffer" class="text-decoration-none fs-3">{{personalOffers.title}}</a>  -->
                 <h3>{{personalOffers.title}}</h3>               
             </div>
 
@@ -55,9 +54,10 @@
                     </MDBCardText>
                 </MDBCol>
 
-                <MDBAccordion class="mt-3" v-model="activeItemApplication">
+                <MDBAccordion class="mt-4" v-model="activeItemApplication">
 
                     <MDBAccordionItem class="accordion-applications"
+                    icon="fas fa-minus-circle fa-lg me-4"
                     headerTitle="Solicitudes Pendientes"
                     collapseId="collapsePendantApplication"
                     >                        
@@ -95,7 +95,8 @@
                         </MDBTable>                                             
                     </MDBAccordionItem>           
                     
-                    <MDBAccordionItem class="accordion-applications"
+                    <MDBAccordionItem class="accordion-applications"     
+                    icon="fas fa-check-circle fa-lg me-4"               
                     headerTitle="Solicitudes Aceptadas"
                     collapseId="collapseAcceptedApplication"
                     >                        

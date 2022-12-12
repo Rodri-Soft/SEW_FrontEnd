@@ -103,6 +103,9 @@ export default {
         this.profileImage = Cookies.get('profile_image_url');
         // this.backgroundImage = Cookies.get('background_image_url');            
       }, 100);
-    }      
+    },
+    goHome() {
+      this.$emit("goHome");
+    },      
   }
 }

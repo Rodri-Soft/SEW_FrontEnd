@@ -27,15 +27,7 @@
                             v-on:removeOfferItem="removeOfferItem(i)"                    
                             v-on:showOffer="showOffer(i)"
                             v-on:consultOffer="consultOffer(i)" />                    
-            </div>
-
-            <!-- <div class="col-lg-3 mb-3">
-                <div class="col col-sm-12">
-                    <div class="d-flex justify-content-lg-end justify-content-center">
-                        <Category/>
-                    </div>
-                </div>                
-            </div> -->
+            </div>            
         </div>
     </div>
 
@@ -110,6 +102,8 @@
         </MDBModalBody>
         </MDBModal>
     </section>
+
+    <Footer class="mt-4"/>
 </template>
 
 <style scoped src="@/wwwroot/css/offer.css"></style>

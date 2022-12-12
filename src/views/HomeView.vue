@@ -1,6 +1,6 @@
 <template>
 
-    <Navbar class="mb-4"/>
+    <Navbar class="mb-4" v-on:goHome="goHome"/>
 
     <div class="container-fluid">
         <div class="row">

@@ -234,6 +234,25 @@ export default {
       });          
 
     },
+    async refuseJobApplication(index, jobApplications){
+      const url = "jobApplications/";
+      const payload = {   
+        id: jobApplications[index].id,
+        changes: {
+          status: "Rechazada"
+        }     
+      };      
+      await axios.patch(url, payload).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {       
+          this.jobApplications = [];          
+        }
+      }).catch((error) => {                  
+        alert('Algo salió mal, intenta más tarde 😞')
+      });          
+
+      await this.getPendingJobApplications();
+    }
 
   }
 }

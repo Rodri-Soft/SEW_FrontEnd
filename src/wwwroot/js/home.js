@@ -36,8 +36,7 @@ export default {
   },
   methods:{
     
-    async fillFeed(){
-
+    async fillFeed(){      
       const url = "offers";
       await axios.get(url).then((response) => {
         const offers = response.data;                
@@ -68,6 +67,14 @@ export default {
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;   
 
     },    
+    async goHome(){      
+      const url = "offers";
+      await axios.get(url).then((response) => {
+        const offers = response.data;                
+        this.offerInformation = offers;           
+      });            
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true;
+    }
   }
 }
 

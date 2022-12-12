@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar.vue'
 import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
 import Category from '@/components/Category.vue'
 import OfferItem from '@/components/OfferItem.vue'
+import Footer from '@/components/Footer.vue'
 import $ from 'jquery';
 import { mapGetters } from "vuex";
 import Cookies from "js-cookie";
@@ -45,6 +46,7 @@ export default {
     ProfileMainMenu,      
     Category,
     OfferItem,
+    Footer,
     
     MDBRow,
     MDBCol,

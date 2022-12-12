@@ -1,7 +1,7 @@
 <template>
 	<MDBNavbar expand="lg" light container class="shadow-1 d-flex justify-content-between">
 		<router-link to="/home">
-			<MDBNavbarBrand class="form-title ">
+			<MDBNavbarBrand class="form-title" v-on:click="goHome">
 				<img src="@/assets/logo-2.svg" alt="logo" class="m-0 logo" />
 				<h2 class="fs-5 form-title m-auto d-flex align-items-center">SEW</h2>
 			</MDBNavbarBrand>
@@ -18,19 +18,7 @@
 						<div class="d-flex align-items-center search-container">
 							<i class="fas fa-search search-icon"></i>
 							<input type="search" class="form-control search-input rounded-4" 
-								placeholder="Explota Ofertas Laborales" aria-label="Search" id="input-search"/>
-							<!-- <MDBDropdown v-model="dropdownFilter">
-								<a id="filterButton" class="m-2 color-button" href="#" @click="(dropdownFilter = !dropdownFilter)">
-									<MDBIcon icon="filter" size="lg"></MDBIcon>
-									<p class="filter-text ms-2">Filtros</p>
-								</a>
-
-								<MDBDropdownMenu id="dropDownFilter" aria-labelledby="dropdownMenuButton">
-									<MDBDropdownItem href="#">Nombre</MDBDropdownItem>
-									<MDBDropdownItem href="#">Categoría</MDBDropdownItem>
-									<MDBDropdownItem href="#">Fecha</MDBDropdownItem>
-								</MDBDropdownMenu>
-							</MDBDropdown> -->
+								placeholder="Explota Ofertas Laborales" aria-label="Search" id="input-search"/>							
 						</div>
 					</form>
 				</MDBNavbarItem>
