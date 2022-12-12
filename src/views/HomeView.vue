@@ -24,6 +24,8 @@
         </div>
     </div>        
 
+    <Footer class="mt-4"/>
+
 </template>
 
 <style scoped src="@/wwwroot/css/home.css"></style>

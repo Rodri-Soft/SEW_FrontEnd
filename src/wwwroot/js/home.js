@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar.vue'
 import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
 import MainFeed from '@/components/MainFeed.vue'
 import Category from '@/components/Category.vue'
+import Footer from '@/components/Footer.vue'
 import { mapGetters } from "vuex";
 import Cookies from "js-cookie";
 import axios from 'axios';
@@ -18,11 +19,13 @@ export default {
     Navbar,
     ProfileMainMenu,
     MainFeed,
-    Category  
+    Category,
+    Footer  
   },
   data() {
     return {            
       offerInformation: [],
+      emptyOffers: true,
     };
   },
   computed: {

@@ -23,27 +23,8 @@
 
         </MDBCardHeader>
 
-        <MDBCardBody class="offer-content">
-            <!-- <h5 class="text-start">Descripción</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.description}}
-            </MDBCardText>
-
-            <h5 class="text-start">Categoría</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.category}}
-            </MDBCardText>
-
-            <h5 class="text-start">Experiencia</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.experience}}
-            </MDBCardText>
-
-            <h5 class="text-start">Jornada Laboral</h5>
-            <MDBCardText class="text-start">
-                {{personalOffers.workday}}
-            </MDBCardText> -->
-
+        <MDBCardBody>
+           
             <MDBRow class="row">
             
                 <MDBCol class="mb-4" col="12" lg="6">
@@ -74,22 +55,43 @@
                     </MDBCardText>
                 </MDBCol>
 
-                <MDBAccordion v-model="activeItem">
-                    <MDBAccordionItem
-                    headerTitle="Accordion Item #1"
+                <MDBAccordion class="mt-2" v-model="activeItem">
+                    <MDBAccordionItem class="accordion-applications"
+                    headerTitle="Solicitudes"
                     collapseId="collapseOne"
                     >
-                    <strong>This is the first item's accordion body.</strong> It is
-                    shown by default, until the collapse plugin adds the appropriate
-                    classes that we use to style each element. These classes control
-                    the overall appearance, as well as the showing and hiding via
-                    CSS transitions. You can modify any of this with custom CSS or
-                    overriding our default variables. It's also worth noting that
-                    just about any HTML can go within the
-                    MDBAccordionItem, though the transition does limit
-                    overflow.
+                        
+                        <MDBTable bordered hover class="mb-0 bg-white text-center table-jobApplications">
+                            <thead>
+                                <tr>
+                                <th>ID Trabajador</th>
+                                <th>Estado</th>
+                                <th>Aceptar</th>
+                                <th>Rechazar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(element, index) in jobApplications" :key="index">
+                                    <td>{{ element.employeeId }}</td>
+                                    <td>{{ element.status }}</td>
+                                    <td>
+                                        <MDBBtn color="success" class="btn btn-primary btn-floating" size="sm"
+                                            @click="acceptJobApplication(index, jobApplications)">
+                                            <MDBIcon icon="check" />
+                                        </MDBBtn>
+                                    </td>
+                                    <td>
+                                        <MDBBtn color="danger" class="btn btn-primary btn-floating" size="sm"
+                                            @click="refuseJobApplication(index, jobApplications)">
+                                            <MDBIcon icon="trash" />
+                                        </MDBBtn>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </MDBTable>                                             
                     </MDBAccordionItem>                    
                 </MDBAccordion>
+                
                 
             </MDBRow>
 

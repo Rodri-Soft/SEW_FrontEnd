@@ -23,7 +23,8 @@ import {
   MDBCol,
   MDBRow,
   MDBAccordion,
-  MDBAccordionItem
+  MDBAccordionItem,
+  MDBTable,
 
 } from "mdb-vue-ui-kit";
 import { ref } from 'vue';
@@ -49,12 +50,13 @@ export default {
     MDBCol,
     MDBRow,
     MDBAccordion,
-    MDBAccordionItem
+    MDBAccordionItem,
+    MDBTable,
    
   },  
   setup() {    
     const offerDropdownOptions = ref(false);   
-    const activeItem = ref('collapseOne');
+    const activeItem = ref('');
     return {      
       offerDropdownOptions,
       activeItem
@@ -64,7 +66,8 @@ export default {
   data() {
     return {  
       score: null,    
-      jobApplicationsNumber: null                                  
+      jobApplicationsNumber: null,
+      jobApplications: [],                                  
     };
   },
   computed: {
@@ -72,7 +75,8 @@ export default {
   },
   mounted(){ 
     this.setOfferScore();  
-    this.setJobApplicationsNumber();
+    this.setJobApplications();
+    this.setAccordionColor();    
   },
   methods:{
     alter() {
@@ -111,7 +115,7 @@ export default {
         alert('Algo salió mal, intenta más tarde 😞')
       });  
     },
-    async setJobApplicationsNumber(){
+    async setJobApplications(){
 
       const url = "jobApplications/offerJobApplications";     
       const payload = {   
@@ -123,12 +127,27 @@ export default {
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
           const applications = response.data;            
+          this.jobApplications = applications;
           this.jobApplicationsNumber = applications.length;  
         }
       }).catch((error) => {        
         alert('Algo salió mal, intenta más tarde 😞')
       });  
+    },
+    setAccordionColor() {
+      var accordiosButtons = document.getElementsByClassName("accordion-button");            
+      for (let index = 0; index < accordiosButtons.length; index++) {
+        const element = accordiosButtons[index];
+        element.style.backgroundColor = "#dfe7ed";   
+        element.style.color = "#4F4F4F";
+        element.style.fontSize = "large";
+        element.style.height = "50px"            
+      }    
+    },
+    async acceptJobApplication(index, jobApplications) {
+
     }
+
   }
 }
 
