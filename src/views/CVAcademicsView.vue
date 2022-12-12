@@ -11,7 +11,7 @@
               <!-- <router-link to="/profile" class="btn btn-link btn-sm"> -->
               <router-link to="/profile" class="btn btn-floating logIn-form-button">
                 <MDBIcon icon="arrow-left" size="lg" data-mdb-toggle="tooltip" title="Regresar"/>
-              </router-link>
+              </router-link>              
             </MDBCol>
             <MDBCol col="6" class="d-flex align-items-center justify-content-center">
               <MDBCardTitle class="text-center form-title">

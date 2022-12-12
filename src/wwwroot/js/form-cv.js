@@ -164,7 +164,6 @@ export default {
             this.$store.dispatch("cv", newUserCV);
             this.$router.go();
           }, 2000);
-
         }
       }).catch((error) => {
         const codeStatus = error.response.status;

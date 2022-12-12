@@ -180,6 +180,7 @@ export default {
       return payload;
     },
     async loginWithGoogle() {            
+      await this.createUserImages();
       const url = 'http://localhost:3000/api/v1/auth/google';
       window.location.href = url; 
     },
