@@ -71,8 +71,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(element, index) in jobApplications" :key="index">
-                                    <td>{{ element.employeeId }}</td>
+                                <tr v-for="(element, index) in jobApplications" :key="index">                                    
+                                    <td>
+                                        <router-link :to="`/user/${element.rfc}`">
+                                            {{ element.rfc }}
+                                        </router-link>
+                                    </td>
                                     <td>{{ element.status }}</td>
                                     <td>
                                         <MDBBtn color="success" class="btn btn-primary btn-floating" size="sm"

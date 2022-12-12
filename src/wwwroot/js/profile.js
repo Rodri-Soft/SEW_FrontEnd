@@ -80,9 +80,11 @@ export default {
     }
   },
   mounted() {
-    if (this.user.employee.cv) {
-      this.description = this.user.employee.cv.description;
-    }
+    if (this.user.employee) {
+      if (this.user.employee.cv) {
+        this.description = this.user.employee.cv.description;
+      }
+    }    
   },
   methods: {
     checkInput() {

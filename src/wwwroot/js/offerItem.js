@@ -75,7 +75,7 @@ export default {
   },
   mounted(){ 
     this.setOfferScore();  
-    this.setJobApplications();
+    this.getJobApplications();
     this.setAccordionColor();    
   },
   methods:{
@@ -115,7 +115,7 @@ export default {
         alert('Algo salió mal, intenta más tarde 😞')
       });  
     },
-    async setJobApplications(){
+    async getJobApplications(){
 
       const url = "jobApplications/offerJobApplications";     
       const payload = {   
@@ -126,13 +126,36 @@ export default {
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
-          const applications = response.data;            
-          this.jobApplications = applications;
-          this.jobApplicationsNumber = applications.length;  
+          const applications = response.data;                                    
+          this.jobApplicationsNumber = applications.length;            
+          this.setJobApplications(applications);          
         }
-      }).catch((error) => {        
+      }).catch((error) => {      
+        console.log(error);  
         alert('Algo salió mal, intenta más tarde 😞')
       });  
+    },
+    async setJobApplications(applications){                 
+      for (let index = 0; index < applications.length; index++) {
+        await this.setRFC(applications, index)
+      }     
+    },
+    async setRFC(applications, index){
+      const url = "employees/oneEmployeeUser";
+      const payload = {   
+        id: applications[index].employeeId,             
+      };      
+      await axios.post(url, payload).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const userFound = response.data;          
+          applications[index].rfc = userFound.user.rfc;  
+          this.jobApplications = applications;                   
+        }
+      }).catch((error) => {                  
+        alert('Algo salió mal, intenta más tarde 😞')
+      });          
+
     },
     setAccordionColor() {
       var accordiosButtons = document.getElementsByClassName("accordion-button");            
@@ -145,7 +168,7 @@ export default {
       }    
     },
     async acceptJobApplication(index, jobApplications) {
-
+      
     }
 
   }

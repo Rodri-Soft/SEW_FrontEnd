@@ -19,7 +19,7 @@
 							<i class="fas fa-search search-icon"></i>
 							<input type="search" class="form-control search-input rounded-4" 
 								placeholder="Explota Ofertas Laborales" aria-label="Search" id="input-search"/>
-							<MDBDropdown v-model="dropdownFilter">
+							<!-- <MDBDropdown v-model="dropdownFilter">
 								<a id="filterButton" class="m-2 color-button" href="#" @click="(dropdownFilter = !dropdownFilter)">
 									<MDBIcon icon="filter" size="lg"></MDBIcon>
 									<p class="filter-text ms-2">Filtros</p>
@@ -30,7 +30,7 @@
 									<MDBDropdownItem href="#">Categoría</MDBDropdownItem>
 									<MDBDropdownItem href="#">Fecha</MDBDropdownItem>
 								</MDBDropdownMenu>
-							</MDBDropdown>
+							</MDBDropdown> -->
 						</div>
 					</form>
 				</MDBNavbarItem>

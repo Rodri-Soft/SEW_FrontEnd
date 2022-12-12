@@ -119,7 +119,7 @@ export default {
     },      
     async setOfferApplied(){
 
-      const url = "jobApplications/oneJobApplication";     
+      const url = "jobApplications/oneJobApplicationEmployee";     
       const payload = {              
         employeeId: this.user.employee.id,
         offerId: this.offers.id   
@@ -221,7 +221,7 @@ export default {
         await axios.post(url, payload).then((response) => {    
   
           const codeStatus = response.status;              
-          if (codeStatus === 200) {          
+          if (codeStatus === 201) {          
             this.color = "danger";  
           }
         }).catch((error) => {        
