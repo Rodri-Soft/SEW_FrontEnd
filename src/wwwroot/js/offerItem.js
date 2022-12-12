@@ -56,10 +56,10 @@ export default {
   },  
   setup() {    
     const offerDropdownOptions = ref(false);   
-    const activeItem = ref('');
+    const activeItemApplication = ref('');    
     return {      
       offerDropdownOptions,
-      activeItem
+      activeItemApplication,      
     }
   },
   props: ["personalOffers"],  
@@ -67,7 +67,8 @@ export default {
     return {  
       score: null,    
       jobApplicationsNumber: null,
-      jobApplications: [],                                  
+      jobApplications: [],    
+      acceptedJobApplications: [],                      
     };
   },
   computed: {
@@ -75,8 +76,9 @@ export default {
   },
   mounted(){ 
     this.setOfferScore();  
-    this.getJobApplications();
-    this.setAccordionColor();    
+    this.getPendingJobApplications();
+    this.getAcceptedJobApplications();
+    this.setAccordionColor();        
   },
   methods:{
     alter() {
@@ -115,11 +117,12 @@ export default {
         alert('Algo salió mal, intenta más tarde 😞')
       });  
     },
-    async getJobApplications(){
+    async getPendingJobApplications(){
 
-      const url = "jobApplications/offerJobApplications";     
+      const url = "jobApplications/offerStatusJobApplications";     
       const payload = {   
-        offerId: this.personalOffers.id,             
+        offerId: this.personalOffers.id,
+        status: "Pendiente",             
       };
       
       await axios.post(url, payload).then((response) => {    
@@ -130,12 +133,12 @@ export default {
           this.jobApplicationsNumber = applications.length;            
           this.setJobApplications(applications);          
         }
-      }).catch((error) => {      
-        console.log(error);  
+      }).catch((error) => {              
         alert('Algo salió mal, intenta más tarde 😞')
       });  
     },
-    async setJobApplications(applications){                 
+    async setJobApplications(applications){ 
+      this.jobApplications = [];                          
       for (let index = 0; index < applications.length; index++) {
         await this.setRFC(applications, index)
       }     
@@ -163,13 +166,74 @@ export default {
         const element = accordiosButtons[index];
         element.style.backgroundColor = "#dfe7ed";   
         element.style.color = "#4F4F4F";
-        element.style.fontSize = "large";
-        element.style.height = "50px"            
+        element.style.fontSize = "medium";
+        element.style.height = "30px"              
       }    
     },
-    async acceptJobApplication(index, jobApplications) {
+    async acceptJobApplication(index, jobApplications) {            
+          
+      const url = "jobApplications/";
+      const payload = {   
+        id: jobApplications[index].id,
+        changes: {
+          status: "Aceptada"
+        }     
+      };      
+      await axios.patch(url, payload).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {       
+          this.jobApplications = [];          
+        }
+      }).catch((error) => {                  
+        alert('Algo salió mal, intenta más tarde 😞')
+      });          
+
+      await this.getPendingJobApplications();
+      await this.getAcceptedJobApplications();
+
+    },
+    async getAcceptedJobApplications(){
+
+      const url = "jobApplications/offerStatusJobApplications";     
+      const payload = {   
+        offerId: this.personalOffers.id,
+        status: "Aceptada",             
+      };
       
-    }
+      await axios.post(url, payload).then((response) => {    
+
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const applications = response.data;                                                        
+          this.setAcceptedJobApplications(applications);          
+        }
+      }).catch((error) => {              
+        alert('Algo salió mal, intenta más tarde 😞')
+      });  
+    },
+    async setAcceptedJobApplications(applications){ 
+      this.acceptedJobApplications = [];                          
+      for (let index = 0; index < applications.length; index++) {
+        await this.setAceptedRFC(applications, index)
+      }     
+    },
+    async setAceptedRFC(applications, index){
+      const url = "employees/oneEmployeeUser";
+      const payload = {   
+        id: applications[index].employeeId,             
+      };      
+      await axios.post(url, payload).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const userFound = response.data;          
+          applications[index].rfc = userFound.user.rfc;  
+          this.acceptedJobApplications = applications;                   
+        }
+      }).catch((error) => {                  
+        alert('Algo salió mal, intenta más tarde 😞')
+      });          
+
+    },
 
   }
 }

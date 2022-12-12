@@ -55,16 +55,16 @@
                     </MDBCardText>
                 </MDBCol>
 
-                <MDBAccordion class="mt-2" v-model="activeItem">
+                <MDBAccordion class="mt-3" v-model="activeItemApplication">
+
                     <MDBAccordionItem class="accordion-applications"
-                    headerTitle="Solicitudes"
-                    collapseId="collapseOne"
-                    >
-                        
-                        <MDBTable bordered hover class="mb-0 bg-white text-center table-jobApplications">
+                    headerTitle="Solicitudes Pendientes"
+                    collapseId="collapsePendantApplication"
+                    >                        
+                        <MDBTable bordered hover class="mb-0 text-center table-jobApplications">
                             <thead>
                                 <tr>
-                                <th>ID Trabajador</th>
+                                <th>RFC Trabajador</th>
                                 <th>Estado</th>
                                 <th>Aceptar</th>
                                 <th>Rechazar</th>
@@ -81,8 +81,8 @@
                                     <td>
                                         <MDBBtn color="success" class="btn btn-primary btn-floating" size="sm"
                                             @click="acceptJobApplication(index, jobApplications)">
-                                            <MDBIcon icon="check" />
-                                        </MDBBtn>
+                                            <MDBIcon icon="check" />                                                                                       
+                                        </MDBBtn>                                       
                                     </td>
                                     <td>
                                         <MDBBtn color="danger" class="btn btn-primary btn-floating" size="sm"
@@ -93,10 +93,39 @@
                                 </tr>
                             </tbody>
                         </MDBTable>                                             
-                    </MDBAccordionItem>                    
-                </MDBAccordion>
-                
-                
+                    </MDBAccordionItem>           
+                    
+                    <MDBAccordionItem class="accordion-applications"
+                    headerTitle="Solicitudes Aceptadas"
+                    collapseId="collapseAcceptedApplication"
+                    >                        
+                        <MDBTable bordered hover class="mb-0 text-center table-jobApplications">
+                            <thead>
+                                <tr>
+                                <th>RFC Trabajador</th>
+                                <th>Estado</th>
+                                <th></th>                                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(element, index) in acceptedJobApplications" :key="index">                                    
+                                    <td>
+                                        <router-link :to="`/user/${element.rfc}`">
+                                            {{ element.rfc }}
+                                        </router-link>
+                                    </td>
+                                    <td>{{ element.status }}</td>
+                                    <td>
+                                        <MDBBtn color="success" class="btn btn-primary btn-floating" size="sm">                                            
+                                            <MDBIcon icon="check" />                                                                                       
+                                        </MDBBtn>                                       
+                                    </td>                                    
+                                </tr>
+                            </tbody>
+                        </MDBTable>                                             
+                    </MDBAccordionItem> 
+                </MDBAccordion>     
+                                                         
             </MDBRow>
 
 
