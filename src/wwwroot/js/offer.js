@@ -153,8 +153,7 @@ export default {
           messageUpdate.innerHTML = verifyFieldsMessage;
         } else {
           messagePublish.innerHTML = verifyFieldsMessage;          
-        }
-                
+        }                
       }      
     },  
     validateFormOffer() {
@@ -268,49 +267,94 @@ export default {
       this.category = 'null';                             
 
     },  
-    publishOffer(messagePublish) {
+    async publishOffer(messagePublish) {
       
-      messagePublish.innerHTML = 'Oferta publicada correctamente 😊';
-      messagePublish.classList.add('text-success');
-      const publishButton = document.getElementById('publish-offer-button');
-      publishButton.setAttribute("disabled", "");
+      const url = "offers/createOffer";      
+      const newOffer = {       
+        title: this.title,
+        workday: this.workday,
+        description: this.description,
+        experience: this.experience,
+        category: this.category,
+        status: "Pendiente",
+        score: 0,
+        reportsNumber: 0,
+        recruiterId: this.user.recruiter.id
+      } 
 
-      const offersLenght = this.offerInformation.length;
+      const payload = {        
+        offerData: newOffer
+      }
+          
+      await axios.post(url, payload).then((response) => {
+        const codeStatus = response.status;        
+        if (codeStatus === 201) {
 
-      //Verificar que haya por lo menos un elemento
-      const lastOffer = this.offerInformation[offersLenght - 1];
-      
-      this.offerInformation.push(
-        {
-          id: (lastOffer.id + 1),
-          title: this.title,                              
-          description: this.description,
-          category: this.category,
-          experience: this.experience,
-          workday: this.workday,
-          score: 0,
-          jobAplicationsNumber: 0,          
+          const newOffer = response.data;
+          this.offerInformation.push(newOffer);
+
+          messagePublish.innerHTML = 'Oferta publicada correctamente 😊';
+          messagePublish.classList.add('text-success');
+          const publishButton = document.getElementById('publish-offer-button');
+          publishButton.setAttribute("disabled", "");                    
+
         }
-      );
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          400: 'Verifique los campos nuevamente 🤔',
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        messagePublish.innerHTML = messages[codeStatus];
+      });      
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
     },
-    updateOffer(messageUpdate) {
-      
-      messageUpdate.innerHTML = 'Oferta actualizada correctamente 😊';
-      messageUpdate.classList.add('text-success');
-      const updateButton = document.getElementById('update-offer-button');
-      updateButton.setAttribute("disabled", "");
-      
-      let newOffer = this.offerInformation[this.updatedOfferIndex];
-      newOffer.title = this.title;
-      newOffer.description = this.description,
-      newOffer.category = this.category,
-      newOffer.experience = this.experience,
-      newOffer.workday = this.workday,
+    async updateOffer(messageUpdate) {
 
-      this.offerInformation[this.updatedOfferIndex] = newOffer;
-               
+      const url = "offers/";      
+      const updatedOffer = {
+        title: this.title,
+        category: this.category,
+        workday: this.workday,
+        description: this.description,
+        experience: this.experience
+      } 
+
+      const payload = {
+        id:  this.offerInformation[this.updatedOfferIndex].id,
+        changes: updatedOffer
+      }
+          
+      await axios.patch(url, payload).then((data) => {
+        const codeStatus = data.status;        
+        if (codeStatus === 200) {
+
+          messageUpdate.innerHTML = 'Oferta actualizada correctamente 😊';
+          messageUpdate.classList.add('text-success');
+          const updateButton = document.getElementById('update-offer-button');
+          updateButton.setAttribute("disabled", "");          
+
+          let newOffer = this.offerInformation[this.updatedOfferIndex];
+          newOffer.title = this.title;
+          newOffer.description = this.description,
+          newOffer.category = this.category,
+          newOffer.experience = this.experience,
+          newOffer.workday = this.workday,
+
+          this.offerInformation[this.updatedOfferIndex] = newOffer;
+
+        }
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          400: 'Verifique los campos nuevamente 🤔',
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        messageUpdate.innerHTML = messages[codeStatus];
+      });      
     },
     consultOffer(i) {
       console.log(i);     

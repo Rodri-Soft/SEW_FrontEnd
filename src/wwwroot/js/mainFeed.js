@@ -224,8 +224,15 @@ export default {
           if (codeStatus === 201) {          
             this.color = "danger";  
           }
-        }).catch((error) => {        
-          alert('Algo salió mal, intenta más tarde 😞')
+        }).catch((error) => {                  
+          const codeStatus = error.response.status;
+          const messages = {          
+            401: 'No autorizado 😡',
+            404: 'Esta oferta ya no se encuentra disponible 😔',
+            409: 'Recurso duplicado',
+            500: 'Algo salió mal, intenta más tarde 😔'
+          }
+          alert(messages[codeStatus]);
         });  
       } else {
         
@@ -243,7 +250,14 @@ export default {
             this.color = "light";  
           }                    
         }).catch((error) => {                  
-          alert('Algo salió mal, intenta más tarde 😞')
+          alert('Algo salió mal, intenta más tarde 😞');
+          const codeStatus = error.response.status;
+          const messages = {          
+            401: 'No autorizado 😡',
+            404: 'Esta oferta ya no se encuentra disponible 😔',            
+            500: 'Algo salió mal, intenta más tarde 😔'
+          }
+          alert(messages[codeStatus]);
         });  
 
 
