@@ -29,6 +29,7 @@ import {
  
 } from "mdb-vue-ui-kit";
 import { ref } from 'vue';
+import { setTimeout } from 'core-js';
 
 export default {
 
@@ -67,6 +68,9 @@ export default {
   props: ["offers"],
   computed: {
     ...mapGetters(["user"]),
+    styles() {
+      return this.process ? ['disabled'] :  [''];
+    },
   },
   data() {
     return {
@@ -74,7 +78,8 @@ export default {
       score: null,
       hasScore: false,      
       localScore: null,
-      color: "light",
+      color: "light",      
+      process: false
     }
   },
   mounted(){           
@@ -170,8 +175,14 @@ export default {
         if (codeStatus === 200) {          
           offerScore = response.data;         
         }
-      }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
+      }).catch((error) => {                
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',            
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
       });        
             
       const url = "offers/";
@@ -195,9 +206,14 @@ export default {
         }
 
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
-      });       
-      
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',            
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });             
     }, 
     showScoreDrop() {
       
@@ -207,10 +223,13 @@ export default {
       if (!dropdownScoreState) {
         this.hasScore = false;
       }
-    },  
+    },    
     async applyToJobApplication(){
-        
+                   
+      this.process = true;
+
       if (this.color === "light") {
+        
         const url = "jobApplications/createJobApplication";     
         const payload = {   
           status: "Pendiente",
@@ -223,8 +242,10 @@ export default {
           const codeStatus = response.status;              
           if (codeStatus === 201) {          
             this.color = "danger";  
+            this.process = false;
           }
-        }).catch((error) => {                  
+        }).catch((error) => {       
+          this.process = false;           
           const codeStatus = error.response.status;
           const messages = {          
             401: 'No autorizado 😡',
@@ -236,8 +257,7 @@ export default {
         });  
       } else {
         
-        const url = "jobApplications/deleteJobApplication";     
-                      
+        const url = "jobApplications/deleteJobApplication";                           
         await axios.delete(url, {
           data: {
             employeeId: this.user.employee.id,
@@ -247,10 +267,11 @@ export default {
                  
           const codeStatus = response.status;          
           if (codeStatus === 204) {
+            this.process = false;
             this.color = "light";  
           }                    
-        }).catch((error) => {                  
-          alert('Algo salió mal, intenta más tarde 😞');
+        }).catch((error) => {   
+          this.process = false;                         
           const codeStatus = error.response.status;
           const messages = {          
             401: 'No autorizado 😡',
@@ -259,11 +280,8 @@ export default {
           }
           alert(messages[codeStatus]);
         });  
-
-
       }        
     }  
-
   }
 }
 

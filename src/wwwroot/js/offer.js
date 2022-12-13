@@ -242,10 +242,32 @@ export default {
       this.category = offer.category
                               
     },
-    removeOfferItem(i) {
+    async removeOfferItem(i) {      
+      
+      const url = "offers/deleteOffer";                           
+      await axios.delete(url, {
+        data: {         
+          id: this.offerInformation[i].id,
+        }
+      }).then((response) => {    
+                
+        const codeStatus = response.status;          
+        if (codeStatus === 204) {
+          const offersRemove = this.offerInformation.filter((element, index) => index !== i);      
+          this.offerInformation = offersRemove;
+        }                    
+      }).catch((error) => {   
+                                
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });  
 
-      const offersRemove = this.offerInformation.filter((element, index) => index !== i);      
-      this.offerInformation = offersRemove;
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
 

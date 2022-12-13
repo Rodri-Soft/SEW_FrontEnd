@@ -27,26 +27,27 @@
     margin-left: -1%;
 }
 
-@media (max-width: 576px) {
-    .reactionButton {
-        width: 100%;
-    }
+.reactionButton {
+    width: 100%;
 }
 
 @media (min-width: 1200px) {
     .reactionButton {
-        font-size: xx-small;
+        font-size: small;
     }
 }
 
 @media (min-width: 1300px) {
     .reactionButton {
-        font-size: x-small;
+        font-size: small;
     }
 }
 
 .star-widget{
     padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;         
 }
 
 .star-widget input {
@@ -54,14 +55,9 @@
 }
 
 .star-widget label {
-    color: #444;
-    padding-left: 10px;
+    color: #444;    
     float: inline-start;
-    transition: all 0.2s ease;
-}
-
-.score-menu {
-    margin-left: -10px!important;
+    transition: all 0.2s ease;    
 }
 
 .icon-jobapplication:hover{
