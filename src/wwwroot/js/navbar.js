@@ -44,9 +44,10 @@ export default {
   computed: {
     ...mapGetters(["user"]),
   },
+  props: ["homeNavbar"],  
   data() {
     return {
-      profileImage: '',
+      profileImage: '',      
     }
   },
   setup() {
@@ -107,5 +108,8 @@ export default {
     goHome() {
       this.$emit("goHome");
     },      
+    searchOffer() {            
+      this.$emit("searchOffer", document.getElementById("input-search").value);
+    }
   }
 }

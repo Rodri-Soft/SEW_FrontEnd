@@ -53,7 +53,7 @@ export default {
       
       await axios.post(url, payload).then((response) => {
         const offers = response.data;                
-        this.offerInformation = offers;              
+        this.offerInformation = offers;                     
 
       }).catch((error) => {
         const codeStatus = error.response.status;
@@ -61,7 +61,8 @@ export default {
           401: 'No autorizado 😡',
           400: "Verifique el campo nuevamente 🤔",
           500: 'Algo salió mal, intenta más tarde 😔'
-        }          
+        }         
+        alert(messages[codeStatus]); 
       });       
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;   
@@ -74,6 +75,28 @@ export default {
         this.offerInformation = offers;           
       });            
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
+    },
+    async searchOffer(title) {
+
+      const url = "offers/getOffersTitle";
+      const payload = {         
+        title: title,
+      };
+      
+      await axios.post(url, payload).then((response) => {
+        const offers = response.data;                
+        this.offerInformation = offers;   
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {
+          401: 'No autorizado 😡',
+          400: "Verifique el campo nuevamente 🤔",
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }         
+        alert(messages[codeStatus]); 
+      });       
+
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true; 
     }
   }
 }

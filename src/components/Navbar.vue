@@ -13,8 +13,8 @@
 
 		<MDBCollapse v-model="collapse" id="navbarSupportedContent">
 			<MDBNavbarNav class="mb-2 mb-lg-0">
-				<MDBNavbarItem>
-					<form class="d-flex input-group w-auto">
+				<MDBNavbarItem v-show="homeNavbar" >
+					<form class="d-flex input-group w-auto" @submit.prevent="searchOffer">
 						<div class="d-flex align-items-center search-container">
 							<i class="fas fa-search search-icon"></i>
 							<input type="search" class="form-control search-input rounded-4" 
