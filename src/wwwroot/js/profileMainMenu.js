@@ -77,7 +77,11 @@ export default {
     },       
     consultRecruiterOffers(){
       this.$router.push('offers');
-    }      
+    },
+    consultEmployeeJobApplications(){
+      this.$router.push('jobApplications');
+    },
+
   }
 }
 

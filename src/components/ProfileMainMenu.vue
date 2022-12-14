@@ -41,7 +41,7 @@
                 </router-link>                                  
             </MDBCol>
             <MDBCol id="jobApplicationsButton" col="12">
-                <MDBBtn v-show="user.role == 'Employee'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
+                <MDBBtn @click="consultEmployeeJobApplications" v-show="user.role == 'Employee'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-envelope me-2 fa-lg"></i>
                     Mis Solicitudes
                 </MDBBtn>   

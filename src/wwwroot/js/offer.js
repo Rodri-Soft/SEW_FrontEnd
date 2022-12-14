@@ -223,7 +223,14 @@ export default {
         const offers = response.data;                
         this.offerInformation = offers;           
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
       });    
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
@@ -271,11 +278,7 @@ export default {
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
 
-    },
-    showOffer(i) {
-      console.log("Índice de elemento en arreglo "+i);
-      console.log("ID de offer "+this.offerInformation[i].id);      
-    },
+    },    
     closeOfferModal(){
       
       this.update = false;
@@ -377,15 +380,7 @@ export default {
         }
         messageUpdate.innerHTML = messages[codeStatus];
       });      
-    },
-    consultOffer(i) {
-      console.log(i);     
-      // this.$router.push({ name: 'about', params: { title: 'test title' }});
-      // this.$store.state.test = "Test title";
-      this.$store.state.offer = this.offerInformation[i];
-      this.$router.push('offerApplications');
-      
-    },
+    },    
   }
 }
 

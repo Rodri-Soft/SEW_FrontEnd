@@ -1,0 +1,32 @@
+.statusColor-pending {
+    color: #2C58A0;
+}
+
+.statusBackground-pending {
+    background: #DFE7F6;
+}
+
+.statusColor-accepted {
+    color: #0D6832;
+}
+
+.statusBackground-accepted {
+    background: #D6F0E0;
+}
+
+.statusColor-rejected {
+    color: #AF2371
+}
+
+.statusBackground-rejected {
+    background: #F9E1E5;
+}
+
+.statusBackground-border {    
+    border-radius: 10px;
+}
+
+.headerFeed {
+    border-color: white;
+}
+

@@ -24,9 +24,7 @@
                             :key="i"
                             :personalOffers="offer"
                             v-on:alterOfferItem="alterOfferItem(i)"
-                            v-on:removeOfferItem="removeOfferItem(i)"                    
-                            v-on:showOffer="showOffer(i)"
-                            v-on:consultOffer="consultOffer(i)" />                    
+                            v-on:removeOfferItem="removeOfferItem(i)" />                                                                                                
             </div>            
         </div>
     </div>

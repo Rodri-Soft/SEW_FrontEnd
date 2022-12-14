@@ -77,13 +77,13 @@ const routes = [
     name: 'offers',
     // meta: { requiresAuth: true },
     component: () => import('../views/OfferView.vue')
-  },
+  },  
   {
-    path: '/offerApplications',
-    name: 'offerApplications',
+    path: '/jobApplications',
+    name: 'jobApplications',
     // meta: { requiresAuth: true },
-    component: () => import('../views/OfferApplicationsView.vue')
-  }
+    component: () => import('../views/JobApplication.vue')
+  },
 ]
 
 const router = createRouter({

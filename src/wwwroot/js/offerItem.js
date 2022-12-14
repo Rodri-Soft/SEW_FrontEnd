@@ -86,13 +86,7 @@ export default {
     },
     remove() {
       this.$emit("removeOfferItem");
-    },
-    showOffer() {
-      this.$emit("showOffer");
-    },
-    consultOffer() {
-      this.$emit("consultOffer");
-    },
+    },        
     async setOfferScore(){
 
       const url = "offers/oneOffer";     
@@ -114,7 +108,14 @@ export default {
           }    
         }
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
       });  
     },
     async getPendingJobApplications(){
