@@ -93,8 +93,12 @@ export default {
       const payload = {   
         id: this.personalOffers.id,             
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
@@ -125,8 +129,12 @@ export default {
         offerId: this.personalOffers.id,
         status: "Pendiente",             
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
@@ -134,9 +142,16 @@ export default {
           this.jobApplicationsNumber = applications.length;            
           this.setJobApplications(applications);          
         }
-      }).catch((error) => {              
-        alert('Algo salió mal, intenta más tarde 😞')
-      });  
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });   
     },
     async setJobApplications(applications){ 
       this.jobApplications = [];                          
@@ -149,16 +164,27 @@ export default {
       const payload = {   
         id: applications[index].employeeId,             
       };      
-      await axios.post(url, payload).then((response) => {    
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.post(url, payload, config).then((response) => {    
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
           const userFound = response.data;          
           applications[index].rfc = userFound.user.rfc;  
           this.jobApplications = applications;                   
         }
-      }).catch((error) => {                  
-        alert('Algo salió mal, intenta más tarde 😞')
-      });          
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });           
 
     },
     setAccordionColor() {
@@ -179,15 +205,26 @@ export default {
         changes: {
           status: "Aceptada"
         }     
-      };      
-      await axios.patch(url, payload).then((response) => {    
+      };    
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };  
+      await axios.patch(url, payload, config).then((response) => {    
         const codeStatus = response.status;              
         if (codeStatus === 200) {       
           this.jobApplications = [];          
         }
-      }).catch((error) => {                  
-        alert('Algo salió mal, intenta más tarde 😞')
-      });          
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });            
 
       await this.getPendingJobApplications();
       await this.getAcceptedJobApplications();
@@ -200,16 +237,27 @@ export default {
         offerId: this.personalOffers.id,
         status: "Aceptada",             
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
           const applications = response.data;                                                        
           this.setAcceptedJobApplications(applications);          
         }
-      }).catch((error) => {              
-        alert('Algo salió mal, intenta más tarde 😞')
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
       });  
     },
     async setAcceptedJobApplications(applications){ 
@@ -223,16 +271,27 @@ export default {
       const payload = {   
         id: applications[index].employeeId,             
       };      
-      await axios.post(url, payload).then((response) => {    
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.post(url, payload, config).then((response) => {    
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
           const userFound = response.data;          
           applications[index].rfc = userFound.user.rfc;  
           this.acceptedJobApplications = applications;                   
         }
-      }).catch((error) => {                  
-        alert('Algo salió mal, intenta más tarde 😞')
-      });          
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });           
 
     },
     async refuseJobApplication(index, jobApplications){
@@ -243,14 +302,25 @@ export default {
           status: "Rechazada"
         }     
       };      
-      await axios.patch(url, payload).then((response) => {    
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.patch(url, payload, config).then((response) => {    
         const codeStatus = response.status;              
         if (codeStatus === 200) {       
           this.jobApplications = [];          
         }
-      }).catch((error) => {                  
-        alert('Algo salió mal, intenta más tarde 😞')
-      });          
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });           
 
       await this.getPendingJobApplications();
     }

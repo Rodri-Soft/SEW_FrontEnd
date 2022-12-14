@@ -208,20 +208,27 @@ export default {
       const payload = {         
         recruiterId: this.user.recruiter.id,         
       };
-      await axios.post(url, payload).then((response) => {
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      let offerScore;
+      await axios.post(url, payload, config).then((response) => {
         const codeStatus = response.status;                  
         if (codeStatus === 200) {                    
           const followers = response.data;          
           this.$store.commit('setFollowers', followers);
         }
-      }).catch((error) => {
+      }).catch((error) => {        
         const codeStatus = error.response.status;
-        const messages = {
+        const messages = {          
           401: 'No autorizado 😡',
-          400: "Verifique el campo nuevamente 🤔",
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
           500: 'Algo salió mal, intenta más tarde 😔'
-        }          
-      });                    
+        }
+        alert(messages[codeStatus]);
+      });                        
     },
     async setAmountOffers(){
               
@@ -229,22 +236,28 @@ export default {
       const payload = {         
         recruiterId: this.user.recruiter.id,         
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
 
-      await axios.post(url, payload).then((response) => {
+      await axios.post(url, payload, config).then((response) => {
         const codeStatus = response.status;          
         
         if (codeStatus === 200) {                              
           const amountOffers = response.data;          
           this.$store.commit('setAmountOffers', amountOffers);
         }
-      }).catch((error) => {
+      }).catch((error) => {        
         const codeStatus = error.response.status;
-        const messages = {
+        const messages = {          
           401: 'No autorizado 😡',
-          400: "Verifique el campo nuevamente 🤔",
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
           500: 'Algo salió mal, intenta más tarde 😔'
-        }          
-      });              
+        }
+        alert(messages[codeStatus]);
+      });             
         
     },
     setMenuBackground(){

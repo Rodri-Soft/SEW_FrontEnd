@@ -78,7 +78,11 @@ export default {
             const payload = {         
                 id: this.user.employee.id,
             };
-            await axios.post(url, payload).then((response) => {                            
+            const token = Cookies.get('access_token');      
+            const config = {
+              headers: { 'Authorization': `Bearer ${token}` }
+            };
+            await axios.post(url, payload, config).then((response) => {                            
                 this.jobApplications = response.data.offers;           
             }).catch((error) => {        
                 const codeStatus = error.response.status;

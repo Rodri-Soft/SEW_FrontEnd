@@ -101,8 +101,12 @@ export default {
       const payload = {   
         id: this.employeeJobApplication.id,             
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
