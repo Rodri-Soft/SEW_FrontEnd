@@ -21,8 +21,7 @@ import {
   MDBCardText,
   MDBCardLink,
   MDBCardImg,
-  MDBCardGroup,
-  MDBCardGroupItem,
+  MDBCardGroup,  
   MDBListGroupItem,
   MDBListGroup,  
   MDBModal,
@@ -57,8 +56,7 @@ export default {
     MDBCardText,
     MDBCardLink,
     MDBCardImg,
-    MDBCardGroup,
-    MDBCardGroupItem,
+    MDBCardGroup,    
     MDBListGroupItem,
     MDBListGroup,    
     MDBModal,
@@ -254,35 +252,12 @@ export default {
                               
     },
     async removeOfferItem(i) {      
-      
-      // const url = "offers/deleteOffer";           
+                      
       const url = `offers/deleteOffer/${this.offerInformation[i].id}`;           
       const token = Cookies.get('access_token');      
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
-      };                
-      // await axios.delete(url, {
-      //   data: {         
-      //     id: this.offerInformation[i].id,
-      //   }
-      // }).then((response) => {    
-                
-      //   const codeStatus = response.status;          
-      //   if (codeStatus === 204) {
-      //     const offersRemove = this.offerInformation.filter((element, index) => index !== i);      
-      //     this.offerInformation = offersRemove;
-      //   }                    
-      // }).catch((error) => {   
-                                
-      //   const codeStatus = error.response.status;
-      //   const messages = {          
-      //     401: 'No autorizado 😡',
-      //     404: 'Esta oferta ya no se encuentra disponible 😔',      
-      //     400: 'Algo salió mal, intenta más tarde 😔',      
-      //     500: 'Algo salió mal, intenta más tarde 😔'
-      //   }
-      //   alert(messages[codeStatus]);
-      // });  
+      };                      
 
       await axios.delete(url, config).then((response) => {    
                 

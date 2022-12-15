@@ -173,6 +173,7 @@ export default {
     },
     async qualifyOffer(score){      
 
+      console.log(score);
       if (this.hasScore) {
 
         for (let index = 1; index <= 5; index++) {
@@ -214,6 +215,8 @@ export default {
         }
         alert(messages[codeStatus]);
       });        
+
+      console.log(offerScore);
             
       const url = "offers/";
       let newScore = offerScore.score + score;
@@ -291,35 +294,7 @@ export default {
           alert(messages[codeStatus]);
         });  
       } else {
-        
-        // const url = "jobApplications/deleteJobApplication";    
-        // const token = Cookies.get('access_token');      
-        // const config = {
-        //   headers: { 'Authorization': `Bearer ${token}` }
-        // };                       
-        // await axios.delete(url, config, {
-        //   data: {
-        //     employeeId: this.user.employee.id,
-        //     offerId: this.offers.id
-        //   }
-        // }).then((response) => {    
-                 
-        //   const codeStatus = response.status;          
-        //   if (codeStatus === 204) {
-        //     this.process = false;
-        //     this.color = "light";  
-        //   }                    
-        // }).catch((error) => {   
-        //   this.process = false;                         
-        //   const codeStatus = error.response.status;
-        //   const messages = {          
-        //     401: 'No autorizado 😡',
-        //     404: 'Esta oferta ya no se encuentra disponible 😔',            
-        //     500: 'Algo salió mal, intenta más tarde 😔'
-        //   }
-        //   alert(messages[codeStatus]);
-        // });  
-
+              
         const url = `jobApplications/deleteJobApplication/${this.user.employee.id}&${this.offers.id}`;    
         const token = Cookies.get('access_token');      
         const config = {
