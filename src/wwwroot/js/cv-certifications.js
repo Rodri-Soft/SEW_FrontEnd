@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar.vue'
 import UserInformation from '@/components/ProfileInformation.vue'
+import Footer from '@/components/Footer.vue'
 import axios from 'axios';
 import './axios'
 import { mapGetters } from 'vuex';
@@ -29,6 +30,7 @@ export default {
   components: {
     Navbar,
     UserInformation,
+    Footer,
     MDBIcon,
     MDBInput,
     MDBRow,

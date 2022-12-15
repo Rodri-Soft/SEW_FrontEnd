@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import store from './../store/index.js'
 import Cookies from 'js-cookie'
 import '../wwwroot/js/axios'
+import { mapGetters } from 'vuex';
 
 const routes = [
   {
@@ -40,31 +41,71 @@ const routes = [
     path: '/profile/cv/work-experiences',
     name: 'workExperiences',
     meta: { requiresAuth: true },
-    component: () => import('../views/CVWorksView.vue')
+    component: () => import('../views/CVWorksView.vue'),
+    beforeEnter: (to, from, next) => {
+      const userRole = store.getters.user.role;
+      if (userRole === 'Employee') {
+        next();
+      } else {
+        next('/home');
+      }
+    }
   },
   {
     path: '/profile/cv/academic-trainings',
     name: 'academicTrainings',
     meta: { requiresAuth: true },
-    component: () => import('../views/CVAcademicsView.vue')
+    component: () => import('../views/CVAcademicsView.vue'),
+    beforeEnter: (to, from, next) => {
+      const userRole = store.getters.user.role;
+      if (userRole === 'Employee') {
+        next();
+      } else {
+        next('/home');
+      }
+    }
   },
   {
     path: '/profile/cv/certifications',
     name: 'certifications',
     meta: { requiresAuth: true },
-    component: () => import('../views/CVCertificationsView.vue')
+    component: () => import('../views/CVCertificationsView.vue'),
+    beforeEnter: (to, from, next) => {
+      const userRole = store.getters.user.role;
+      if (userRole === 'Employee') {
+        next();
+      } else {
+        next('/home');
+      }
+    }
   },
   {
     path: '/profile/cv/skills',
     name: 'skills',
     meta: { requiresAuth: true },
-    component: () => import('../views/CVSkillsView.vue')
+    component: () => import('../views/CVSkillsView.vue'),
+    beforeEnter: (to, from, next) => {
+      const userRole = store.getters.user.role;
+      if (userRole === 'Employee') {
+        next();
+      } else {
+        next('/home');
+      }
+    }
   },
   {
     path: '/profile/cv/lenguages',
     name: 'lenguages',
     meta: { requiresAuth: true },
-    component: () => import('../views/CVLenguagesView.vue')
+    component: () => import('../views/CVLenguagesView.vue'),
+    beforeEnter: (to, from, next) => {
+      const userRole = store.getters.user.role;
+      if (userRole === 'Employee') {
+        next();
+      } else {
+        next('/home');
+      }
+    }
   },
   {
     path: '/user/:rfc',

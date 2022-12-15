@@ -213,6 +213,8 @@
       </MDBRow>
     </MDBCol>
   </MDBRow>
+
+  <Footer class="mt-5" />
 </template>
 
 <style scoped src="@/wwwroot/css/logIn.css"></style>

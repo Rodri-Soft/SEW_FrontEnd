@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar.vue'
+import Footer from '@/components/Footer.vue'
 import axios from 'axios';
 import './axios'
 import Cookies from 'js-cookie';
@@ -27,6 +28,7 @@ export default {
   name: "UserProfileView",
   components: {
     Navbar,
+    Footer,
     MDBIcon,
     MDBInput,
     MDBTextarea,

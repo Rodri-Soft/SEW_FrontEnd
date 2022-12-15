@@ -1,4 +1,5 @@
 import HelloWorld from '@/components/HelloWorld.vue'
+import Footer from '@/components/Footer.vue'
 import $ from 'jquery';
 import axios from 'axios';
 import './axios'
@@ -20,7 +21,7 @@ import {
   MDBModalBody,
   MDBModalFooter,
   MDBRadio,
-  MDBSpinner
+  MDBSpinner,
 } from 'mdb-vue-ui-kit';
 export default {
   name: 'LogInView',
@@ -40,7 +41,8 @@ export default {
     MDBModalBody,
     MDBModalFooter,
     MDBRadio,
-    MDBSpinner
+    MDBSpinner,
+    Footer,
   },
   computed: {
     ...mapGetters(['user']),    
@@ -214,6 +216,7 @@ export default {
             }, 2000);
           }
         }).catch((error) => {
+          console.log({error});
           const codeStatus = error.response.status;
           const messages = {
             '409': 'Pareces ya estar registrado, verifica los campos 👍',
@@ -262,7 +265,7 @@ export default {
           const messages = {
             '400': 'Verifique los campos nuevamente 🤔',
             '401': 'Usuario o contraseña incorrectos 😕',
-            '500': 'Error interno del servidor 😢'
+            '500': 'Algo salió mal, intenta más tarde 😔'
           }
           messageLogin.innerHTML = messages[codeStatus];
 
@@ -312,7 +315,7 @@ export default {
             '400': 'Verifique su correo nuevamente 🤔',
             '401': 'Primero debes registrarte 🫡',
             '404': 'Primero debes registrarte 🫡',
-            '500': 'Error interno del servidor 😢'
+            '500': 'Algo salió mal, intenta más tarde 😔'
           }
           messageChangePassword.innerHTML = messages[codeStatus];
 

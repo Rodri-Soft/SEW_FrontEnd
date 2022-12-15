@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar.vue'
 import FormCV from '@/components/FormCV.vue'
 import ProfileInformation from '@/components/ProfileInformation.vue'
+import Footer from '@/components/Footer.vue'
 import axios from 'axios';
 import './axios'
 import Cookies from 'js-cookie';
@@ -30,6 +31,7 @@ export default {
     FormCV,
     Navbar,
     ProfileInformation,
+    Footer,
     MDBIcon,
     MDBInput,
     MDBTextarea,
@@ -80,8 +82,10 @@ export default {
     }
   },
   mounted() {
-    if (this.user.employee.cv) {
-      this.description = this.user.employee.cv.description;
+    if (this.user.employee) {
+      if (this.user.employee.cv) {
+        this.description = this.user.employee.cv.description;
+      }
     }
   },
   methods: {

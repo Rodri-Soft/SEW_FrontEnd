@@ -208,6 +208,8 @@
       </MDBModalBody>
     </MDBModal>
   </section>
+
+  <!-- <Footer/> -->
 </template>
   
 <style scoped src="@/wwwroot/css/logIn.css"></style>
