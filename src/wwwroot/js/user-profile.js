@@ -91,7 +91,7 @@ export default {
       const isValidRfc = regexRFC.test(userRfc);
 
       if (!isValidRfc) {
-        this.$router.push('home');
+        this.$router.push({ path: '/home' });
       }
 
       axios.get(urlProfile, config).then((response) => {

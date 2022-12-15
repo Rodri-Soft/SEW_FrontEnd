@@ -111,7 +111,17 @@ const routes = [
     path: '/user/:rfc',
     name: 'user',
     meta: { requiresAuth: true },
-    component: () => import('../views/UserProfileView.vue')
+    component: () => import('../views/UserProfileView.vue'),
+    beforeEnter: (to, from, next) => {
+      const rfc = to.params.rfc;
+      const regexRFC = new RegExp('^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$');
+      const isValidRfc = regexRFC.test(rfc);
+      if (isValidRfc) {
+        next();
+      } else {
+        next('/home');
+      }
+    }
   },
   {
     path: '/offers',
