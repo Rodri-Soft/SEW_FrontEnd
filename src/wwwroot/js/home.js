@@ -36,13 +36,25 @@ export default {
   },
   methods:{
     
-    async fillFeed(){
-
+    async fillFeed(){      
       const url = "offers";
-      await axios.get(url).then((response) => {
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.get(url, config).then((response) => {
         const offers = response.data;                
         this.offerInformation = offers;           
-      });            
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudieron cargar las ofertas disponibles 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      }); 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
     },
     async consultOffers(category){
@@ -51,10 +63,14 @@ export default {
       const payload = {         
         category: category,
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {
+      await axios.post(url, payload, config).then((response) => {
         const offers = response.data;                
-        this.offerInformation = offers;              
+        this.offerInformation = offers;                     
 
       }).catch((error) => {
         const codeStatus = error.response.status;
@@ -62,12 +78,60 @@ export default {
           401: 'No autorizado 😡',
           400: "Verifique el campo nuevamente 🤔",
           500: 'Algo salió mal, intenta más tarde 😔'
-        }          
+        }         
+        alert(messages[codeStatus]); 
       });       
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;   
 
     },    
+    async goHome(){      
+      const url = "offers";
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.get(url, config).then((response) => {
+        const offers = response.data;                
+        this.offerInformation = offers;           
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudieron cargar las ofertas disponibles 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });             
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true;
+    },
+    async searchOffer(title) {
+
+      const url = "offers/getOffersTitle";
+      const payload = {         
+        title: title,
+      };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      
+      await axios.post(url, payload, config).then((response) => {
+        const offers = response.data;                
+        this.offerInformation = offers;   
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {
+          401: 'No autorizado 😡',
+          400: "Verifique el campo nuevamente 🤔",
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }         
+        alert(messages[codeStatus]); 
+      });       
+
+      this.emptyOffers = this.offerInformation.length > 0 ? false : true; 
+    }
   }
 }
 

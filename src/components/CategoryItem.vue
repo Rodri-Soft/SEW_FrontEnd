@@ -20,9 +20,7 @@
 import $ from 'jquery';
 
 import {
-    MDBBtn,
-    MDBCardGroup,
-    MDBCardGroupItem,
+    MDBBtn,     
     MDBListGroupItem,
     MDBListGroup
 
@@ -33,9 +31,7 @@ export default {
 
     name: 'CategoryItem',
     components: {
-        MDBBtn,
-        MDBCardGroup,
-        MDBCardGroupItem,
+        MDBBtn,         
         MDBListGroupItem,
         MDBListGroup
     },

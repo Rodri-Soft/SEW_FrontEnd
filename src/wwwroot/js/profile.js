@@ -86,7 +86,7 @@ export default {
       if (this.user.employee.cv) {
         this.description = this.user.employee.cv.description;
       }
-    }
+    }    
   },
   methods: {
     checkInput() {

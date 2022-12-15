@@ -360,7 +360,8 @@ function fillBackgroundContainers(side, id){
     background.className = 'img-fluid';
     background.alt = `background-${side}`;
     const backgroundContainer = document.getElementById(`background-${side}-container`);
-
-    backgroundContainer.appendChild(background);
+    if (backgroundContainer != null && background != null ) {
+      backgroundContainer.appendChild(background);
+    }    
   }
 }

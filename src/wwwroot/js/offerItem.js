@@ -56,10 +56,10 @@ export default {
   },  
   setup() {    
     const offerDropdownOptions = ref(false);   
-    const activeItem = ref('');
+    const activeItemApplication = ref('');    
     return {      
       offerDropdownOptions,
-      activeItem
+      activeItemApplication,      
     }
   },
   props: ["personalOffers"],  
@@ -67,7 +67,8 @@ export default {
     return {  
       score: null,    
       jobApplicationsNumber: null,
-      jobApplications: [],                                  
+      jobApplications: [],    
+      acceptedJobApplications: [],                      
     };
   },
   computed: {
@@ -75,8 +76,9 @@ export default {
   },
   mounted(){ 
     this.setOfferScore();  
-    this.setJobApplications();
-    this.setAccordionColor();    
+    this.getPendingJobApplications();
+    this.getAcceptedJobApplications();
+    this.setAccordionColor();        
   },
   methods:{
     alter() {
@@ -84,21 +86,19 @@ export default {
     },
     remove() {
       this.$emit("removeOfferItem");
-    },
-    showOffer() {
-      this.$emit("showOffer");
-    },
-    consultOffer() {
-      this.$emit("consultOffer");
-    },
+    },        
     async setOfferScore(){
 
       const url = "offers/oneOffer";     
       const payload = {   
         id: this.personalOffers.id,             
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
@@ -112,27 +112,80 @@ export default {
           }    
         }
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
       });  
     },
-    async setJobApplications(){
+    async getPendingJobApplications(){
 
-      const url = "jobApplications/offerJobApplications";     
+      const url = "jobApplications/offerStatusJobApplications";     
       const payload = {   
-        offerId: this.personalOffers.id,             
+        offerId: this.personalOffers.id,
+        status: "Pendiente",             
+      };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
       };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
-          const applications = response.data;            
-          this.jobApplications = applications;
-          this.jobApplicationsNumber = applications.length;  
+          const applications = response.data;                                    
+          this.jobApplicationsNumber = applications.length;            
+          this.setJobApplications(applications);          
         }
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
-      });  
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });   
+    },
+    async setJobApplications(applications){ 
+      this.jobApplications = [];                          
+      for (let index = 0; index < applications.length; index++) {
+        await this.setRFC(applications, index)
+      }     
+    },
+    async setRFC(applications, index){
+      const url = "employees/oneEmployeeUser";
+      const payload = {   
+        id: applications[index].employeeId,             
+      };      
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.post(url, payload, config).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const userFound = response.data;          
+          applications[index].rfc = userFound.user.rfc;  
+          this.jobApplications = applications;                   
+        }
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });           
+
     },
     setAccordionColor() {
       var accordiosButtons = document.getElementsByClassName("accordion-button");            
@@ -140,12 +193,136 @@ export default {
         const element = accordiosButtons[index];
         element.style.backgroundColor = "#dfe7ed";   
         element.style.color = "#4F4F4F";
-        element.style.fontSize = "large";
-        element.style.height = "50px"            
+        element.style.fontSize = "medium";
+        element.style.height = "30px"              
       }    
     },
-    async acceptJobApplication(index, jobApplications) {
+    async acceptJobApplication(index, jobApplications) {            
+          
+      const url = "jobApplications/";
+      const payload = {   
+        id: jobApplications[index].id,
+        changes: {
+          status: "Aceptada"
+        }     
+      };    
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };  
+      await axios.patch(url, payload, config).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {       
+          this.jobApplications = [];          
+        }
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });            
 
+      await this.getPendingJobApplications();
+      await this.getAcceptedJobApplications();
+
+    },
+    async getAcceptedJobApplications(){
+
+      const url = "jobApplications/offerStatusJobApplications";     
+      const payload = {   
+        offerId: this.personalOffers.id,
+        status: "Aceptada",             
+      };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      
+      await axios.post(url, payload, config).then((response) => {    
+
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const applications = response.data;                                                        
+          this.setAcceptedJobApplications(applications);          
+        }
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });  
+    },
+    async setAcceptedJobApplications(applications){ 
+      this.acceptedJobApplications = [];                          
+      for (let index = 0; index < applications.length; index++) {
+        await this.setAceptedRFC(applications, index)
+      }     
+    },
+    async setAceptedRFC(applications, index){
+      const url = "employees/oneEmployeeUser";
+      const payload = {   
+        id: applications[index].employeeId,             
+      };      
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.post(url, payload, config).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {          
+          const userFound = response.data;          
+          applications[index].rfc = userFound.user.rfc;  
+          this.acceptedJobApplications = applications;                   
+        }
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });           
+
+    },
+    async refuseJobApplication(index, jobApplications){
+      const url = "jobApplications/";
+      const payload = {   
+        id: jobApplications[index].id,
+        changes: {
+          status: "Rechazada"
+        }     
+      };      
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.patch(url, payload, config).then((response) => {    
+        const codeStatus = response.status;              
+        if (codeStatus === 200) {       
+          this.jobApplications = [];          
+        }
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });           
+
+      await this.getPendingJobApplications();
     }
 
   }

@@ -1,6 +1,6 @@
 <template>
 
-    <Navbar class="mb-4"/>
+    <Navbar class="mb-4" v-on:goHome="goHome" v-on:searchOffer="searchOffer" :homeNavbar="true"/>
 
     <div class="container-fluid">
         <div class="row">

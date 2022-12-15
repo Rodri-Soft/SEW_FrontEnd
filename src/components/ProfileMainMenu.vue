@@ -32,14 +32,16 @@
         </div>    
 
         <MDBRow>
-            <MDBCol id="profileButton" col="12">                
-                <MDBBtn class="mt-3 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
-                    <i class="fas fa-user-alt me-2 fa-lg"></i>
-                    Mi Perfil
-                </MDBBtn>            
+            <MDBCol id="profileButton" col="12">      
+                <router-link to="/profile">
+                    <MDBBtn class="mt-3 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
+                        <i class="fas fa-user-alt me-2 fa-lg"></i>
+                        Mi Perfil
+                    </MDBBtn>    
+                </router-link>                                  
             </MDBCol>
             <MDBCol id="jobApplicationsButton" col="12">
-                <MDBBtn v-show="user.role == 'Employee'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
+                <MDBBtn @click="consultEmployeeJobApplications" v-show="user.role == 'Employee'" class="mt-2 mb-2 shadow-0 backgroundFont profileCard buttonPadding buttonHover">
                     <i class="fas fa-envelope me-2 fa-lg"></i>
                     Mis Solicitudes
                 </MDBBtn>   

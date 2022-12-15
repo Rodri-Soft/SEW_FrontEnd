@@ -15,8 +15,7 @@ import {
   MDBCardText,
   MDBCardLink,
   MDBCardImg,
-  MDBCardGroup,
-  MDBCardGroupItem,
+  MDBCardGroup,  
   MDBListGroupItem,
   MDBListGroup,
   MDBCol,
@@ -37,8 +36,7 @@ export default {
     MDBCardText,
     MDBCardLink,
     MDBCardImg,
-    MDBCardGroup,
-    MDBCardGroupItem,
+    MDBCardGroup,    
     MDBListGroupItem,
     MDBListGroup,
     MDBCol,
@@ -77,7 +75,11 @@ export default {
     },       
     consultRecruiterOffers(){
       this.$router.push('offers');
-    }      
+    },
+    consultEmployeeJobApplications(){
+      this.$router.push('jobApplications');
+    },
+
   }
 }
 

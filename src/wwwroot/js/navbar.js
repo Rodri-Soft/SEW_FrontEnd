@@ -44,9 +44,10 @@ export default {
   computed: {
     ...mapGetters(["user"]),
   },
+  props: ["homeNavbar"],  
   data() {
     return {
-      profileImage: '',
+      profileImage: '',      
     }
   },
   setup() {
@@ -103,6 +104,12 @@ export default {
         this.profileImage = Cookies.get('profile_image_url');
         // this.backgroundImage = Cookies.get('background_image_url');            
       }, 100);
-    }      
+    },
+    goHome() {
+      this.$emit("goHome");
+    },      
+    searchOffer() {            
+      this.$emit("searchOffer", document.getElementById("input-search").value);
+    }
   }
 }

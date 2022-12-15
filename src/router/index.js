@@ -116,15 +116,31 @@ const routes = [
   {
     path: '/offers',
     name: 'offers',
-    // meta: { requiresAuth: true },
-    component: () => import('../views/OfferView.vue')
-  },
+    meta: { requiresAuth: true },
+    component: () => import('../views/OfferView.vue'),
+    beforeEnter: (to, from, next) => {
+      const userRole = store.getters.user.role;
+      if (userRole === 'Recruiter') {
+        next();
+      } else {
+        next('/home')
+      }
+    }
+  },  
   {
-    path: '/offerApplications',
-    name: 'offerApplications',
-    // meta: { requiresAuth: true },
-    component: () => import('../views/OfferApplicationsView.vue')
-  }
+    path: '/jobApplications',
+    name: 'jobApplications',
+    meta: { requiresAuth: true },
+    component: () => import('../views/JobApplication.vue'),
+    beforeEnter: (to, from, next) => {
+      const userRole = store.getters.user.role;
+      if (userRole === 'Employee') {
+        next();
+      } else {
+        next('/home')
+      }
+    }
+  },
 ]
 
 const router = createRouter({

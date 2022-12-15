@@ -5,7 +5,8 @@ import Category from '@/components/Category.vue'
 import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
 import $ from 'jquery';
 import axios from 'axios';
-import './axios'
+import './axios';
+import Cookies from 'js-cookie';
 import { mapGetters } from "vuex";
 
 import {
@@ -29,6 +30,7 @@ import {
  
 } from "mdb-vue-ui-kit";
 import { ref } from 'vue';
+import { setTimeout } from 'core-js';
 
 export default {
 
@@ -67,6 +69,9 @@ export default {
   props: ["offers"],
   computed: {
     ...mapGetters(["user"]),
+    styles() {
+      return this.process ? ['disabled'] :  [''];
+    },
   },
   data() {
     return {
@@ -74,7 +79,8 @@ export default {
       score: null,
       hasScore: false,      
       localScore: null,
-      color: "light",
+      color: "light",      
+      process: false
     }
   },
   mounted(){           
@@ -99,8 +105,12 @@ export default {
       const payload = {   
         id: this.offers.id,             
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
@@ -114,22 +124,42 @@ export default {
           }    
         }
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
-      });  
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      }); 
     },      
     async setOfferApplied(){
 
-      const url = "jobApplications/oneJobApplication";     
+      const url = "jobApplications/oneJobApplicationEmployee";     
       const payload = {              
         employeeId: this.user.employee.id,
         offerId: this.offers.id   
       };          
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       
-      await axios.post(url, payload).then((response) => {    
+      await axios.post(url, payload, config).then((response) => {    
         if (response.data != null) {
           this.color = "danger";   
         }                                   
-      });  
+      }).catch((error) => {        
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      }); ;  
     },    
     setScoreReaction(length, color){
 
@@ -143,6 +173,7 @@ export default {
     },
     async qualifyOffer(score){      
 
+      console.log(score);
       if (this.hasScore) {
 
         for (let index = 1; index <= 5; index++) {
@@ -162,17 +193,30 @@ export default {
       const payloadOffer = {   
         id: this.offers.id,             
       };
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
       let offerScore;
       
-      await axios.post(urlOffer, payloadOffer).then((response) => {    
+      await axios.post(urlOffer, payloadOffer, config).then((response) => {    
 
         const codeStatus = response.status;              
         if (codeStatus === 200) {          
           offerScore = response.data;         
         }
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
       });        
+
+      console.log(offerScore);
             
       const url = "offers/";
       let newScore = offerScore.score + score;
@@ -185,7 +229,7 @@ export default {
         }
       };
       
-      await axios.patch(url, payload).then((response) => {        
+      await axios.patch(url, payload, config).then((response) => {        
         
         const codeStatus = response.status;              
         if (codeStatus === 200) {
@@ -195,9 +239,15 @@ export default {
         }
 
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
-      });       
-      
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'No se pudo acceder a los recursos 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });             
     }, 
     showScoreDrop() {
       
@@ -207,49 +257,68 @@ export default {
       if (!dropdownScoreState) {
         this.hasScore = false;
       }
-    },  
+    },    
     async applyToJobApplication(){
-        
+                   
+      this.process = true;
+
       if (this.color === "light") {
+        
         const url = "jobApplications/createJobApplication";     
         const payload = {   
           status: "Pendiente",
           employeeId: this.user.employee.id,
           offerId: this.offers.id                
         };
+        const token = Cookies.get('access_token');      
+        const config = {
+          headers: { 'Authorization': `Bearer ${token}` }
+        };
   
-        await axios.post(url, payload).then((response) => {    
+        await axios.post(url, payload, config).then((response) => {    
   
           const codeStatus = response.status;              
-          if (codeStatus === 200) {          
+          if (codeStatus === 201) {          
             this.color = "danger";  
+            this.process = false;
           }
-        }).catch((error) => {        
-          alert('Algo salió mal, intenta más tarde 😞')
+        }).catch((error) => {       
+          this.process = false;           
+          const codeStatus = error.response.status;
+          const messages = {          
+            401: 'No autorizado 😡',
+            404: 'Esta oferta ya no se encuentra disponible 😔',
+            409: 'Recurso duplicado',
+            500: 'Algo salió mal, intenta más tarde 😔'
+          }
+          alert(messages[codeStatus]);
         });  
       } else {
-        
-        const url = "jobApplications/deleteJobApplication";     
-                      
-        await axios.delete(url, {
-          data: {
-            employeeId: this.user.employee.id,
-            offerId: this.offers.id
-          }
-        }).then((response) => {    
+              
+        const url = `jobApplications/deleteJobApplication/${this.user.employee.id}&${this.offers.id}`;    
+        const token = Cookies.get('access_token');      
+        const config = {
+          headers: { 'Authorization': `Bearer ${token}` }
+        };                       
+        await axios.delete(url, config).then((response) => {    
                  
           const codeStatus = response.status;          
           if (codeStatus === 204) {
+            this.process = false;
             this.color = "light";  
           }                    
-        }).catch((error) => {                  
-          alert('Algo salió mal, intenta más tarde 😞')
-        });  
-
-
+        }).catch((error) => {   
+          this.process = false;                         
+          const codeStatus = error.response.status;
+          const messages = {          
+            401: 'No autorizado 😡',
+            404: 'Esta oferta ya no se encuentra disponible 😔',            
+            500: 'Algo salió mal, intenta más tarde 😔'
+          }
+          alert(messages[codeStatus]);
+        }); 
       }        
     }  
-
   }
 }
 

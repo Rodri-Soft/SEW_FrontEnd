@@ -24,18 +24,8 @@
                             :key="i"
                             :personalOffers="offer"
                             v-on:alterOfferItem="alterOfferItem(i)"
-                            v-on:removeOfferItem="removeOfferItem(i)"                    
-                            v-on:showOffer="showOffer(i)"
-                            v-on:consultOffer="consultOffer(i)" />                    
-            </div>
-
-            <!-- <div class="col-lg-3 mb-3">
-                <div class="col col-sm-12">
-                    <div class="d-flex justify-content-lg-end justify-content-center">
-                        <Category/>
-                    </div>
-                </div>                
-            </div> -->
+                            v-on:removeOfferItem="removeOfferItem(i)" />                                                                                                
+            </div>            
         </div>
     </div>
 
@@ -66,13 +56,14 @@
                     </p>
                     </MDBCol>
 
-                    <MDBCol md="12">
+                    <MDBCol md="12" class="mb-2">
                         <MDBInput type="text" label="Título" id="input-offer-title" v-model="title"
                             invalidFeedback="Verifica el título" 
+                            counter :maxlength="100"
                             required/>
                     </MDBCol>
 
-                    <MDBCol md="12">
+                    <MDBCol md="12" class="mb-2">
                         <div class="select">
                             <select name="combobox-category" id="combobox-offer-category" v-model="category">
                                 <option value="null" selected disabled>Seleccione una categoría</option>
@@ -85,22 +76,20 @@
                         </div>
                     </MDBCol>
 
-                    <MDBCol md="12">
+                    <MDBCol md="12" class="mb-2">
                         <MDBInput type="text" label="Jornada Laboral" id="input-offer-workday" v-model="workday"
-                            invalidFeedback="Verifica la jornada laboral" 
+                            invalidFeedback="Verifica la jornada laboral" counter :maxlength="200"
                             required/>            
                     </MDBCol>
                     
-                    <MDBCol md="12">
+                    <MDBCol md="12" class="mb-2">
                         <MDBTextarea rows="4" type="text" label="Descripción" id="textarea-offer-description" v-model="description" 
-                            invalidFeedback="Verifica la descripción" 
-                            required/>            
+                            invalidFeedback="Verifica la descripción" :maxLength="200" counter required/>                                        
                     </MDBCol>                               
                     
-                    <MDBCol md="12">
+                    <MDBCol md="12" class="mb-2">
                         <MDBTextarea rows="4" type="text" label="Experiencia Laboral" id="textarea-offer-experience" v-model="experience"
-                            invalidFeedback="Verifica la experiencia laboral " 
-                            required/>            
+                            invalidFeedback="Verifica la experiencia laboral" :maxLength="200" counter required/>                                        
                     </MDBCol>                               
                 </MDBRow>                                               
                 
@@ -110,6 +99,8 @@
         </MDBModalBody>
         </MDBModal>
     </section>
+
+    <Footer class="mt-4"/>
 </template>
 
 <style scoped src="@/wwwroot/css/offer.css"></style>

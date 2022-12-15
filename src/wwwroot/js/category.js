@@ -8,9 +8,7 @@ import {
     MDBCardTitle,
     MDBCardText,
     MDBCardLink,
-    MDBCardImg,
-    MDBCardGroup,
-    MDBCardGroupItem,
+    MDBCardImg,    
     MDBListGroupItem,
     MDBListGroup 
 
@@ -28,9 +26,7 @@ export default {
     MDBCardTitle,
     MDBCardText,
     MDBCardLink,
-    MDBCardImg,
-    MDBCardGroup,
-    MDBCardGroupItem,
+    MDBCardImg,   
     MDBListGroupItem,
     MDBListGroup
   },

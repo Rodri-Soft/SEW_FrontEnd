@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar.vue'
 import ProfileMainMenu from '@/components/ProfileMainMenu.vue'
 import Category from '@/components/Category.vue'
 import OfferItem from '@/components/OfferItem.vue'
+import Footer from '@/components/Footer.vue'
 import $ from 'jquery';
 import { mapGetters } from "vuex";
 import Cookies from "js-cookie";
@@ -20,8 +21,7 @@ import {
   MDBCardText,
   MDBCardLink,
   MDBCardImg,
-  MDBCardGroup,
-  MDBCardGroupItem,
+  MDBCardGroup,  
   MDBListGroupItem,
   MDBListGroup,  
   MDBModal,
@@ -45,6 +45,7 @@ export default {
     ProfileMainMenu,      
     Category,
     OfferItem,
+    Footer,
     
     MDBRow,
     MDBCol,
@@ -55,8 +56,7 @@ export default {
     MDBCardText,
     MDBCardLink,
     MDBCardImg,
-    MDBCardGroup,
-    MDBCardGroupItem,
+    MDBCardGroup,    
     MDBListGroupItem,
     MDBListGroup,    
     MDBModal,
@@ -151,8 +151,7 @@ export default {
           messageUpdate.innerHTML = verifyFieldsMessage;
         } else {
           messagePublish.innerHTML = verifyFieldsMessage;          
-        }
-                
+        }                
       }      
     },  
     validateFormOffer() {
@@ -218,11 +217,22 @@ export default {
       const payload = {         
         recruiterId: this.user.recruiter.id,
       };
-      await axios.post(url, payload).then((response) => {
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+      await axios.post(url, payload, config).then((response) => {
         const offers = response.data;                
         this.offerInformation = offers;           
       }).catch((error) => {        
-        alert('Algo salió mal, intenta más tarde 😞')
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
       });    
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
@@ -241,18 +251,37 @@ export default {
       this.category = offer.category
                               
     },
-    removeOfferItem(i) {
+    async removeOfferItem(i) {      
+                      
+      const url = `offers/deleteOffer/${this.offerInformation[i].id}`;           
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };                      
 
-      const offersRemove = this.offerInformation.filter((element, index) => index !== i);      
-      this.offerInformation = offersRemove;
+      await axios.delete(url, config).then((response) => {    
+                
+        const codeStatus = response.status;          
+        if (codeStatus === 204) {
+          const offersRemove = this.offerInformation.filter((element, index) => index !== i);      
+          this.offerInformation = offersRemove;
+        }                    
+      }).catch((error) => {   
+                                
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          404: 'Esta oferta ya no se encuentra disponible 😔',      
+          400: 'Algo salió mal, intenta más tarde 😔',      
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        alert(messages[codeStatus]);
+      });  
+
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
 
-    },
-    showOffer(i) {
-      console.log("Índice de elemento en arreglo "+i);
-      console.log("ID de offer "+this.offerInformation[i].id);      
-    },
+    },    
     closeOfferModal(){
       
       this.update = false;
@@ -266,58 +295,101 @@ export default {
       this.category = 'null';                             
 
     },  
-    publishOffer(messagePublish) {
+    async publishOffer(messagePublish) {
       
-      messagePublish.innerHTML = 'Oferta publicada correctamente 😊';
-      messagePublish.classList.add('text-success');
-      const publishButton = document.getElementById('publish-offer-button');
-      publishButton.setAttribute("disabled", "");
+      const url = "offers/createOffer";      
+      const newOffer = {       
+        title: this.title,
+        workday: this.workday,
+        description: this.description,
+        experience: this.experience,
+        category: this.category,
+        status: "Pendiente",
+        score: 0,
+        reportsNumber: 0,
+        recruiterId: this.user.recruiter.id
+      } 
+      const payload = {        
+        offerData: newOffer
+      }
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+          
+      await axios.post(url, payload, config).then((response) => {
+        const codeStatus = response.status;        
+        if (codeStatus === 201) {
 
-      const offersLenght = this.offerInformation.length;
+          const newOffer = response.data;
+          this.offerInformation.push(newOffer);
 
-      //Verificar que haya por lo menos un elemento
-      const lastOffer = this.offerInformation[offersLenght - 1];
-      
-      this.offerInformation.push(
-        {
-          id: (lastOffer.id + 1),
-          title: this.title,                              
-          description: this.description,
-          category: this.category,
-          experience: this.experience,
-          workday: this.workday,
-          score: 0,
-          jobAplicationsNumber: 0,          
+          messagePublish.innerHTML = 'Oferta publicada correctamente 😊';
+          messagePublish.classList.add('text-success');
+          const publishButton = document.getElementById('publish-offer-button');
+          publishButton.setAttribute("disabled", "");                    
+
         }
-      );
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          400: 'Verifique los campos nuevamente 🤔',
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        messagePublish.innerHTML = messages[codeStatus];
+      });      
 
       this.emptyOffers = this.offerInformation.length > 0 ? false : true;
     },
-    updateOffer(messageUpdate) {
-      
-      messageUpdate.innerHTML = 'Oferta actualizada correctamente 😊';
-      messageUpdate.classList.add('text-success');
-      const updateButton = document.getElementById('update-offer-button');
-      updateButton.setAttribute("disabled", "");
-      
-      let newOffer = this.offerInformation[this.updatedOfferIndex];
-      newOffer.title = this.title;
-      newOffer.description = this.description,
-      newOffer.category = this.category,
-      newOffer.experience = this.experience,
-      newOffer.workday = this.workday,
+    async updateOffer(messageUpdate) {
 
-      this.offerInformation[this.updatedOfferIndex] = newOffer;
-               
-    },
-    consultOffer(i) {
-      console.log(i);     
-      // this.$router.push({ name: 'about', params: { title: 'test title' }});
-      // this.$store.state.test = "Test title";
-      this.$store.state.offer = this.offerInformation[i];
-      this.$router.push('offerApplications');
-      
-    },
+      const url = "offers/";      
+      const updatedOffer = {
+        title: this.title,
+        category: this.category,
+        workday: this.workday,
+        description: this.description,
+        experience: this.experience
+      } 
+      const payload = {
+        id:  this.offerInformation[this.updatedOfferIndex].id,
+        changes: updatedOffer
+      }
+      const token = Cookies.get('access_token');      
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      };
+          
+      await axios.patch(url, payload, config).then((data) => {
+        const codeStatus = data.status;        
+        if (codeStatus === 200) {
+
+          messageUpdate.innerHTML = 'Oferta actualizada correctamente 😊';
+          messageUpdate.classList.add('text-success');
+          const updateButton = document.getElementById('update-offer-button');
+          updateButton.setAttribute("disabled", "");          
+
+          let newOffer = this.offerInformation[this.updatedOfferIndex];
+          newOffer.title = this.title;
+          newOffer.description = this.description,
+          newOffer.category = this.category,
+          newOffer.experience = this.experience,
+          newOffer.workday = this.workday,
+
+          this.offerInformation[this.updatedOfferIndex] = newOffer;
+
+        }
+      }).catch((error) => {
+        const codeStatus = error.response.status;
+        const messages = {          
+          401: 'No autorizado 😡',
+          400: 'Verifique los campos nuevamente 🤔',
+          500: 'Algo salió mal, intenta más tarde 😔'
+        }
+        messageUpdate.innerHTML = messages[codeStatus];
+      });      
+    },    
   }
 }
 
