@@ -173,7 +173,6 @@ export default {
     },
     async qualifyOffer(score){      
 
-      console.log(score);
       if (this.hasScore) {
 
         for (let index = 1; index <= 5; index++) {
@@ -216,7 +215,6 @@ export default {
         alert(messages[codeStatus]);
       });        
 
-      console.log(offerScore);
             
       const url = "offers/";
       let newScore = offerScore.score + score;
