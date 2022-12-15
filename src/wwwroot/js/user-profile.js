@@ -99,8 +99,7 @@ export default {
         this.showUserProfile(user);
 
       }).catch((error) => {
-        this.$router.push('home');
-        alert('Algo salio mal 😢')
+        this.$router.push({ path: '/home' });
       });   
     },
     showUserProfile(user) {
