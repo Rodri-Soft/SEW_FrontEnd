@@ -183,7 +183,7 @@ export default {
     },
     async loginWithGoogle() {            
       await this.createUserImages();
-      const url = 'http://localhost:3000/api/v1/auth/google';
+      const url = 'https://sew.onrender.com/api/v1/auth/google';
       window.location.href = url; 
     },
     async registerNewUser(event) {
@@ -231,11 +231,11 @@ export default {
     },
     async login(event) {
       const sppinerLogin = document.getElementById('spinner-login');
-      sppinerLogin.classList.remove('d-none');
-
+      
       event.target.classList.add('was-validated');
-
+      
       if (event.target.checkValidity()) {
+        sppinerLogin.classList.remove('d-none');
         let payload = {
           email: this.email,
           password: this.password,
