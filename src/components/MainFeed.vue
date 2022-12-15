@@ -14,7 +14,7 @@
                     </div>
                 </div>
 
-                <MDBDropdown v-model="dropdownOptions">
+                <!-- <MDBDropdown v-model="dropdownOptions">
                     <a id="ellipsisOptionsIcon" @click="dropdownOptions = !dropdownOptions">                        
                         <i class="fas fa-ellipsis-v ellipsisIcon fa-lg"></i>
                     </a>
@@ -25,7 +25,7 @@
                         <MDBDropdownItem tag="button">Another Action</MDBDropdownItem>
                         <MDBDropdownItem tag="button">Something else here</MDBDropdownItem>
                     </MDBDropdownMenu>
-                </MDBDropdown>                
+                </MDBDropdown>                 -->
             </div>
 
             <div>                

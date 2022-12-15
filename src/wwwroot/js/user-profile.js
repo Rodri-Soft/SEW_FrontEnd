@@ -86,13 +86,21 @@ export default {
       const config = {
         headers: { 'Authorization': `Bearer ${token}` }
       };
+      
+      const regexRFC = new RegExp('^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])([A-Z]|[0-9]){2}([A]|[0-9]){1})?$');
+      const isValidRfc = regexRFC.test(userRfc);
+
+      if (!isValidRfc) {
+        this.$router.push('home');
+      }
 
       axios.get(urlProfile, config).then((response) => {
         user = response.data;
         this.showUserProfile(user);
 
       }).catch((error) => {
-        console.log(error);
+        this.$router.push('home');
+        alert('Algo salio mal 😢')
       });   
     },
     showUserProfile(user) {

@@ -27,7 +27,7 @@
 		</MDBCollapse>
 		
 		<MDBNavbarNav class="d-flex justify-content-end flex-row">
-			<MDBNavbarItem to="#" class="me-3 me-lg-0 m-auto d-flex align-items-center">
+			<!-- <MDBNavbarItem to="#" class="me-3 me-lg-0 m-auto d-flex align-items-center">
 				<MDBDropdown to="" v-model="dropdownBellNotifications" class="me-2">
 					<a id="bellNotificationsButton" @click="dropdownBellNotifications = !dropdownBellNotifications">
 						<MDBIcon icon="bell" size="lg" class="color-button"></MDBIcon>
@@ -39,7 +39,7 @@
 						<MDBDropdownItem href="#">Action</MDBDropdownItem>
 					</MDBDropdownMenu>
 				</MDBDropdown>
-			</MDBNavbarItem>
+			</MDBNavbarItem> -->
 
 			<MDBNavbarItem class="me-3 me-lg-0 m-auto d-flex align-items-center">
 				<MDBDropdown btnGroup v-model="dropdownProfile" class="shadow-0" >
